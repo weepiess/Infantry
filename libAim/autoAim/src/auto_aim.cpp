@@ -63,8 +63,8 @@ bool AutoAim::setImage(Mat &img){
     resetROI();
     mask = img(rectROI);
     split(mask, channel);
-    Mask = channel[2];
-    diff = channel[2] - channel[1];
+    Mask = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[2]:channel[0];
+    diff = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[2] - channel[1]:channel[0] - channel[1];
     GaussianBlur(Mask, Mask, Size(5,5), 0);
     threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
     threshold(diff, diff, substract_thresh, 255, THRESH_BINARY);
@@ -90,7 +90,6 @@ bool AutoAim::setImage(Mat &img){
 }
 
 //寻找灯管
-
 void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
     pre_armor_lamps.clear();
     vector<vector<Point> > contours;
@@ -109,6 +108,7 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
         }
     }
 }
+
 //匹配灯管
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
     //权重

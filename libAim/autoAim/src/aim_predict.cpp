@@ -4,12 +4,12 @@ Aim_predict::Aim_predict(){}
 Aim_predict::~Aim_predict(){}
 
 void Aim_predict::model_init(){
-    mKf.measurementMatrix=(Mat_<float>(1, 2) <<   
+    mKf.measurementMatrix = (Mat_<float>(1, 2) <<   
             1,0);  
-    mKf.measurementNoiseCov=(Mat_<float>(1, 1) <<   
+    mKf.measurementNoiseCov = (Mat_<float>(1, 1) <<   
             0.0001);
 
-    mKf.processNoiseCov=(Mat_<float>(2,2) <<
+    mKf.processNoiseCov = (Mat_<float>(2,2) <<
 			10000,0,
 			0,1); 
     mKf.init(2,1,0);
@@ -24,11 +24,13 @@ Mat Aim_predict::predict(Mat measurement, float dt){
     mKf.correct(measurement);
     return mKf.predict();
 }
+
 void Aim_predict::clear(){
     mAngle_Velocity.clear();
     mYaw.clear();
     mPredict_Angle.clear();
 }
+
 bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict_angle){
     //取当前以及上一帧数据,取其均值
     if(mAngle_Velocity.size()<2){
