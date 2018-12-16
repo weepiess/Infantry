@@ -48,6 +48,8 @@ private:
         //是否需要确认装甲板
     bool need_check=true;
     std::future<int> tmp;
+    MindVision* cap;
+    SerialInterface *interface;
 private:
     void Aim();
 

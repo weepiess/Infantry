@@ -41,7 +41,8 @@ bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict
             float iYaw_mean=std::accumulate(std::begin(mYaw),std::end(mYaw),0.0)/2;
             float v_a_mean=std::accumulate(std::begin(mAngle_Velocity),std::end(mAngle_Velocity),0.0)/2;
             float pred_angle_mean=std::accumulate(std::begin(mPredict_Angle),std::end(mPredict_Angle),0.0)/2;
-            clear();
+            
+            if(mYaw[1]>3) return false;
             if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){//运动状态
                 if(v_a_mean<-0.02&&iYaw_mean>0.2&&pred_angle_mean<0) { return true;}
                 else if(v_a_mean>0.02&&iYaw_mean<-0.2 && pred_angle_mean>0) { return true;}
@@ -49,6 +50,7 @@ bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict
             }
             else if(fabs(iYaw_mean)<=0.45&&fabs(v_a_mean)<=0.009) { return true;}//静止状态
             else { return false;}
+            clear();
         }else return false;
     }else{
         clear();

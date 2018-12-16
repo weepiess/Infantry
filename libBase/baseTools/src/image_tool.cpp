@@ -61,8 +61,11 @@ float ImageTool::calcTriangleInnerAngle(cv::Point2f vertexPoint, cv::Point2f poi
 
 }
 
+
+//Todo:使用SSE指令集修改
 double ImageTool::gravityKiller(double z_distance, double y_distance, double bullet_speed, double current_pitch){
     constexpr double GRAVITY = 9.7913;
+    //float op1[4]={GRAVITY, bullet_speed, z_distance, y_distance};
     double alpha = current_pitch*CV_PI/180;
     double x = -y_distance*sin(alpha)+z_distance*cos(alpha);
     double y = z_distance*sin(alpha)+y_distance*cos(alpha);

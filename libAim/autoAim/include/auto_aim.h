@@ -3,6 +3,7 @@
 
 #include <opencv2/opencv.hpp>
 #include "base_aim.h"
+#include "basic_tool.h"
 #include "time.h"
 #include "aim_predict.h"
 #include "usb_capture_with_opencv.h"
@@ -50,7 +51,7 @@ private:
     bool is_check_armor=true;
     Rect rectROI;
     Aim_predict aim_predict;
-
+    BasicTool basic_tool;
 };                                                                                                      
 
 #endif

@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-
+#include"omp.h"
 AutoAim::AutoAim(){}
 
 AutoAim::AutoAim(int width, int height){
@@ -57,23 +57,32 @@ void AutoAim::set_parameters(int angle,int inside_angle, int height, int width){
 
 //图像预处理
 bool AutoAim::setImage(Mat &img){
+    int start = basic_tool.currentTimeMsGet();
     if(img.empty()) return false;
     Mat channel[3], Mask, diff;
     int thresh = 40, substract_thresh = 100;
-    resetROI();
+    //resetROI();
     mask = img(rectROI);
     split(mask, channel);
-    Mask = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[2]:channel[0];
-    diff = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[2] - channel[1]:channel[0] - channel[1];
+    Mask = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[0]:channel[2];
+    diff = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[0] - channel[1]:channel[2] - channel[1];
     GaussianBlur(Mask, Mask, Size(5,5), 0);
     threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
     threshold(diff, diff, substract_thresh, 255, THRESH_BINARY);
+    // #pragma omp parallel sections num_threads(2)
+    // {
+    //     #pragma omp section
+    //     {
+    //         threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
+    //     }
+    //     #pragma omp section
+    //     {
+    //         threshold(diff, diff, substract_thresh, 255, THRESH_BINARY);
+    //     }
+    // }
     Mat element = getStructuringElement( MORPH_ELLIPSE, Size(1, 3));
-    for (int i = 0; i < 8; ++i){
-        dilate( diff, diff, element);
-    }   
+    dilate( diff, diff, element,Point(-1,-1),iteration=4);   
     bitwise_and(Mask, diff, mask);
-    
     /*
     if(enemyColor == color_blue){
         threshold(channel[0] - channel[2], mask, 0, 255, THRESH_BINARY+THRESH_OTSU);
@@ -99,11 +108,12 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
     RotatedRect temp;
     float lastCenterX = 0, lastCenterY = 0;
     if(contours.size()<40){
+        //#pragma omp parallel for
         for(int i=0;i<contours.size();i++){
             if(contours[i].size()>5){
                 temp = adjustRRect(minAreaRect(contours[i]));//寻找最小外接矩形
-                if(abs(temp.angle)>45) continue;//旋转矩形角度小于45度，则忽略
-                pre_armor_lamps.push_back(temp);
+                if(abs(temp.angle)<45) pre_armor_lamps.push_back(temp);//旋转矩形角度大于45度，则忽略
+                
             }
         }
     }
@@ -118,6 +128,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     int size = pre_armor_lamps.size();
     vector<float> diff(size);
     vector<float> best_match_index(size);
+    //#pragma omp parallel for
     for(int i=0; i<size; i++){
         diff[i] = 0x3f3f3f3f;
         best_match_index[i] = -1;
@@ -125,12 +136,12 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     //计算灯管匹配之间的花费
     int dist, avg_height, diff_angle, diff_height, ratio, totalDiff,inside_angle,diff_width;
     int i,j;
+    //#pragma omp parallel for
     for(i=0; i<size; i++){
         float currDiff = 0x3f3f3f3f;
         int currIndex = -1;
         const RotatedRect &current = pre_armor_lamps[i];
         int theta_current = current.angle;
-
         for(j=i+1;j<size; j++){
             //计算比例，筛选灯管
             const RotatedRect &compare = pre_armor_lamps[j];
@@ -143,6 +154,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
 
             //内角小于设定角度忽略
             if(abs(current.center.y - compare.center.y) == 0) inside_angle=90;
+            
             else inside_angle = atanf(abs(current.center.x-compare.center.x)/abs(current.center.y-compare.center.y))*180/CV_PI;
             //cout<<"inside"<<inside_angle<<endl;
             if(inside_angle < param_inside_angle) continue;
@@ -180,7 +192,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             best_match_index[currIndex] = i;
         }
     }
-
+    //#pragma omp parallel for
     for(i=0; i<size; i++){
         //cout<<best_match_index[i]<<endl;
         int index = best_match_index[i];
@@ -194,10 +206,21 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int lowerY=0;
     int lowerIndex=-1;
+    int hero_index=-1;
     bestCenter.x=-1;
+    //最优装甲板逻辑
     for(int i=0; i<real_armor_lamps.size(); i+=2){
         if(i+1 >= real_armor_lamps.size()) break;
         int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
+        int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
+        if(x/real_armor_lamps[i].height>4){  
+            hero_index=i; 
+            pnpSolver.pushPoints3D(-115, -47, 0);
+            pnpSolver.pushPoints3D(115, -47, 0);
+            pnpSolver.pushPoints3D(115, 47, 0);
+            pnpSolver.pushPoints3D(-115, 47, 0);
+            break;
+        }
         if(y > lowerY){
             lowerY = y;
             lowerIndex = i;
@@ -212,7 +235,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             resizeCount = 0;
         }
     } else {
-        resizeCount = 0;
+        resizeCount = 0; 
         count++;
         //cout<<real_armor_lamps[lowerIndex].x<<"  "<<real_armor_lamps[lowerIndex+1].x<<endl;
 	    if(real_armor_lamps[lowerIndex].center.x > real_armor_lamps[lowerIndex+1].center.x){
@@ -226,9 +249,9 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             bestCenter.y = (real_armor_lamps[lowerIndex].center.y + real_armor_lamps[lowerIndex+1].center.y)/2 + rectROI.y;
             //cout<<bestCenter<<endl;
         } else{
-		 resetROI();
-                 count=0;
-	}
+		    resetROI();
+            count=0;
+    	}
     }
 
     if(bestCenter.x!=-1){
@@ -281,7 +304,7 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
         //     return AIM_TARGET_NOT_FOUND;
         // }
 
-        if(isPredict){
+        if(is_predict){
             pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/17, -90, 170, currPitch, currYaw);
             measurement.at<float>(0) = currYaw + pitYaw.y;  //测量值为当前云台绝对角加上当前目标相对云台角度
             if(count==1){//statePost赋值
