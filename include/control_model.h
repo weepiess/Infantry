@@ -17,7 +17,6 @@
 #include "opencv2/opencv.hpp"
 #include "robot_model.h"
 #include "auto_aim.h"
-#include "aim_assistant.h"
 #include <future>
 #include "basic_tool.h"
 #include "mind_vision.h"
@@ -38,7 +37,6 @@ private:
     RobotMode mSetMode;
     BasicTool basic_tool;
     AutoAim* autoAim;
-    Aim_assistant aim_assist;
     vector<double> result;
     int armor_id=-1;
 private:

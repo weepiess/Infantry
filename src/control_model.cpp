@@ -90,6 +90,8 @@ void ControlModel::Aim(){
         
         if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
         //src2 = imread("../res/2.png");
+        imshow("src",src1);
+        waitKey(1);
         
         interface->getAbsYunTaiDelta();
         current_angle.x = pRobotModel->getCurrentPitch();

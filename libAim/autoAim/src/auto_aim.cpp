@@ -81,7 +81,7 @@ bool AutoAim::setImage(Mat &img){
     //     }
     // }
     Mat element = getStructuringElement( MORPH_ELLIPSE, Size(1, 3));
-    dilate( diff, diff, element,Point(-1,-1),iteration=4);   
+    dilate( diff, diff, element,Point(-1,-1),4);   
     bitwise_and(Mask, diff, mask);
     /*
     if(enemyColor == color_blue){
@@ -213,7 +213,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         if(i+1 >= real_armor_lamps.size()) break;
         int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
         int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
-        if(x/real_armor_lamps[i].height>4){  
+        if(x/real_armor_lamps[i].size.height>4){  
             hero_index=i; 
             pnpSolver.pushPoints3D(-115, -47, 0);
             pnpSolver.pushPoints3D(115, -47, 0);

@@ -13,7 +13,6 @@
 #ifndef AIM_PREDICT_H
 #define AIM_PREDICT_H
 #include "kalman_filter_by_opencv.h"
-#include "Kalman_CSM.h"
 #include "opencv2/opencv.hpp"
 
 class Aim_predict{

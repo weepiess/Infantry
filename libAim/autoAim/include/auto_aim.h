@@ -7,7 +7,7 @@
 #include "time.h"
 #include "aim_predict.h"
 #include "usb_capture_with_opencv.h"
-#include "aim_assistant.h"
+
 using namespace cv;
 using namespace std;
 

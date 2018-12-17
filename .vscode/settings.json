@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "dense": "cpp",
+        "future": "cpp",
+        "cholesky": "cpp"
+    }
+}
