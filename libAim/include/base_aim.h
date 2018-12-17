@@ -112,7 +112,7 @@ protected:
     bool isPredict = false;
 
     //目标的颜色，用于分离通道等操作，默认为红色
-    int enemyColor = color_red;
+    int enemyColor = color_blue;
 
     //用在预测过程中，用于通过时延计算下一帧预测位置
     double timeDelay = 0;

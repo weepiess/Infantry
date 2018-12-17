@@ -87,12 +87,11 @@ void ControlModel::Aim(){
         Point2f current_angle;  
         //UsbCaptureWithThread* cap2 = pRobotModel->getpUsbCaptureAssist();
         //if(cap2->getImg(src2)!=0) cout<<"src is error"<<endl;
-        
         if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
         //src2 = imread("../res/2.png");
-        imshow("src",src1);
-        waitKey(1);
-        
+        //imshow("src",src1);
+        //waitKey(1);
+
         interface->getAbsYunTaiDelta();
         current_angle.x = pRobotModel->getCurrentPitch();
         current_angle.y = pRobotModel->getCurrentYaw();

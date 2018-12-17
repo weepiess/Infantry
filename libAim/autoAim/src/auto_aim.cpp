@@ -57,14 +57,16 @@ void AutoAim::set_parameters(int angle,int inside_angle, int height, int width){
 
 //图像预处理
 bool AutoAim::setImage(Mat &img){
+    watchwin = Mat::zeros(img.size(),CV_8UC1);
     int start = basic_tool.currentTimeMsGet();
     if(img.empty()) return false;
     Mat channel[3], Mask, diff;
     int thresh = 40, substract_thresh = 100;
-    //resetROI();
+    resetROI();
     mask = img(rectROI);
     split(mask, channel);
     Mask = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[0]:channel[2];
+    imshow("Mask",Mask);
     diff = (BaseAim::enemyColor==BaseAim::color_blue) ? channel[0] - channel[1]:channel[2] - channel[1];
     GaussianBlur(Mask, Mask, Size(5,5), 0);
     threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
@@ -95,6 +97,10 @@ bool AutoAim::setImage(Mat &img){
     */
     //Canny(mask, mask, 3, 9, 3);
     //imshow("mask", mask);
+    //imshow("Mask",Mask);
+    imshow("diff",diff);
+    //imshow("watchwin",watchwin);
+    waitKey(1);
     return true;
 }
 
@@ -113,7 +119,7 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
             if(contours[i].size()>5){
                 temp = adjustRRect(minAreaRect(contours[i]));//寻找最小外接矩形
                 if(abs(temp.angle)<45) pre_armor_lamps.push_back(temp);//旋转矩形角度大于45度，则忽略
-                
+        
             }
         }
     }

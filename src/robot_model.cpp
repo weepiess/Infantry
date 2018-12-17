@@ -43,9 +43,9 @@ int RobotModel::init(){
     //     cout<<"[robot model init ]: RobotSerialInterface init failed!"<<endl;
     // }
 
-    hCamera = mVision.init();
+    
     if(hCamera!=-1){
-        mVision.startPlay(hCamera, mEnemyIsRed);
+        hCamera = mVision.init(mEnemyIsRed);
         cout << "[robot model init ]:UsbCapture init successed!" <<endl;
         usleep(1000000);//等待1s
     }else{

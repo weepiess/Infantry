@@ -48,6 +48,7 @@ private:
     float dt;
     Point bestCenter;
     Mat mask;
+    Mat watchwin;
     bool is_check_armor=true;
     Rect rectROI;
     Aim_predict aim_predict;

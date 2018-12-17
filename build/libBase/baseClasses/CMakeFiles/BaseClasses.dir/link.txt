@@ -1,2 +1,2 @@
-/usr/bin/ar qc libBaseClasses.a  CMakeFiles/BaseClasses.dir/src/base_thread.cpp.o
+/usr/bin/ar qc libBaseClasses.a  CMakeFiles/BaseClasses.dir/src/base_thread.cpp.o CMakeFiles/BaseClasses.dir/src/function_thread.cpp.o
 /usr/bin/ranlib libBaseClasses.a

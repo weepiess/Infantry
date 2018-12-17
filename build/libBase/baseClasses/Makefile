@@ -152,6 +152,33 @@ src/base_thread.cpp.s:
 	cd /home/weepies/RM/INF/build && $(MAKE) -f libBase/baseClasses/CMakeFiles/BaseClasses.dir/build.make libBase/baseClasses/CMakeFiles/BaseClasses.dir/src/base_thread.cpp.s
 .PHONY : src/base_thread.cpp.s
 
+src/function_thread.o: src/function_thread.cpp.o
+
+.PHONY : src/function_thread.o
+
+# target to build an object file
+src/function_thread.cpp.o:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libBase/baseClasses/CMakeFiles/BaseClasses.dir/build.make libBase/baseClasses/CMakeFiles/BaseClasses.dir/src/function_thread.cpp.o
+.PHONY : src/function_thread.cpp.o
+
+src/function_thread.i: src/function_thread.cpp.i
+
+.PHONY : src/function_thread.i
+
+# target to preprocess a source file
+src/function_thread.cpp.i:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libBase/baseClasses/CMakeFiles/BaseClasses.dir/build.make libBase/baseClasses/CMakeFiles/BaseClasses.dir/src/function_thread.cpp.i
+.PHONY : src/function_thread.cpp.i
+
+src/function_thread.s: src/function_thread.cpp.s
+
+.PHONY : src/function_thread.s
+
+# target to generate assembly for a file
+src/function_thread.cpp.s:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libBase/baseClasses/CMakeFiles/BaseClasses.dir/build.make libBase/baseClasses/CMakeFiles/BaseClasses.dir/src/function_thread.cpp.s
+.PHONY : src/function_thread.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -164,6 +191,9 @@ help:
 	@echo "... src/base_thread.o"
 	@echo "... src/base_thread.i"
 	@echo "... src/base_thread.s"
+	@echo "... src/function_thread.o"
+	@echo "... src/function_thread.i"
+	@echo "... src/function_thread.s"
 .PHONY : help
 
 
