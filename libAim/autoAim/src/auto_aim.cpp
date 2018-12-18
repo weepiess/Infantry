@@ -312,18 +312,21 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
 
         if(is_predict){
             pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/17, -90, 170, currPitch, currYaw);
-            measurement.at<float>(0) = currYaw + pitYaw.y;  //测量值为当前云台绝对角加上当前目标相对云台角度
+            measurement.at<float>(1) = currYaw + pitYaw.y;  //测量值为当前云台绝对角加上当前目标相对云台角度
+            measurement.at<float>(0) = currPitch + pitYaw.x;
             if(count==1){//statePost赋值
-                Mat statePost=(Mat_<float>(2, 1) << currYaw + pitYaw.y,0);
-                aim_predict.model_init();
+                Mat statePost=(Mat_<float>(6, 1) << currYaw + pitYaw.x,currPitch+pitYaw.y,1,1,1,1);
+                aim_predict.model_init(time_delay/25);
                 aim_predict.reset_kf_statepost(statePost);
             }
-            Mat Predict = this->aim_predict.predict(measurement,time_delay/25);
+            Mat Predict = aim_predict.predict(measurement,time_delay/25);
             
-            float predict_angle=Predict.at<float>(1)*(time_delay);//预测角为经过卡尔曼得出的角速度值乘以系统延迟,经过测试发现 在3m内不考虑子弹飞行时间效果较好,但是3m外则需要考虑
-            if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);//判断当前是否可以射击
-            pitYaw.y += predict_angle;
-            
+            float predict_angle_x=Predict.at<float>(0)*(time_delay);//预测角为经过卡尔曼得出的角速度值乘以系统延迟,经过测试发现 在3m内不考虑子弹飞行时间效果较好,但是3m外则需要考虑
+            float predict_angle_y=Predict.at<float>(1)*(time_delay);
+            //if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);//判断当前是否可以射击
+            pitYaw.y += predict_angle_y;
+            pitYaw.x += predict_angle_x;
+
         }else{   
             pitYaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/17, -90, 170, currPitch, currYaw);
         }

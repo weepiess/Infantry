@@ -14,9 +14,14 @@ void Kalman_filter::init(int dynamParams,int measureParams ,int controlParams){
     
 }
 void Kalman_filter::set_samplingtime(float dt){
-   transitionMatrix=(Mat_<float>(2, 2) <<   
-            1,dt,   
-            0,1);
+   transitionMatrix=(Mat_<float>(6, 6) <<   
+            1,   0,   2*dt,  0,   dt*dt/2, 0,
+            0,   1,   0,   2*dt,  0,       dt*dt/2,
+			0,   0,   1,   0,   1,       0,
+			0,   0,   0,   1,   0,       1,
+			0,   0,   0,   0,   1,       0,
+			0,   0,   0,   0,   0,       1
+			);
     Kf.transitionMatrix = transitionMatrix;
 }
 

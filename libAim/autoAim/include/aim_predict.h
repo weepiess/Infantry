@@ -21,7 +21,7 @@ class Aim_predict{
         ~Aim_predict();
     public: 
         //预测模型初始化
-        void model_init();
+        void model_init(float dt);
         
         //重新调整卡尔曼statepost,主要用于对新目标的statepost更新
         void reset_kf_statepost(Mat statepost);

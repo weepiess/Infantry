@@ -3,16 +3,21 @@ using namespace cv;
 Aim_predict::Aim_predict(){}
 Aim_predict::~Aim_predict(){}
 
-void Aim_predict::model_init(){
-    mKf.measurementMatrix = (Mat_<float>(1, 2) <<   
-            1,0);  
-    mKf.measurementNoiseCov = (Mat_<float>(1, 1) <<   
-            0.0001);
+void Aim_predict::model_init(float dt){
+    setIdentity(mKf.measurementMatrix);
+    mKf.processNoiseCov = (Mat_<float>(6, 6) <<
+	0.5*dt*dt,   0,                 0,           0,		    0,          0,
+	0,                 0.5*dt*dt,   0,           0,		    0,          0,
+	0,                 0,                 dt, 		   0,		  0,          0,
+	0,                 0,                 0,           dt,        0,          0,
+	0,                 0,                 0,            0,         1,          0,
+	0,                 0,                 0,		    0,         0,          1);
 
-    mKf.processNoiseCov = (Mat_<float>(2,2) <<
-			10000,0,
-			0,1); 
-    mKf.init(2,1,0);
+setIdentity( mKf.processNoiseCov, Scalar::all(1e-1)); 
+    // mKf.processNoiseCov = (Mat_<float>(2,2) <<
+	// 		10000,0,
+	// 		0,1); 
+    mKf.init(6,2,0);
 }
 
 void Aim_predict::reset_kf_statepost(Mat statepost){
@@ -20,6 +25,14 @@ void Aim_predict::reset_kf_statepost(Mat statepost){
 }
 
 Mat Aim_predict::predict(Mat measurement, float dt){
+    cout<<"proccessnoise_cov"<<endl;
+    cout<<mKf.processNoiseCov<<endl;
+    cout<<"meassurement_noise"<<endl;
+    cout<<mKf.measurementNoiseCov<<endl;
+    cout<<"error_COV"<<endl;
+    cout<<mKf.errorCovPost<<endl;
+    cout<<"error_pre"<<endl;
+    cout<<mKf.errorCovPre<<endl;
     mKf.set_samplingtime(dt);//设置采样时间,由于每次算法运行时间不定必须根据实际情况重新调整采样时间
     mKf.correct(measurement);
     return mKf.predict();
