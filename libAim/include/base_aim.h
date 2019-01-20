@@ -58,6 +58,12 @@ public:
     const static int color_blue = 1;
 
 protected:
+    /** 纠正椭圆拟合后的角度问题
+     * @param: rect, 传入的椭圆拟合出来的矩形
+     * @return:void
+     */
+    void adjustEllipseAngle(cv::RotatedRect & rect);
+
     /** 根据pnp解算的tvec矩阵计算需要移动的pitch和yaw轴角度，默认使用迭代法
      * 该方法的调用需要确保在Points3D和Points2D都已经初始化完成以后，直接调用此方法就可获取偏移角度
      * @param: x_offset，tvec返回的x需要手动添加的增量

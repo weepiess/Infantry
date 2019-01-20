@@ -11,6 +11,12 @@ kalman_filter_by_opencv.h
 ../libAim/autoAim/include/kalman_filter_by_opencv.h
 opencv2/opencv.hpp
 ../libAim/autoAim/include/opencv2/opencv.hpp
+vector
+-
+numeric
+-
+functional
+-
 
 ../libAim/autoAim/include/auto_aim.h
 opencv2/opencv.hpp

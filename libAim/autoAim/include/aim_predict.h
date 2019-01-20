@@ -14,6 +14,9 @@
 #define AIM_PREDICT_H
 #include "kalman_filter_by_opencv.h"
 #include "opencv2/opencv.hpp"
+#include <vector>
+#include <numeric>
+#include <functional>
 
 class Aim_predict{
     public:

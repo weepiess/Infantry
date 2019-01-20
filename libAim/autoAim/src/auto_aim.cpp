@@ -117,9 +117,16 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
         //#pragma omp parallel for
         for(int i=0;i<contours.size();i++){
             if(contours[i].size()>5){
-                temp = adjustRRect(minAreaRect(contours[i]));//寻找最小外接矩形
-                if(abs(temp.angle)<45) pre_armor_lamps.push_back(temp);//旋转矩形角度大于45度，则忽略
-        
+               // temp = adjustRRect(minAreaRect(contours[i]));//寻找最小外接矩形
+               temp = adjustRRect(fitEllipseAMS(contours[i])); //椭圆拟合 AMS-近似均方差
+                adjustEllipseAngle(temp);
+                if(abs(temp.angle)<45){
+                    float hw_ratio = temp.size.height/temp.size.width;
+                    if(hw_ratio >40 || hw_ratio < 1.5) continue; //宽高比例限制
+                    if(temp.size.area() > 10000 || temp.size.area() < 10) continue; //过大或者过小限制
+                    pre_armor_lamps.push_back(temp);//旋转矩形角度大于45度，则忽略
+
+                }
             }
         }
     }
@@ -128,17 +135,24 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
 //匹配灯管
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
     //权重
-    int angle_diff_weight = 3;
+    // int angle_diff_weight = 3;
     int height_diff_weight = 2;
+    int angle_diff_weight = 5;
+    int height_ratio_weight = 2;
+    int yx_ratio_weight = 3;
     //初始化
     int size = pre_armor_lamps.size();
-    vector<float> diff(size);
-    vector<float> best_match_index(size);
+    vector<float> diff(size,0x3f3f3f3f);
+    vector<float> best_match_index(size,-1);
     //#pragma omp parallel for
-    for(int i=0; i<size; i++){
-        diff[i] = 0x3f3f3f3f;
-        best_match_index[i] = -1;
+    // for(int i=0; i<size; i++){
+    //     diff[i] = 0x3f3f3f3f;
+    //     best_match_index[i] = -1;
+    // }
+    for(int i=0; i<pre_armor_lamps.size(); i++){
+        cout<<pre_armor_lamps.at(i).angle<<" "<<pre_armor_lamps.at(i).size.height<<" "<<pre_armor_lamps.at(i).size.width<<" ---- ";
     }
+    cout<<endl;
     //计算灯管匹配之间的花费
     int dist, avg_height, diff_angle, diff_height, ratio, totalDiff,inside_angle,diff_width;
     int i,j;
@@ -180,7 +194,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             avg_height = (compare.size.height + current.size.height) / 2;
             ratio = dist / avg_height;
             //cout<<"ratio: "<<ratio<<endl;
-            if(ratio > 3 || ratio < 1) continue;
+            if(ratio > 6 || ratio < 1) continue;
             
             totalDiff = angle_diff_weight*diff_angle + height_diff_weight*diff_height;
             if(totalDiff < currDiff){
@@ -221,6 +235,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
         if(x/real_armor_lamps[i].size.height>4){  
             hero_index=i; 
+            pnpSolver.clearPoints3D();
             pnpSolver.pushPoints3D(-115, -47, 0);
             pnpSolver.pushPoints3D(115, -47, 0);
             pnpSolver.pushPoints3D(115, 47, 0);
@@ -289,6 +304,7 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
     // imshow("src",src);
     // waitKey(1);
     if(bestCenter.x!=-1){        
+        
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[0],1));//P1
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[1],1));//P3
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[1],0));//P2
