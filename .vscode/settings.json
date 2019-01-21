@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+        "*.ipp": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "any": "cpp",
+        "system_error": "cpp",
+        "iostream": "cpp",
+        "core": "cpp",
+        "threadpool": "cpp",
+        "specialfunctions": "cpp",
+        "array": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "functional": "cpp"
+    }
+}

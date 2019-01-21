@@ -81,7 +81,7 @@ bool AutoAim::setImage(Mat &img){
     //     }
     // }
     Mat element = getStructuringElement( MORPH_ELLIPSE, Size(1, 3));
-    dilate( diff, diff, element,Point(-1,-1),iteration=4);   
+    dilate( diff, diff, element,Point(-1,-1),4);   
     bitwise_and(Mask, diff, mask);
     /*
     if(enemyColor == color_blue){
@@ -213,8 +213,9 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         if(i+1 >= real_armor_lamps.size()) break;
         int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
         int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
-        if(x/real_armor_lamps[i].height>4){  
+        if(x/real_armor_lamps[i].size.height>4){  
             hero_index=i; 
+            pnpSolver.clearPoints3D();
             pnpSolver.pushPoints3D(-115, -47, 0);
             pnpSolver.pushPoints3D(115, -47, 0);
             pnpSolver.pushPoints3D(115, 47, 0);
@@ -226,15 +227,33 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             lowerIndex = i;
         }
     }
+    if(hero_index!=-1){
+        resizeCount=0;
+        count++;
+        if(real_armor_lamps[hero_index].center.x > real_armor_lamps[hero_index+1].center.x){
+            swap(real_armor_lamps[hero_index],real_armor_lamps[hero_index+1]);//确保偶数为左灯条，奇数为右灯条
+        }
+        int height = (real_armor_lamps[hero_index].size.height + real_armor_lamps[hero_index+1].size.height)/2;
+        //当灯条高度小于10个像素点时放弃锁定，重新寻找合适目标
+        if(height > 10){
+            //cout<<rectROI.x<<" "<<rectROI.y<<endl;
+            bestCenter.x = (real_armor_lamps[hero_index].center.x + real_armor_lamps[hero_index+1].center.x)/2 + rectROI.x;
+            bestCenter.y = (real_armor_lamps[hero_index].center.y + real_armor_lamps[hero_index+1].center.y)/2 + rectROI.y;
+        }else{
+            resetROI();
+            count=0;
+        }
+    }
     //优先锁定图像下方装甲板
-    if(lowerIndex == -1){
+    else if(lowerIndex == -1){
         resizeCount++;
         count=0;
         if(!broadenRect(rectROI) || resizeCount>3){
             resetROI();
             resizeCount = 0;
         }
-    } else {
+    } 
+    else if(lowerIndex != -1) {
         resizeCount = 0; 
         count++;
         //cout<<real_armor_lamps[lowerIndex].x<<"  "<<real_armor_lamps[lowerIndex+1].x<<endl;
@@ -269,7 +288,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         cout<<rectROI.x<<endl;
         if(!makeRectSafe(rectROI)){
             resetROI();
-	}
+	    }
     }
 }
 

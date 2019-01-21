@@ -14,10 +14,10 @@
 #ifndef KALMAN_CSM_H
 #define KALMAN_CSM_H
 #include <Eigen/Dense>
-
+using namespace Eigen;
 #pragma once
 
-class KalmanFilter {
+class KalmanCSMFilter {
 
 public:
 
@@ -29,19 +29,14 @@ public:
   *   R - Measurement noise covariance
   *   P - Estimate error covariance
   */
-  KalmanFilter(
-      double dt,
-      const Eigen::MatrixXd& A,
-      const Eigen::MatrixXd& C,
-      const Eigen::MatrixXd& Q,
-      const Eigen::MatrixXd& R,
-      const Eigen::MatrixXd& P
+  KalmanCSMFilter(
+      double dt
   );
 
   /**
   * Create a blank estimator.
   */
-  KalmanFilter();
+  KalmanCSMFilter();
 
   /**
   * Initialize the filter with initial states as zero.
@@ -51,30 +46,37 @@ public:
   /**
   * Initialize the filter with a guess for initial states.
   */
-  void init(double t0, const Eigen::VectorXd& x0);
+  void init(double t0, const VectorXd& x0);
 
   /**
   * Update the estimated state based on measured values. The
   * time step is assumed to remain constant.
   */
-  void update(const Eigen::VectorXd& y);
+  void update(float y);
 
   /**
   * Update the estimated state based on measured values,
   * using the given time step and dynamics matrix.
   */
-  void update(const Eigen::VectorXd& y, double dt, const Eigen::MatrixXd A);
+  void update(float y, double dt, const MatrixXd A);
 
   /**
   * Return the current state and time.
   */
-  Eigen::VectorXd state() { return x_hat; };
+  VectorXd state() { return x_hat; };
   double time() { return t; };
 
 private:
 
   // Matrices for computation
-  Eigen::MatrixXd A, C, Q, R, P, K, P0;
+  MatrixXd A;
+  MatrixXd C;
+  MatrixXd Q;
+  MatrixXd R;
+  MatrixXd P;
+  MatrixXd K, P0;
+  MatrixXd U;
+  Matrix3d Q_CSM;
 
   // System dimensions
   int m, n;
@@ -84,6 +86,15 @@ private:
 
   // Discrete time step
   double dt;
+  
+  //机动时间常数的倒数
+  double a;
+
+  //自适应方法系数
+  double beta_csm;
+
+  //目标加速度上限
+  double a_max ;
 
   // Is the filter initialized?
   bool initialized;

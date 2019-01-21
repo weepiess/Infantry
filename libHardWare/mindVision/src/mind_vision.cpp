@@ -90,7 +90,6 @@ int MindVision::startPlay(int hCamera_, unsigned char color){
     //设置分辨率，默认是1280*720
     
     setResolution(width, height);
-    cout<<"1"<<endl;
 
     #ifdef DEBUG
     CameraGetImageResolution(hCamera, &tResolution);
