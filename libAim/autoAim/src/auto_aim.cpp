@@ -134,12 +134,23 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
 
 //匹配灯管
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
+    cv::FileStorage f;
+    f = FileStorage("../libAim/res/aimdata.yaml",0); //READ
+
     //权重
+    int height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight,ratio_max,ratio_min;
+    f["height_diff_weight"] >> height_diff_weight;
+    f["angle_diff_weight"] >> angle_diff_weight;
+    f["height_ratio_weight"] >> height_ratio_weight;
+    f["yx_ratio_weight"] >> yx_ratio_weight;
+    f["ratio_max"] >> ratio_max;
+    f["ratio_min"] >> ratio_min;
+    f.release();
     // int angle_diff_weight = 3;
-    int height_diff_weight = 2;
-    int angle_diff_weight = 5;
-    int height_ratio_weight = 2;
-    int yx_ratio_weight = 3;
+    // int height_diff_weight = 2;
+    // int angle_diff_weight = 5;
+    // int height_ratio_weight = 2;
+    // int yx_ratio_weight = 3;
     //初始化
     int size = pre_armor_lamps.size();
     vector<float> diff(size,0x3f3f3f3f);
@@ -194,7 +205,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             avg_height = (compare.size.height + current.size.height) / 2;
             ratio = dist / avg_height;
             //cout<<"ratio: "<<ratio<<endl;
-            if(ratio > 6 || ratio < 1) continue;
+            if(ratio > ratio_max || ratio < ratio_min) continue;
             
             totalDiff = angle_diff_weight*diff_angle + height_diff_weight*diff_height;
             if(totalDiff < currDiff){

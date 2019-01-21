@@ -1,0 +1,8 @@
+%YAML:1.0
+---
+height_diff_weight: 2
+angle_diff_weight: 5
+height_ratio_weight: 2
+yx_ratio_weight: 3
+ratio_max: 6
+ratio_min: 1
