@@ -98,9 +98,9 @@ bool AutoAim::setImage(Mat &img){
     //Canny(mask, mask, 3, 9, 3);
     //imshow("mask", mask);
     //imshow("Mask",Mask);
-    imshow("diff",diff);
+    //imshow("diff",diff);
     //imshow("watchwin",watchwin);
-    waitKey(1);
+    //waitKey(1);
     return true;
 }
 
@@ -138,6 +138,8 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     f = FileStorage("../libAim/res/aimdata.yaml",0); //READ
 
     //权重
+    float yx_ratio;
+    float params_max_height_ratio, params_max_dis_height_ratio, params_min_dis_height_ratio, params_max_allow_angle, params_max_yx_diff_ratio;
     int height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight,ratio_max,ratio_min;
     f["height_diff_weight"] >> height_diff_weight;
     f["angle_diff_weight"] >> angle_diff_weight;
@@ -145,6 +147,11 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     f["yx_ratio_weight"] >> yx_ratio_weight;
     f["ratio_max"] >> ratio_max;
     f["ratio_min"] >> ratio_min;
+    f["params_max_height_ratio"] >> params_max_height_ratio;
+    f["params_max_dis_height_ratio"] >> params_max_dis_height_ratio;
+    f["params_min_dis_height_ratio"] >> params_min_dis_height_ratio;
+    f["params_max_yx_diff_ratio"] >> params_max_yx_diff_ratio;
+    f["params_max_allow_angle"] >> params_max_allow_angle;
     f.release();
     // int angle_diff_weight = 3;
     // int height_diff_weight = 2;
@@ -165,7 +172,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     }
     cout<<endl;
     //计算灯管匹配之间的花费
-    int dist, avg_height, diff_angle, diff_height, ratio, totalDiff,inside_angle,diff_width;
+    float height_ratio,dist, avg_height, diff_angle, diff_height, ratio, totalDiff,inside_angle,diff_width,dis_height_ratio;
     int i,j;
     //#pragma omp parallel for
     for(i=0; i<size; i++){
@@ -177,50 +184,53 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             //计算比例，筛选灯管
             const RotatedRect &compare = pre_armor_lamps[j];
             int theta_compare = compare.angle;
-            
+        
             //灯条角度差超过设定角度忽略
             diff_angle = abs(theta_compare - theta_current);
-            //cout<<"diff_angle"<<diff_angle<<" "<<theta_compare<<" "<<theta_current<<endl;
-            if(diff_angle > param_diff_angle) continue;
+            if(diff_angle > params_max_allow_angle) continue;
 
+            //y差值与x差值超过设定值忽略
+            if(current.center.x - compare.center.x == 0) yx_ratio=100;
+            else yx_ratio = abs(current.center.y-compare.center.y)/abs(current.center.x-compare.center.x);
+            if(yx_ratio > params_max_yx_diff_ratio) continue;
             //内角小于设定角度忽略
-            if(abs(current.center.y - compare.center.y) == 0) inside_angle=90;
-            
-            else inside_angle = atanf(abs(current.center.x-compare.center.x)/abs(current.center.y-compare.center.y))*180/CV_PI;
-            //cout<<"inside"<<inside_angle<<endl;
-            if(inside_angle < param_inside_angle) continue;
-            
-            //两灯条高度比例不在范围内则忽略，用比例代替高度差
-            if(compare.size.height/current.size.height > 1.5 || compare.size.height/current.size.height<0.7) continue;
 
-            //两灯条宽度差超过20个像素点忽略
-            diff_width=abs(compare.size.width - current.size.width);
-            //cout<<"diffwidth"<<diff_width<<endl;
-            if(diff_width>param_diff_width) continue;
+            //两灯条高度比例不在范围内则忽略
+             if(compare.size.height > current.size.height)
+                height_ratio = compare.size.height*1.0f/current.size.height;
+            else
+                height_ratio = current.size.height*1.0f/compare.size.height;
+            //LOG_INFO<<height_ratio;
+            if(height_ratio > params_max_height_ratio) continue;
+            //LOG_INFO<<"height_ratio";
 
+            //灯条之间的距离与灯条的平均长度之比需要在一定范围之内
             dist = ImageTool::calc2PointApproDistance(compare.center, current.center);
-            //cout<<"dist"<<dist<<endl;
-            //灯条间距小于20个像素点忽略
-            if(dist < 20) continue;
             avg_height = (compare.size.height + current.size.height) / 2;
-            ratio = dist / avg_height;
-            //cout<<"ratio: "<<ratio<<endl;
-            if(ratio > ratio_max || ratio < ratio_min) continue;
-            
-            totalDiff = angle_diff_weight*diff_angle + height_diff_weight*diff_height;
-            if(totalDiff < currDiff){
-                currDiff = totalDiff;
-                currIndex = j;
-            }
-        }
+            dis_height_ratio = dist / avg_height;
+            //LOG_INFO<<dis_height_ratio;
+            if(dis_height_ratio > params_max_dis_height_ratio || dis_height_ratio < params_min_dis_height_ratio) continue;
+            //角度差约束会在几度之内，高度比例约束会在1到1.x之内，内角约束大致在几十度到90度(目前70-90)，
+            //实际上用90度减去角度应该在0-几十度之内，且越小越好
+            //用归一化的值算最后的花费，避免不同值的取值范围不同
+            totalDiff = angle_diff_weight * (diff_angle/params_max_allow_angle) //角度花费
+                        + height_ratio_weight * ((height_ratio-1)/(params_max_height_ratio-1)) //高度比例花费
+                        + yx_ratio_weight * (yx_ratio/params_max_yx_diff_ratio); //内角花费
 
-        //一对灯管肯定花费是最少的，所以如果当前花费比两个的花费都要少，就记录是最优
+              //更新j代表的灯条的最小花费
+            if(diff.at(j) > totalDiff)
+                diff.at(j) = totalDiff;
+
+            //更新i代表的当前灯条的最优匹配
+            if(diff.at(i) > totalDiff){
+                diff.at(i) = totalDiff;
+                currIndex = j;
+            }            
+        }
         if(currIndex==-1) continue;
-        if(currDiff < diff[i] && currDiff < diff[currIndex]){
-            diff[i] = currDiff;
-            diff[currIndex] = currDiff;
-            best_match_index[i] = currIndex;
-            best_match_index[currIndex] = i;
+        else {
+            best_match_index.at(i) = currIndex;
+            best_match_index.at(currIndex) = i;
         }
     }
     //#pragma omp parallel for
