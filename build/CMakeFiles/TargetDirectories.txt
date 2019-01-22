@@ -29,3 +29,8 @@
 /home/weepies/RM/INF/build/libAim/markAim/CMakeFiles/edit_cache.dir
 /home/weepies/RM/INF/build/libAim/markAim/CMakeFiles/MarkAim.dir
 /home/weepies/RM/INF/build/libAim/markAim/CMakeFiles/rebuild_cache.dir
+/home/weepies/RM/INF/build/unit_test/CMakeFiles/edit_cache.dir
+/home/weepies/RM/INF/build/unit_test/CMakeFiles/rebuild_cache.dir
+/home/weepies/RM/INF/build/unit_test/aim_test/CMakeFiles/edit_cache.dir
+/home/weepies/RM/INF/build/unit_test/aim_test/CMakeFiles/aim_test.dir
+/home/weepies/RM/INF/build/unit_test/aim_test/CMakeFiles/rebuild_cache.dir

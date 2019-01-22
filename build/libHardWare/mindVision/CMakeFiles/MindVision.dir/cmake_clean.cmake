@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o"
   "CMakeFiles/MindVision.dir/src/mind_vision.cpp.o"
   "libMindVision.pdb"
   "libMindVision.a"

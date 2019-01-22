@@ -27,7 +27,6 @@ public:
     void set_parameters(int angle,int inside_angle, int height, int width);
     Rect armor;
 
-
 private:
 
     void resetROI();

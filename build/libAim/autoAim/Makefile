@@ -125,6 +125,33 @@ AutoAim/fast:
 	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/build
 .PHONY : AutoAim/fast
 
+src/Kalman_CSM.o: src/Kalman_CSM.cpp.o
+
+.PHONY : src/Kalman_CSM.o
+
+# target to build an object file
+src/Kalman_CSM.cpp.o:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o
+.PHONY : src/Kalman_CSM.cpp.o
+
+src/Kalman_CSM.i: src/Kalman_CSM.cpp.i
+
+.PHONY : src/Kalman_CSM.i
+
+# target to preprocess a source file
+src/Kalman_CSM.cpp.i:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.i
+.PHONY : src/Kalman_CSM.cpp.i
+
+src/Kalman_CSM.s: src/Kalman_CSM.cpp.s
+
+.PHONY : src/Kalman_CSM.s
+
+# target to generate assembly for a file
+src/Kalman_CSM.cpp.s:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.s
+.PHONY : src/Kalman_CSM.cpp.s
+
 src/aim_predict.o: src/aim_predict.cpp.o
 
 .PHONY : src/aim_predict.o
@@ -215,6 +242,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... AutoAim"
 	@echo "... rebuild_cache"
+	@echo "... src/Kalman_CSM.o"
+	@echo "... src/Kalman_CSM.i"
+	@echo "... src/Kalman_CSM.s"
 	@echo "... src/aim_predict.o"
 	@echo "... src/aim_predict.i"
 	@echo "... src/aim_predict.s"

@@ -1,5 +1,6 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "dense": "cpp",
         "future": "cpp",
         "cholesky": "cpp",
@@ -22,10 +23,17 @@
         "condition_variable": "cpp",
         "cstdint": "cpp",
         "cwctype": "cpp",
+=======
+        "*.ipp": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "*.tcc": "cpp",
+>>>>>>> 3512af706918beabf795b53a0b7a69bc4ef5bd80
         "deque": "cpp",
         "list": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
+<<<<<<< HEAD
         "exception": "cpp",
         "fstream": "cpp",
         "functional": "cpp",
@@ -59,5 +67,17 @@
         "forward_list": "cpp",
         "variant": "cpp",
         "algorithm": "cpp"
+=======
+        "any": "cpp",
+        "system_error": "cpp",
+        "iostream": "cpp",
+        "core": "cpp",
+        "threadpool": "cpp",
+        "specialfunctions": "cpp",
+        "array": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "functional": "cpp"
+>>>>>>> 3512af706918beabf795b53a0b7a69bc4ef5bd80
     }
 }

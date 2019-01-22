@@ -152,6 +152,33 @@ src/mind_vision.cpp.s:
 	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.s
 .PHONY : src/mind_vision.cpp.s
 
+src/mind_vision_thread.o: src/mind_vision_thread.cpp.o
+
+.PHONY : src/mind_vision_thread.o
+
+# target to build an object file
+src/mind_vision_thread.cpp.o:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o
+.PHONY : src/mind_vision_thread.cpp.o
+
+src/mind_vision_thread.i: src/mind_vision_thread.cpp.i
+
+.PHONY : src/mind_vision_thread.i
+
+# target to preprocess a source file
+src/mind_vision_thread.cpp.i:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.i
+.PHONY : src/mind_vision_thread.cpp.i
+
+src/mind_vision_thread.s: src/mind_vision_thread.cpp.s
+
+.PHONY : src/mind_vision_thread.s
+
+# target to generate assembly for a file
+src/mind_vision_thread.cpp.s:
+	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.s
+.PHONY : src/mind_vision_thread.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -164,6 +191,9 @@ help:
 	@echo "... src/mind_vision.o"
 	@echo "... src/mind_vision.i"
 	@echo "... src/mind_vision.s"
+	@echo "... src/mind_vision_thread.o"
+	@echo "... src/mind_vision_thread.i"
+	@echo "... src/mind_vision_thread.s"
 .PHONY : help
 
 

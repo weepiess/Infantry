@@ -129,11 +129,36 @@ libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o.provides: libAim/aut
 libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o.provides.build: libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o
 
 
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o: libAim/autoAim/CMakeFiles/AutoAim.dir/flags.make
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o: ../libAim/autoAim/src/Kalman_CSM.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o"
+	cd /home/weepies/RM/INF/build/libAim/autoAim && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o -c /home/weepies/RM/INF/libAim/autoAim/src/Kalman_CSM.cpp
+
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.i"
+	cd /home/weepies/RM/INF/build/libAim/autoAim && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libAim/autoAim/src/Kalman_CSM.cpp > CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.i
+
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.s"
+	cd /home/weepies/RM/INF/build/libAim/autoAim && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libAim/autoAim/src/Kalman_CSM.cpp -o CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.s
+
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.requires:
+
+.PHONY : libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.requires
+
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.provides: libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.requires
+	$(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.provides.build
+.PHONY : libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.provides
+
+libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.provides.build: libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o
+
+
 # Object files for target AutoAim
 AutoAim_OBJECTS = \
 "CMakeFiles/AutoAim.dir/src/auto_aim.cpp.o" \
 "CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.o" \
-"CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o"
+"CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o" \
+"CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o"
 
 # External object files for target AutoAim
 AutoAim_EXTERNAL_OBJECTS =
@@ -141,9 +166,10 @@ AutoAim_EXTERNAL_OBJECTS =
 libAim/autoAim/libAutoAim.a: libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.o
 libAim/autoAim/libAutoAim.a: libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.o
 libAim/autoAim/libAutoAim.a: libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o
+libAim/autoAim/libAutoAim.a: libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o
 libAim/autoAim/libAutoAim.a: libAim/autoAim/CMakeFiles/AutoAim.dir/build.make
 libAim/autoAim/libAutoAim.a: libAim/autoAim/CMakeFiles/AutoAim.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libAutoAim.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libAutoAim.a"
 	cd /home/weepies/RM/INF/build/libAim/autoAim && $(CMAKE_COMMAND) -P CMakeFiles/AutoAim.dir/cmake_clean_target.cmake
 	cd /home/weepies/RM/INF/build/libAim/autoAim && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/AutoAim.dir/link.txt --verbose=$(VERBOSE)
 
@@ -155,6 +181,7 @@ libAim/autoAim/CMakeFiles/AutoAim.dir/build: libAim/autoAim/libAutoAim.a
 libAim/autoAim/CMakeFiles/AutoAim.dir/requires: libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.o.requires
 libAim/autoAim/CMakeFiles/AutoAim.dir/requires: libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.o.requires
 libAim/autoAim/CMakeFiles/AutoAim.dir/requires: libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o.requires
+libAim/autoAim/CMakeFiles/AutoAim.dir/requires: libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o.requires
 
 .PHONY : libAim/autoAim/CMakeFiles/AutoAim.dir/requires
 

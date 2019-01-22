@@ -1,3 +1,5 @@
 include_directories(./include)
+include_directories(${PROJECT_SOURCE_DIR}/libBase/include)
 AUX_SOURCE_DIRECTORY(./src MINDVISION_SRCS)
 ADD_LIBRARY(MindVision ${MINDVISION_SRCS})
+target_link_libraries(MindVision BaseClasses)

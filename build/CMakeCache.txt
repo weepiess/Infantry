@@ -186,8 +186,8 @@ GLOG_LIBRARY:FILEPATH=/usr/local/lib/libglog.so
 //Dependencies for target
 MarkAim_LIB_DEPENDS:STATIC=
 
-//Dependencies for target
-MindVision_LIB_DEPENDS:STATIC=
+//Dependencies for the target
+MindVision_LIB_DEPENDS:STATIC=general;BaseClasses;
 
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/local/share/OpenCV
@@ -203,6 +203,12 @@ SerialPort_LIB_DEPENDS:STATIC=
 
 //Dependencies for the target
 UsbCapture_LIB_DEPENDS:STATIC=general;BaseClasses;
+
+//Value Computed by CMake
+aim_test_BINARY_DIR:STATIC=/home/weepies/RM/INF/build/unit_test/aim_test
+
+//Value Computed by CMake
+aim_test_SOURCE_DIR:STATIC=/home/weepies/RM/INF/unit_test/aim_test
 
 //Value Computed by CMake
 zimiao_BINARY_DIR:STATIC=/home/weepies/RM/INF/build
@@ -301,7 +307,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=13
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

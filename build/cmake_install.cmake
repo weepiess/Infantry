@@ -37,6 +37,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/weepies/RM/INF/build/libBase/cmake_install.cmake")
   include("/home/weepies/RM/INF/build/libHardWare/cmake_install.cmake")
   include("/home/weepies/RM/INF/build/libAim/cmake_install.cmake")
+  include("/home/weepies/RM/INF/build/unit_test/cmake_install.cmake")
 
 endif()
 

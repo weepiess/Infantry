@@ -6,5 +6,5 @@ CXX_FLAGS =  -fopenmp   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/include/glog -I/home/weepies/RM/INF/include -I/home/weepies/RM/INF/libHardWare/serialPort/include -I/home/weepies/RM/INF/libHardWare/usbCapture/include -I/home/weepies/RM/INF/libHardWare/mindVision/include -I/home/weepies/RM/INF/libAim/include -I/home/weepies/RM/INF/libAim/autoAim/include -I/home/weepies/RM/INF/libAim/markAim/include -I/home/weepies/RM/INF/libBase/baseClasses/include -I/home/weepies/RM/INF/libBase/baseTools/include -I/home/weepies/RM/INF/libHardWare/mindVision/./include 
+CXX_INCLUDES = -I/usr/local/include/glog -I/home/weepies/RM/INF/include -I/home/weepies/RM/INF/libHardWare/serialPort/include -I/home/weepies/RM/INF/libHardWare/usbCapture/include -I/home/weepies/RM/INF/libHardWare/mindVision/include -I/home/weepies/RM/INF/libAim/include -I/home/weepies/RM/INF/libAim/autoAim/include -I/home/weepies/RM/INF/libAim/markAim/include -I/home/weepies/RM/INF/libBase/baseClasses/include -I/home/weepies/RM/INF/libBase/baseTools/include -I/home/weepies/RM/INF/libHardWare/mindVision/./include -I/home/weepies/RM/INF/libBase/include 
 

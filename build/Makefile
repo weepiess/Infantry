@@ -227,6 +227,19 @@ MarkAim/fast:
 	$(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/build
 .PHONY : MarkAim/fast
 
+#=============================================================================
+# Target rules for targets named aim_test
+
+# Build rule for target.
+aim_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 aim_test
+.PHONY : aim_test
+
+# fast build rule for target.
+aim_test/fast:
+	$(MAKE) -f unit_test/aim_test/CMakeFiles/aim_test.dir/build.make unit_test/aim_test/CMakeFiles/aim_test.dir/build
+.PHONY : aim_test/fast
+
 src/control_model.o: src/control_model.cpp.o
 
 .PHONY : src/control_model.o
@@ -352,6 +365,7 @@ help:
 	@echo "... BaseAim"
 	@echo "... AutoAim"
 	@echo "... MarkAim"
+	@echo "... aim_test"
 	@echo "... src/control_model.o"
 	@echo "... src/control_model.i"
 	@echo "... src/control_model.s"

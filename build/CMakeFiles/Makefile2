@@ -73,7 +73,7 @@ CMakeFiles/example.dir/all: libAim/autoAim/CMakeFiles/AutoAim.dir/all
 CMakeFiles/example.dir/all: libAim/markAim/CMakeFiles/MarkAim.dir/all
 	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/depend
 	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=27,28,29,30,31 "Built target example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=31,32,33,34,35 "Built target example"
 .PHONY : CMakeFiles/example.dir/all
 
 # Include target in all.
@@ -83,7 +83,7 @@ all: CMakeFiles/example.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/example.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 31
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 33
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/example.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
 .PHONY : CMakeFiles/example.dir/rule
@@ -149,7 +149,7 @@ libBase/baseClasses/preinstall:
 libBase/baseClasses/CMakeFiles/BaseClasses.dir/all:
 	$(MAKE) -f libBase/baseClasses/CMakeFiles/BaseClasses.dir/build.make libBase/baseClasses/CMakeFiles/BaseClasses.dir/depend
 	$(MAKE) -f libBase/baseClasses/CMakeFiles/BaseClasses.dir/build.make libBase/baseClasses/CMakeFiles/BaseClasses.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=7,8,9 "Built target BaseClasses"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=8,9,10 "Built target BaseClasses"
 .PHONY : libBase/baseClasses/CMakeFiles/BaseClasses.dir/all
 
 # Include target in all.
@@ -204,7 +204,7 @@ libBase/baseTools/preinstall:
 libBase/baseTools/CMakeFiles/BaseTools.dir/all:
 	$(MAKE) -f libBase/baseTools/CMakeFiles/BaseTools.dir/build.make libBase/baseTools/CMakeFiles/BaseTools.dir/depend
 	$(MAKE) -f libBase/baseTools/CMakeFiles/BaseTools.dir/build.make libBase/baseTools/CMakeFiles/BaseTools.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=10,11,12,13 "Built target BaseTools"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=11,12,13,14 "Built target BaseTools"
 .PHONY : libBase/baseTools/CMakeFiles/BaseTools.dir/all
 
 # Include target in all.
@@ -283,7 +283,7 @@ libHardWare/serialPort/preinstall:
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/all:
 	$(MAKE) -f libHardWare/serialPort/CMakeFiles/SerialPort.dir/build.make libHardWare/serialPort/CMakeFiles/SerialPort.dir/depend
 	$(MAKE) -f libHardWare/serialPort/CMakeFiles/SerialPort.dir/build.make libHardWare/serialPort/CMakeFiles/SerialPort.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=18,19,20,21,22 "Built target SerialPort"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=20,21,22,23,24 "Built target SerialPort"
 .PHONY : libHardWare/serialPort/CMakeFiles/SerialPort.dir/all
 
 # Include target in all.
@@ -338,7 +338,7 @@ libHardWare/usbCapture/preinstall:
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/all: libBase/baseClasses/CMakeFiles/BaseClasses.dir/all
 	$(MAKE) -f libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/build.make libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/depend
 	$(MAKE) -f libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/build.make libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=23,24,25,26 "Built target UsbCapture"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=25,26,27,28 "Built target UsbCapture"
 .PHONY : libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/all
 
 # Include target in all.
@@ -390,10 +390,10 @@ libHardWare/mindVision/preinstall:
 # Target rules for target libHardWare/mindVision/CMakeFiles/MindVision.dir
 
 # All Build rule for target.
-libHardWare/mindVision/CMakeFiles/MindVision.dir/all:
+libHardWare/mindVision/CMakeFiles/MindVision.dir/all: libBase/baseClasses/CMakeFiles/BaseClasses.dir/all
 	$(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/depend
 	$(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=16,17 "Built target MindVision"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=17,18,19 "Built target MindVision"
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/all
 
 # Include target in all.
@@ -403,7 +403,7 @@ all: libHardWare/mindVision/CMakeFiles/MindVision.dir/all
 
 # Build rule for subdir invocation for target.
 libHardWare/mindVision/CMakeFiles/MindVision.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/CMakeFiles/MindVision.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/rule
@@ -453,7 +453,7 @@ libAim/preinstall: libAim/markAim/preinstall
 libAim/CMakeFiles/BaseAim.dir/all:
 	$(MAKE) -f libAim/CMakeFiles/BaseAim.dir/build.make libAim/CMakeFiles/BaseAim.dir/depend
 	$(MAKE) -f libAim/CMakeFiles/BaseAim.dir/build.make libAim/CMakeFiles/BaseAim.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=5,6 "Built target BaseAim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=6,7 "Built target BaseAim"
 .PHONY : libAim/CMakeFiles/BaseAim.dir/all
 
 # Include target in all.
@@ -508,7 +508,7 @@ libAim/autoAim/preinstall:
 libAim/autoAim/CMakeFiles/AutoAim.dir/all: libAim/CMakeFiles/BaseAim.dir/all
 	$(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/depend
 	$(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=1,2,3,4 "Built target AutoAim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target AutoAim"
 .PHONY : libAim/autoAim/CMakeFiles/AutoAim.dir/all
 
 # Include target in all.
@@ -518,7 +518,7 @@ all: libAim/autoAim/CMakeFiles/AutoAim.dir/all
 
 # Build rule for subdir invocation for target.
 libAim/autoAim/CMakeFiles/AutoAim.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 7
 	$(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/CMakeFiles/AutoAim.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
 .PHONY : libAim/autoAim/CMakeFiles/AutoAim.dir/rule
@@ -563,7 +563,7 @@ libAim/markAim/preinstall:
 libAim/markAim/CMakeFiles/MarkAim.dir/all:
 	$(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/depend
 	$(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=14,15 "Built target MarkAim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=15,16 "Built target MarkAim"
 .PHONY : libAim/markAim/CMakeFiles/MarkAim.dir/all
 
 # Include target in all.
@@ -590,6 +590,83 @@ libAim/markAim/CMakeFiles/MarkAim.dir/clean:
 
 # clean rule for target.
 clean: libAim/markAim/CMakeFiles/MarkAim.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory unit_test
+
+# Convenience name for "all" pass in the directory.
+unit_test/all: unit_test/aim_test/all
+
+.PHONY : unit_test/all
+
+# Convenience name for "clean" pass in the directory.
+unit_test/clean: unit_test/aim_test/clean
+
+.PHONY : unit_test/clean
+
+# Convenience name for "preinstall" pass in the directory.
+unit_test/preinstall: unit_test/aim_test/preinstall
+
+.PHONY : unit_test/preinstall
+
+#=============================================================================
+# Directory level rules for directory unit_test/aim_test
+
+# Convenience name for "all" pass in the directory.
+unit_test/aim_test/all: unit_test/aim_test/CMakeFiles/aim_test.dir/all
+
+.PHONY : unit_test/aim_test/all
+
+# Convenience name for "clean" pass in the directory.
+unit_test/aim_test/clean: unit_test/aim_test/CMakeFiles/aim_test.dir/clean
+
+.PHONY : unit_test/aim_test/clean
+
+# Convenience name for "preinstall" pass in the directory.
+unit_test/aim_test/preinstall:
+
+.PHONY : unit_test/aim_test/preinstall
+
+#=============================================================================
+# Target rules for target unit_test/aim_test/CMakeFiles/aim_test.dir
+
+# All Build rule for target.
+unit_test/aim_test/CMakeFiles/aim_test.dir/all: libBase/baseClasses/CMakeFiles/BaseClasses.dir/all
+unit_test/aim_test/CMakeFiles/aim_test.dir/all: libBase/baseTools/CMakeFiles/BaseTools.dir/all
+unit_test/aim_test/CMakeFiles/aim_test.dir/all: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/all
+unit_test/aim_test/CMakeFiles/aim_test.dir/all: libAim/CMakeFiles/BaseAim.dir/all
+unit_test/aim_test/CMakeFiles/aim_test.dir/all: libAim/autoAim/CMakeFiles/AutoAim.dir/all
+	$(MAKE) -f unit_test/aim_test/CMakeFiles/aim_test.dir/build.make unit_test/aim_test/CMakeFiles/aim_test.dir/depend
+	$(MAKE) -f unit_test/aim_test/CMakeFiles/aim_test.dir/build.make unit_test/aim_test/CMakeFiles/aim_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=29,30 "Built target aim_test"
+.PHONY : unit_test/aim_test/CMakeFiles/aim_test.dir/all
+
+# Include target in all.
+all: unit_test/aim_test/CMakeFiles/aim_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+unit_test/aim_test/CMakeFiles/aim_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 20
+	$(MAKE) -f CMakeFiles/Makefile2 unit_test/aim_test/CMakeFiles/aim_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
+.PHONY : unit_test/aim_test/CMakeFiles/aim_test.dir/rule
+
+# Convenience name for target.
+aim_test: unit_test/aim_test/CMakeFiles/aim_test.dir/rule
+
+.PHONY : aim_test
+
+# clean rule for target.
+unit_test/aim_test/CMakeFiles/aim_test.dir/clean:
+	$(MAKE) -f unit_test/aim_test/CMakeFiles/aim_test.dir/build.make unit_test/aim_test/CMakeFiles/aim_test.dir/clean
+.PHONY : unit_test/aim_test/CMakeFiles/aim_test.dir/clean
+
+# clean rule for target.
+clean: unit_test/aim_test/CMakeFiles/aim_test.dir/clean
 
 .PHONY : clean
 

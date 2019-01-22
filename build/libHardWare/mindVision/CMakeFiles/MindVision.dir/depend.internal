@@ -10,3 +10,10 @@ libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o
  ../libHardWare/mindVision/include/CameraStatus.h
  ../libHardWare/mindVision/include/mind_vision.h
  /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision.cpp
+libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o
+ ../libBase/baseClasses/include/base_thread.h
+ ../libHardWare/mindVision/include/CameraApi.h
+ ../libHardWare/mindVision/include/CameraDefine.h
+ ../libHardWare/mindVision/include/CameraStatus.h
+ ../libHardWare/mindVision/include/mind_vision_thread.h
+ /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision_thread.cpp

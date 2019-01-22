@@ -24,7 +24,12 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../libHardWare/mindVision/CMakeLists.txt"
   "../libHardWare/serialPort/CMakeLists.txt"
   "../libHardWare/usbCapture/CMakeLists.txt"
+  "../unit_test/CMakeLists.txt"
+  "../unit_test/aim_test/CMakeLists.txt"
   "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig-version.cmake"
+  "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig.cmake"
+  "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules-release.cmake"
+  "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules.cmake"
   "/usr/local/share/OpenCV/OpenCVConfig-version.cmake"
   "/usr/local/share/OpenCV/OpenCVConfig.cmake"
   "/usr/local/share/OpenCV/OpenCVModules-release.cmake"
@@ -138,6 +143,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "libAim/CMakeFiles/CMakeDirectoryInformation.cmake"
   "libAim/autoAim/CMakeFiles/CMakeDirectoryInformation.cmake"
   "libAim/markAim/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "unit_test/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "unit_test/aim_test/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -151,4 +158,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "libAim/CMakeFiles/BaseAim.dir/DependInfo.cmake"
   "libAim/autoAim/CMakeFiles/AutoAim.dir/DependInfo.cmake"
   "libAim/markAim/CMakeFiles/MarkAim.dir/DependInfo.cmake"
+  "unit_test/aim_test/CMakeFiles/aim_test.dir/DependInfo.cmake"
   )
