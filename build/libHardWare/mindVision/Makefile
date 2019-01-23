@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles /home/weepies/RM/INF/build/libHardWare/mindVision/CMakeFiles/progress.marks
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/inf/Aim/build/CMakeFiles /home/weepies/inf/Aim/build/libHardWare/mindVision/CMakeFiles/progress.marks
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/inf/Aim/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/clean
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/preinstall
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/preinstall
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 libHardWare/mindVision/CMakeFiles/MindVision.dir/rule:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/CMakeFiles/MindVision.dir/rule
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libHardWare/mindVision/CMakeFiles/MindVision.dir/rule
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ MindVision: libHardWare/mindVision/CMakeFiles/MindVision.dir/rule
 
 # fast build rule for target.
 MindVision/fast:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/build
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/build
 .PHONY : MindVision/fast
 
 src/mind_vision.o: src/mind_vision.cpp.o
@@ -131,7 +131,7 @@ src/mind_vision.o: src/mind_vision.cpp.o
 
 # target to build an object file
 src/mind_vision.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o
 .PHONY : src/mind_vision.cpp.o
 
 src/mind_vision.i: src/mind_vision.cpp.i
@@ -140,7 +140,7 @@ src/mind_vision.i: src/mind_vision.cpp.i
 
 # target to preprocess a source file
 src/mind_vision.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.i
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.i
 .PHONY : src/mind_vision.cpp.i
 
 src/mind_vision.s: src/mind_vision.cpp.s
@@ -149,35 +149,8 @@ src/mind_vision.s: src/mind_vision.cpp.s
 
 # target to generate assembly for a file
 src/mind_vision.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.s
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.s
 .PHONY : src/mind_vision.cpp.s
-
-src/mind_vision_thread.o: src/mind_vision_thread.cpp.o
-
-.PHONY : src/mind_vision_thread.o
-
-# target to build an object file
-src/mind_vision_thread.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o
-.PHONY : src/mind_vision_thread.cpp.o
-
-src/mind_vision_thread.i: src/mind_vision_thread.cpp.i
-
-.PHONY : src/mind_vision_thread.i
-
-# target to preprocess a source file
-src/mind_vision_thread.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.i
-.PHONY : src/mind_vision_thread.cpp.i
-
-src/mind_vision_thread.s: src/mind_vision_thread.cpp.s
-
-.PHONY : src/mind_vision_thread.s
-
-# target to generate assembly for a file
-src/mind_vision_thread.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.s
-.PHONY : src/mind_vision_thread.cpp.s
 
 # Help Target
 help:
@@ -191,9 +164,6 @@ help:
 	@echo "... src/mind_vision.o"
 	@echo "... src/mind_vision.i"
 	@echo "... src/mind_vision.s"
-	@echo "... src/mind_vision_thread.o"
-	@echo "... src/mind_vision_thread.i"
-	@echo "... src/mind_vision_thread.s"
 .PHONY : help
 
 
@@ -205,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

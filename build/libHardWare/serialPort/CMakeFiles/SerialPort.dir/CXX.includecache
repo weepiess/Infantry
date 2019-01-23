@@ -44,23 +44,23 @@ serial_interface.h
 serial_packet.h
 ../libHardWare/serialPort/include/serial_packet.h
 
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_interface.cpp
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_interface.cpp
 serial_interface.h
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_interface.h
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_interface.h
 
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_packet.cpp
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_packet.cpp
 cstring
 -
 serial_packet.h
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_packet.h
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_packet.h
 
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_port.cpp
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port.cpp
 sstream
 -
 serial_port.h
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_port.h
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port.h
 
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_port_debug.cpp
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port_debug.cpp
 serial_port_debug.h
-/home/weepies/RM/INF/libHardWare/serialPort/src/serial_port_debug.h
+/home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port_debug.h
 

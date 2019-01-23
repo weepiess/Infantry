@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF/libHardWare/usbCapture
+# Install script for directory: /home/weepies/inf/Aim/libHardWare/usbCapture
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

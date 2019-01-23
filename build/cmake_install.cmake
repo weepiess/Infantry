@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF
+# Install script for directory: /home/weepies/inf/Aim
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,10 +34,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/weepies/RM/INF/build/libBase/cmake_install.cmake")
-  include("/home/weepies/RM/INF/build/libHardWare/cmake_install.cmake")
-  include("/home/weepies/RM/INF/build/libAim/cmake_install.cmake")
-  include("/home/weepies/RM/INF/build/unit_test/cmake_install.cmake")
+  include("/home/weepies/inf/Aim/build/libBase/cmake_install.cmake")
+  include("/home/weepies/inf/Aim/build/libHardWare/cmake_install.cmake")
+  include("/home/weepies/inf/Aim/build/libAim/cmake_install.cmake")
 
 endif()
 
@@ -49,5 +48,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/weepies/RM/INF/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/weepies/inf/Aim/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

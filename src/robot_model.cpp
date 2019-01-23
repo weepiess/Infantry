@@ -27,7 +27,6 @@ RobotModel::~RobotModel() {
 
 int RobotModel::init(){
     string serialPath,videoPath;
-    setUseOptimized(true);
     //配置文件
     cv::FileStorage f("../res/main_config.yaml", cv::FileStorage::READ);
     f["robot_id"] >> mRobotId;//机器人id
@@ -36,16 +35,17 @@ int RobotModel::init(){
     f["enemy_is_red"] >> mEnemyIsRed;//自瞄敌方颜色
     f.release();
     //初始化串口
-    // if(mSerialInterface.init("/dev/ttyUSB0")==0) {
-    //     cout<<"[robot model init ]: RobotSerialInterface init successed!"<<endl;
-    //     //mSerialPort.ShowParam();
-    // } else{
-    //     cout<<"[robot model init ]: RobotSerialInterface init failed!"<<endl;
-    // }
+    if(mSerialInterface.init("/dev/ttyUSB0")==0) {
+        cout<<"[robot model init ]: RobotSerialInterface init successed!"<<endl;
+        //mSerialPort.ShowParam();
+    } else{
+        cout<<"[robot model init ]: RobotSerialInterface init failed!"<<endl;
+    }
 
-    
+    hCamera = mVision.init();
+    cout<<hCamera<<endl;
     if(hCamera!=-1){
-        hCamera = mVision.init(mEnemyIsRed);
+        mVision.startPlay(hCamera, mEnemyIsRed);
         cout << "[robot model init ]:UsbCapture init successed!" <<endl;
         usleep(1000000);//等待1s
     }else{
@@ -67,7 +67,6 @@ int RobotModel::init(){
     //     cout << "[robot model init ]:UsbCapture Assist init failed!" <<endl;
     // }
     mCurrentMode=ROBOT_MODE_MARKAIM;
-    return 0;
 
 }
 

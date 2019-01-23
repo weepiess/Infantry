@@ -6,29 +6,17 @@
 
 #IncludeRegexTransform: 
 
-../libAim/autoAim/include/Kalman_CSM.h
-Eigen/Dense
--
-
 ../libAim/autoAim/include/aim_predict.h
 kalman_filter_by_opencv.h
 ../libAim/autoAim/include/kalman_filter_by_opencv.h
 opencv2/opencv.hpp
 ../libAim/autoAim/include/opencv2/opencv.hpp
-vector
--
-numeric
--
-functional
--
 
 ../libAim/autoAim/include/auto_aim.h
 opencv2/opencv.hpp
 -
 base_aim.h
 ../libAim/autoAim/include/base_aim.h
-basic_tool.h
-../libAim/autoAim/include/basic_tool.h
 time.h
 ../libAim/autoAim/include/time.h
 aim_predict.h
@@ -60,10 +48,6 @@ iostream
 pthread.h
 -
 
-../libBase/baseTools/include/basic_tool.h
-sys/time.h
--
-
 ../libBase/baseTools/include/image_tool.h
 opencv2/opencv.hpp
 ../libBase/baseTools/include/opencv2/opencv.hpp
@@ -84,37 +68,21 @@ opencv2/opencv.hpp
 base_thread.h
 ../libHardWare/usbCapture/include/base_thread.h
 
-/home/weepies/RM/INF/libAim/autoAim/src/Kalman_CSM.cpp
-iostream
--
-stdexcept
--
-Kalman_CSM.h
-/home/weepies/RM/INF/libAim/autoAim/src/Kalman_CSM.h
-emmintrin.h
-/home/weepies/RM/INF/libAim/autoAim/src/emmintrin.h
-tmmintrin.h
-/home/weepies/RM/INF/libAim/autoAim/src/tmmintrin.h
-immintrin.h
--
-
-/home/weepies/RM/INF/libAim/autoAim/src/aim_predict.cpp
+/home/weepies/inf/Aim/libAim/autoAim/src/aim_predict.cpp
 aim_predict.h
-/home/weepies/RM/INF/libAim/autoAim/src/aim_predict.h
+/home/weepies/inf/Aim/libAim/autoAim/src/aim_predict.h
 
-/home/weepies/RM/INF/libAim/autoAim/src/auto_aim.cpp
+/home/weepies/inf/Aim/libAim/autoAim/src/auto_aim.cpp
 auto_aim.h
-/home/weepies/RM/INF/libAim/autoAim/src/auto_aim.h
+/home/weepies/inf/Aim/libAim/autoAim/src/auto_aim.h
 string
 -
 iostream
 -
 algorithm
 -
-omp.h
-/home/weepies/RM/INF/libAim/autoAim/src/omp.h
 
-/home/weepies/RM/INF/libAim/autoAim/src/kalman_filter_by_opencv.cpp
+/home/weepies/inf/Aim/libAim/autoAim/src/kalman_filter_by_opencv.cpp
 kalman_filter_by_opencv.h
-/home/weepies/RM/INF/libAim/autoAim/src/kalman_filter_by_opencv.h
+/home/weepies/inf/Aim/libAim/autoAim/src/kalman_filter_by_opencv.h
 

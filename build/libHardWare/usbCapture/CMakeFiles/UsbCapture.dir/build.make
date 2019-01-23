@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 # Include any dependencies generated for this target.
 include libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/depend.make
@@ -59,16 +59,16 @@ include libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/flags.make
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/flags.make
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o: ../libHardWare/usbCapture/src/usb_capture_with_thread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o -c /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture_with_thread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o -c /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture_with_thread.cpp
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture_with_thread.cpp > CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture_with_thread.cpp > CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.i
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture_with_thread.cpp -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture_with_thread.cpp -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.s
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp.o.requires:
 
@@ -83,16 +83,16 @@ libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_thread.cpp
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/flags.make
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o: ../libHardWare/usbCapture/src/usb_capture_with_opencv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o -c /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture_with_opencv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o -c /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture_with_opencv.cpp
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture_with_opencv.cpp > CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture_with_opencv.cpp > CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.i
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture_with_opencv.cpp -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture_with_opencv.cpp -o CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.s
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp.o.requires:
 
@@ -107,16 +107,16 @@ libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture_with_opencv.cpp
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/flags.make
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o: ../libHardWare/usbCapture/src/usb_capture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o -c /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o -c /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture.cpp
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture.cpp > CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture.cpp > CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.i
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/usbCapture/src/usb_capture.cpp -o CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/usbCapture/src/usb_capture.cpp -o CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.s
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o.requires:
 
@@ -143,9 +143,9 @@ libHardWare/usbCapture/libUsbCapture.a: libHardWare/usbCapture/CMakeFiles/UsbCap
 libHardWare/usbCapture/libUsbCapture.a: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/src/usb_capture.cpp.o
 libHardWare/usbCapture/libUsbCapture.a: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/build.make
 libHardWare/usbCapture/libUsbCapture.a: libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libUsbCapture.a"
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && $(CMAKE_COMMAND) -P CMakeFiles/UsbCapture.dir/cmake_clean_target.cmake
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/UsbCapture.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libUsbCapture.a"
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && $(CMAKE_COMMAND) -P CMakeFiles/UsbCapture.dir/cmake_clean_target.cmake
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/UsbCapture.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/build: libHardWare/usbCapture/libUsbCapture.a
@@ -159,10 +159,10 @@ libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/requires: libHardWare/usbCaptur
 .PHONY : libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/requires
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/clean:
-	cd /home/weepies/RM/INF/build/libHardWare/usbCapture && $(CMAKE_COMMAND) -P CMakeFiles/UsbCapture.dir/cmake_clean.cmake
+	cd /home/weepies/inf/Aim/build/libHardWare/usbCapture && $(CMAKE_COMMAND) -P CMakeFiles/UsbCapture.dir/cmake_clean.cmake
 .PHONY : libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/clean
 
 libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/RM/INF /home/weepies/RM/INF/libHardWare/usbCapture /home/weepies/RM/INF/build /home/weepies/RM/INF/build/libHardWare/usbCapture /home/weepies/RM/INF/build/libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/inf/Aim /home/weepies/inf/Aim/libHardWare/usbCapture /home/weepies/inf/Aim/build /home/weepies/inf/Aim/build/libHardWare/usbCapture /home/weepies/inf/Aim/build/libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : libHardWare/usbCapture/CMakeFiles/UsbCapture.dir/depend
 

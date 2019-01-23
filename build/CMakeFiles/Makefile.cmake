@@ -13,7 +13,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.5.1/CMakeSystem.cmake"
   "CMakeFiles/feature_tests.c"
   "CMakeFiles/feature_tests.cxx"
-  "../cmake/FindGlog.cmake"
   "../libAim/CMakeLists.txt"
   "../libAim/autoAim/CMakeLists.txt"
   "../libAim/markAim/CMakeLists.txt"
@@ -24,12 +23,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../libHardWare/mindVision/CMakeLists.txt"
   "../libHardWare/serialPort/CMakeLists.txt"
   "../libHardWare/usbCapture/CMakeLists.txt"
-  "../unit_test/CMakeLists.txt"
-  "../unit_test/aim_test/CMakeLists.txt"
   "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig-version.cmake"
-  "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVConfig.cmake"
-  "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules-release.cmake"
-  "/opt/ros/kinetic/share/OpenCV-3.3.1-dev/OpenCVModules.cmake"
   "/usr/local/share/OpenCV/OpenCVConfig-version.cmake"
   "/usr/local/share/OpenCV/OpenCVConfig.cmake"
   "/usr/local/share/OpenCV/OpenCVModules-release.cmake"
@@ -61,8 +55,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/CMakeTestCXXCompiler.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeTestCompilerCommon.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeUnixFindMake.cmake"
-  "/usr/share/cmake-3.5/Modules/CheckCSourceCompiles.cmake"
-  "/usr/share/cmake-3.5/Modules/CheckCXXSourceCompiles.cmake"
   "/usr/share/cmake-3.5/Modules/Compiler/ADSP-DetermineCompiler.cmake"
   "/usr/share/cmake-3.5/Modules/Compiler/ARMCC-DetermineCompiler.cmake"
   "/usr/share/cmake-3.5/Modules/Compiler/AppleClang-DetermineCompiler.cmake"
@@ -106,7 +98,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/Compiler/XL-CXX-DetermineCompiler.cmake"
   "/usr/share/cmake-3.5/Modules/Compiler/zOS-C-DetermineCompiler.cmake"
   "/usr/share/cmake-3.5/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake"
-  "/usr/share/cmake-3.5/Modules/FindOpenMP.cmake"
   "/usr/share/cmake-3.5/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.5/Modules/FindPackageMessage.cmake"
   "/usr/share/cmake-3.5/Modules/Internal/FeatureTesting.cmake"
@@ -143,8 +134,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "libAim/CMakeFiles/CMakeDirectoryInformation.cmake"
   "libAim/autoAim/CMakeFiles/CMakeDirectoryInformation.cmake"
   "libAim/markAim/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "unit_test/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "unit_test/aim_test/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -158,5 +147,4 @@ set(CMAKE_DEPEND_INFO_FILES
   "libAim/CMakeFiles/BaseAim.dir/DependInfo.cmake"
   "libAim/autoAim/CMakeFiles/AutoAim.dir/DependInfo.cmake"
   "libAim/markAim/CMakeFiles/MarkAim.dir/DependInfo.cmake"
-  "unit_test/aim_test/CMakeFiles/aim_test.dir/DependInfo.cmake"
   )

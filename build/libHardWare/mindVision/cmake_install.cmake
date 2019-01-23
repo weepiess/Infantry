@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF/libHardWare/mindVision
+# Install script for directory: /home/weepies/inf/Aim/libHardWare/mindVision
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

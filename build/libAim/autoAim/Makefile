@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles /home/weepies/RM/INF/build/libAim/autoAim/CMakeFiles/progress.marks
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/inf/Aim/build/CMakeFiles /home/weepies/inf/Aim/build/libAim/autoAim/CMakeFiles/progress.marks
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/inf/Aim/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/clean
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/preinstall
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/preinstall
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 libAim/autoAim/CMakeFiles/AutoAim.dir/rule:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/CMakeFiles/AutoAim.dir/rule
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/autoAim/CMakeFiles/AutoAim.dir/rule
 .PHONY : libAim/autoAim/CMakeFiles/AutoAim.dir/rule
 
 # Convenience name for target.
@@ -122,35 +122,8 @@ AutoAim: libAim/autoAim/CMakeFiles/AutoAim.dir/rule
 
 # fast build rule for target.
 AutoAim/fast:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/build
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/build
 .PHONY : AutoAim/fast
-
-src/Kalman_CSM.o: src/Kalman_CSM.cpp.o
-
-.PHONY : src/Kalman_CSM.o
-
-# target to build an object file
-src/Kalman_CSM.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.o
-.PHONY : src/Kalman_CSM.cpp.o
-
-src/Kalman_CSM.i: src/Kalman_CSM.cpp.i
-
-.PHONY : src/Kalman_CSM.i
-
-# target to preprocess a source file
-src/Kalman_CSM.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.i
-.PHONY : src/Kalman_CSM.cpp.i
-
-src/Kalman_CSM.s: src/Kalman_CSM.cpp.s
-
-.PHONY : src/Kalman_CSM.s
-
-# target to generate assembly for a file
-src/Kalman_CSM.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/Kalman_CSM.cpp.s
-.PHONY : src/Kalman_CSM.cpp.s
 
 src/aim_predict.o: src/aim_predict.cpp.o
 
@@ -158,7 +131,7 @@ src/aim_predict.o: src/aim_predict.cpp.o
 
 # target to build an object file
 src/aim_predict.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.o
 .PHONY : src/aim_predict.cpp.o
 
 src/aim_predict.i: src/aim_predict.cpp.i
@@ -167,7 +140,7 @@ src/aim_predict.i: src/aim_predict.cpp.i
 
 # target to preprocess a source file
 src/aim_predict.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.i
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.i
 .PHONY : src/aim_predict.cpp.i
 
 src/aim_predict.s: src/aim_predict.cpp.s
@@ -176,7 +149,7 @@ src/aim_predict.s: src/aim_predict.cpp.s
 
 # target to generate assembly for a file
 src/aim_predict.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.s
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/aim_predict.cpp.s
 .PHONY : src/aim_predict.cpp.s
 
 src/auto_aim.o: src/auto_aim.cpp.o
@@ -185,7 +158,7 @@ src/auto_aim.o: src/auto_aim.cpp.o
 
 # target to build an object file
 src/auto_aim.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.o
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.o
 .PHONY : src/auto_aim.cpp.o
 
 src/auto_aim.i: src/auto_aim.cpp.i
@@ -194,7 +167,7 @@ src/auto_aim.i: src/auto_aim.cpp.i
 
 # target to preprocess a source file
 src/auto_aim.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.i
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.i
 .PHONY : src/auto_aim.cpp.i
 
 src/auto_aim.s: src/auto_aim.cpp.s
@@ -203,7 +176,7 @@ src/auto_aim.s: src/auto_aim.cpp.s
 
 # target to generate assembly for a file
 src/auto_aim.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.s
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/auto_aim.cpp.s
 .PHONY : src/auto_aim.cpp.s
 
 src/kalman_filter_by_opencv.o: src/kalman_filter_by_opencv.cpp.o
@@ -212,7 +185,7 @@ src/kalman_filter_by_opencv.o: src/kalman_filter_by_opencv.cpp.o
 
 # target to build an object file
 src/kalman_filter_by_opencv.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.o
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.o
 .PHONY : src/kalman_filter_by_opencv.cpp.o
 
 src/kalman_filter_by_opencv.i: src/kalman_filter_by_opencv.cpp.i
@@ -221,7 +194,7 @@ src/kalman_filter_by_opencv.i: src/kalman_filter_by_opencv.cpp.i
 
 # target to preprocess a source file
 src/kalman_filter_by_opencv.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.i
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.i
 .PHONY : src/kalman_filter_by_opencv.cpp.i
 
 src/kalman_filter_by_opencv.s: src/kalman_filter_by_opencv.cpp.s
@@ -230,7 +203,7 @@ src/kalman_filter_by_opencv.s: src/kalman_filter_by_opencv.cpp.s
 
 # target to generate assembly for a file
 src/kalman_filter_by_opencv.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.s
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/autoAim/CMakeFiles/AutoAim.dir/build.make libAim/autoAim/CMakeFiles/AutoAim.dir/src/kalman_filter_by_opencv.cpp.s
 .PHONY : src/kalman_filter_by_opencv.cpp.s
 
 # Help Target
@@ -242,9 +215,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... AutoAim"
 	@echo "... rebuild_cache"
-	@echo "... src/Kalman_CSM.o"
-	@echo "... src/Kalman_CSM.i"
-	@echo "... src/Kalman_CSM.s"
 	@echo "... src/aim_predict.o"
 	@echo "... src/aim_predict.i"
 	@echo "... src/aim_predict.s"
@@ -265,6 +235,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

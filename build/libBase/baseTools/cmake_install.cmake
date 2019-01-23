@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF/libBase/baseTools
+# Install script for directory: /home/weepies/inf/Aim/libBase/baseTools
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

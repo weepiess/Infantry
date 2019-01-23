@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 # Include any dependencies generated for this target.
 include libHardWare/serialPort/CMakeFiles/SerialPort.dir/depend.make
@@ -59,16 +59,16 @@ include libHardWare/serialPort/CMakeFiles/SerialPort.dir/flags.make
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o: libHardWare/serialPort/CMakeFiles/SerialPort.dir/flags.make
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o: ../libHardWare/serialPort/src/serial_packet.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o -c /home/weepies/RM/INF/libHardWare/serialPort/src/serial_packet.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o -c /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_packet.cpp
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SerialPort.dir/src/serial_packet.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/serialPort/src/serial_packet.cpp > CMakeFiles/SerialPort.dir/src/serial_packet.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_packet.cpp > CMakeFiles/SerialPort.dir/src/serial_packet.cpp.i
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SerialPort.dir/src/serial_packet.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/serialPort/src/serial_packet.cpp -o CMakeFiles/SerialPort.dir/src/serial_packet.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_packet.cpp -o CMakeFiles/SerialPort.dir/src/serial_packet.cpp.s
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o.requires:
 
@@ -83,16 +83,16 @@ libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_packet.cpp.o.provide
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.o: libHardWare/serialPort/CMakeFiles/SerialPort.dir/flags.make
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.o: ../libHardWare/serialPort/src/serial_port.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_port.cpp.o -c /home/weepies/RM/INF/libHardWare/serialPort/src/serial_port.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_port.cpp.o -c /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port.cpp
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SerialPort.dir/src/serial_port.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/serialPort/src/serial_port.cpp > CMakeFiles/SerialPort.dir/src/serial_port.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port.cpp > CMakeFiles/SerialPort.dir/src/serial_port.cpp.i
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SerialPort.dir/src/serial_port.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/serialPort/src/serial_port.cpp -o CMakeFiles/SerialPort.dir/src/serial_port.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port.cpp -o CMakeFiles/SerialPort.dir/src/serial_port.cpp.s
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.o.requires:
 
@@ -107,16 +107,16 @@ libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port.cpp.o.provides.
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o: libHardWare/serialPort/CMakeFiles/SerialPort.dir/flags.make
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o: ../libHardWare/serialPort/src/serial_port_debug.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o -c /home/weepies/RM/INF/libHardWare/serialPort/src/serial_port_debug.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o -c /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port_debug.cpp
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/serialPort/src/serial_port_debug.cpp > CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port_debug.cpp > CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.i
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/serialPort/src/serial_port_debug.cpp -o CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_port_debug.cpp -o CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.s
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o.requires:
 
@@ -131,16 +131,16 @@ libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_port_debug.cpp.o.pro
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o: libHardWare/serialPort/CMakeFiles/SerialPort.dir/flags.make
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o: ../libHardWare/serialPort/src/serial_interface.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o -c /home/weepies/RM/INF/libHardWare/serialPort/src/serial_interface.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o -c /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_interface.cpp
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SerialPort.dir/src/serial_interface.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/serialPort/src/serial_interface.cpp > CMakeFiles/SerialPort.dir/src/serial_interface.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_interface.cpp > CMakeFiles/SerialPort.dir/src/serial_interface.cpp.i
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SerialPort.dir/src/serial_interface.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/serialPort/src/serial_interface.cpp -o CMakeFiles/SerialPort.dir/src/serial_interface.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/serialPort/src/serial_interface.cpp -o CMakeFiles/SerialPort.dir/src/serial_interface.cpp.s
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o.requires:
 
@@ -169,9 +169,9 @@ libHardWare/serialPort/libSerialPort.a: libHardWare/serialPort/CMakeFiles/Serial
 libHardWare/serialPort/libSerialPort.a: libHardWare/serialPort/CMakeFiles/SerialPort.dir/src/serial_interface.cpp.o
 libHardWare/serialPort/libSerialPort.a: libHardWare/serialPort/CMakeFiles/SerialPort.dir/build.make
 libHardWare/serialPort/libSerialPort.a: libHardWare/serialPort/CMakeFiles/SerialPort.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libSerialPort.a"
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && $(CMAKE_COMMAND) -P CMakeFiles/SerialPort.dir/cmake_clean_target.cmake
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SerialPort.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libSerialPort.a"
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && $(CMAKE_COMMAND) -P CMakeFiles/SerialPort.dir/cmake_clean_target.cmake
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SerialPort.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/build: libHardWare/serialPort/libSerialPort.a
@@ -186,10 +186,10 @@ libHardWare/serialPort/CMakeFiles/SerialPort.dir/requires: libHardWare/serialPor
 .PHONY : libHardWare/serialPort/CMakeFiles/SerialPort.dir/requires
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/clean:
-	cd /home/weepies/RM/INF/build/libHardWare/serialPort && $(CMAKE_COMMAND) -P CMakeFiles/SerialPort.dir/cmake_clean.cmake
+	cd /home/weepies/inf/Aim/build/libHardWare/serialPort && $(CMAKE_COMMAND) -P CMakeFiles/SerialPort.dir/cmake_clean.cmake
 .PHONY : libHardWare/serialPort/CMakeFiles/SerialPort.dir/clean
 
 libHardWare/serialPort/CMakeFiles/SerialPort.dir/depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/RM/INF /home/weepies/RM/INF/libHardWare/serialPort /home/weepies/RM/INF/build /home/weepies/RM/INF/build/libHardWare/serialPort /home/weepies/RM/INF/build/libHardWare/serialPort/CMakeFiles/SerialPort.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/inf/Aim /home/weepies/inf/Aim/libHardWare/serialPort /home/weepies/inf/Aim/build /home/weepies/inf/Aim/build/libHardWare/serialPort /home/weepies/inf/Aim/build/libHardWare/serialPort/CMakeFiles/SerialPort.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : libHardWare/serialPort/CMakeFiles/SerialPort.dir/depend
 

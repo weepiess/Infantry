@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/example.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/example.dir/flags.make
 
 CMakeFiles/example.dir/src/robot_model.cpp.o: CMakeFiles/example.dir/flags.make
 CMakeFiles/example.dir/src/robot_model.cpp.o: ../src/robot_model.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/example.dir/src/robot_model.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/robot_model.cpp.o -c /home/weepies/RM/INF/src/robot_model.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/example.dir/src/robot_model.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/robot_model.cpp.o -c /home/weepies/inf/Aim/src/robot_model.cpp
 
 CMakeFiles/example.dir/src/robot_model.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/example.dir/src/robot_model.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/src/robot_model.cpp > CMakeFiles/example.dir/src/robot_model.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/src/robot_model.cpp > CMakeFiles/example.dir/src/robot_model.cpp.i
 
 CMakeFiles/example.dir/src/robot_model.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/robot_model.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/src/robot_model.cpp -o CMakeFiles/example.dir/src/robot_model.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/src/robot_model.cpp -o CMakeFiles/example.dir/src/robot_model.cpp.s
 
 CMakeFiles/example.dir/src/robot_model.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/example.dir/src/robot_model.cpp.o.provides.build: CMakeFiles/example.
 
 CMakeFiles/example.dir/src/main.cpp.o: CMakeFiles/example.dir/flags.make
 CMakeFiles/example.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/example.dir/src/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/main.cpp.o -c /home/weepies/RM/INF/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/example.dir/src/main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/main.cpp.o -c /home/weepies/inf/Aim/src/main.cpp
 
 CMakeFiles/example.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/example.dir/src/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/src/main.cpp > CMakeFiles/example.dir/src/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/src/main.cpp > CMakeFiles/example.dir/src/main.cpp.i
 
 CMakeFiles/example.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/src/main.cpp -o CMakeFiles/example.dir/src/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/src/main.cpp -o CMakeFiles/example.dir/src/main.cpp.s
 
 CMakeFiles/example.dir/src/main.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/example.dir/src/main.cpp.o.provides.build: CMakeFiles/example.dir/src
 
 CMakeFiles/example.dir/src/control_model.cpp.o: CMakeFiles/example.dir/flags.make
 CMakeFiles/example.dir/src/control_model.cpp.o: ../src/control_model.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/example.dir/src/control_model.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/control_model.cpp.o -c /home/weepies/RM/INF/src/control_model.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/example.dir/src/control_model.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/control_model.cpp.o -c /home/weepies/inf/Aim/src/control_model.cpp
 
 CMakeFiles/example.dir/src/control_model.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/example.dir/src/control_model.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/src/control_model.cpp > CMakeFiles/example.dir/src/control_model.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/src/control_model.cpp > CMakeFiles/example.dir/src/control_model.cpp.i
 
 CMakeFiles/example.dir/src/control_model.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/control_model.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/src/control_model.cpp -o CMakeFiles/example.dir/src/control_model.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/src/control_model.cpp -o CMakeFiles/example.dir/src/control_model.cpp.s
 
 CMakeFiles/example.dir/src/control_model.cpp.o.requires:
 
@@ -131,16 +131,16 @@ CMakeFiles/example.dir/src/control_model.cpp.o.provides.build: CMakeFiles/exampl
 
 CMakeFiles/example.dir/src/serial_listen_thread.cpp.o: CMakeFiles/example.dir/flags.make
 CMakeFiles/example.dir/src/serial_listen_thread.cpp.o: ../src/serial_listen_thread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/example.dir/src/serial_listen_thread.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/serial_listen_thread.cpp.o -c /home/weepies/RM/INF/src/serial_listen_thread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/example.dir/src/serial_listen_thread.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/example.dir/src/serial_listen_thread.cpp.o -c /home/weepies/inf/Aim/src/serial_listen_thread.cpp
 
 CMakeFiles/example.dir/src/serial_listen_thread.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/example.dir/src/serial_listen_thread.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/src/serial_listen_thread.cpp > CMakeFiles/example.dir/src/serial_listen_thread.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/src/serial_listen_thread.cpp > CMakeFiles/example.dir/src/serial_listen_thread.cpp.i
 
 CMakeFiles/example.dir/src/serial_listen_thread.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/serial_listen_thread.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/src/serial_listen_thread.cpp -o CMakeFiles/example.dir/src/serial_listen_thread.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/src/serial_listen_thread.cpp -o CMakeFiles/example.dir/src/serial_listen_thread.cpp.s
 
 CMakeFiles/example.dir/src/serial_listen_thread.cpp.o.requires:
 
@@ -183,7 +183,6 @@ example: /usr/local/lib/libopencv_shape.so.3.4.3
 example: /usr/local/lib/libopencv_dnn.so.3.4.3
 example: /usr/local/lib/libopencv_videostab.so.3.4.3
 example: libAim/libBaseAim.a
-example: /usr/local/lib/libglog.so
 example: /usr/local/lib/libopencv_calib3d.so.3.4.3
 example: /usr/local/lib/libopencv_features2d.so.3.4.3
 example: /usr/local/lib/libopencv_flann.so.3.4.3
@@ -195,7 +194,7 @@ example: /usr/local/lib/libopencv_imgcodecs.so.3.4.3
 example: /usr/local/lib/libopencv_imgproc.so.3.4.3
 example: /usr/local/lib/libopencv_core.so.3.4.3
 example: CMakeFiles/example.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable example"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/example.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -215,6 +214,6 @@ CMakeFiles/example.dir/clean:
 .PHONY : CMakeFiles/example.dir/clean
 
 CMakeFiles/example.dir/depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/RM/INF /home/weepies/RM/INF /home/weepies/RM/INF/build /home/weepies/RM/INF/build /home/weepies/RM/INF/build/CMakeFiles/example.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/inf/Aim /home/weepies/inf/Aim /home/weepies/inf/Aim/build /home/weepies/inf/Aim/build /home/weepies/inf/Aim/build/CMakeFiles/example.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/example.dir/depend
 

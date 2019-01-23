@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles /home/weepies/RM/INF/build/libAim/markAim/CMakeFiles/progress.marks
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/RM/INF/build/CMakeFiles 0
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/inf/Aim/build/CMakeFiles /home/weepies/inf/Aim/build/libAim/markAim/CMakeFiles/progress.marks
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/weepies/inf/Aim/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/clean
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/preinstall
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/preinstall
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 libAim/markAim/CMakeFiles/MarkAim.dir/rule:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/CMakeFiles/MarkAim.dir/rule
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f CMakeFiles/Makefile2 libAim/markAim/CMakeFiles/MarkAim.dir/rule
 .PHONY : libAim/markAim/CMakeFiles/MarkAim.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ MarkAim: libAim/markAim/CMakeFiles/MarkAim.dir/rule
 
 # fast build rule for target.
 MarkAim/fast:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/build
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/build
 .PHONY : MarkAim/fast
 
 src/mark_aim.o: src/mark_aim.cpp.o
@@ -131,7 +131,7 @@ src/mark_aim.o: src/mark_aim.cpp.o
 
 # target to build an object file
 src/mark_aim.cpp.o:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/src/mark_aim.cpp.o
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/src/mark_aim.cpp.o
 .PHONY : src/mark_aim.cpp.o
 
 src/mark_aim.i: src/mark_aim.cpp.i
@@ -140,7 +140,7 @@ src/mark_aim.i: src/mark_aim.cpp.i
 
 # target to preprocess a source file
 src/mark_aim.cpp.i:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/src/mark_aim.cpp.i
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/src/mark_aim.cpp.i
 .PHONY : src/mark_aim.cpp.i
 
 src/mark_aim.s: src/mark_aim.cpp.s
@@ -149,7 +149,7 @@ src/mark_aim.s: src/mark_aim.cpp.s
 
 # target to generate assembly for a file
 src/mark_aim.cpp.s:
-	cd /home/weepies/RM/INF/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/src/mark_aim.cpp.s
+	cd /home/weepies/inf/Aim/build && $(MAKE) -f libAim/markAim/CMakeFiles/MarkAim.dir/build.make libAim/markAim/CMakeFiles/MarkAim.dir/src/mark_aim.cpp.s
 .PHONY : src/mark_aim.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

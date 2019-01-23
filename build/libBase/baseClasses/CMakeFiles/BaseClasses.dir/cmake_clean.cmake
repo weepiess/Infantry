@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/BaseClasses.dir/src/base_thread.cpp.o"
-  "CMakeFiles/BaseClasses.dir/src/function_thread.cpp.o"
   "libBaseClasses.pdb"
   "libBaseClasses.a"
 )

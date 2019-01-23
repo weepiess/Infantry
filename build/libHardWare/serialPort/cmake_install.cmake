@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF/libHardWare/serialPort
+# Install script for directory: /home/weepies/inf/Aim/libHardWare/serialPort
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

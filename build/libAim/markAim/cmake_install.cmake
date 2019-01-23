@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF/libAim/markAim
+# Install script for directory: /home/weepies/inf/Aim/libAim/markAim
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

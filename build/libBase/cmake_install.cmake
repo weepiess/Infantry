@@ -1,4 +1,4 @@
-# Install script for directory: /home/weepies/RM/INF/libBase
+# Install script for directory: /home/weepies/inf/Aim/libBase
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/weepies/RM/INF/build/libBase/baseClasses/cmake_install.cmake")
-  include("/home/weepies/RM/INF/build/libBase/baseTools/cmake_install.cmake")
+  include("/home/weepies/inf/Aim/build/libBase/baseClasses/cmake_install.cmake")
+  include("/home/weepies/inf/Aim/build/libBase/baseTools/cmake_install.cmake")
 
 endif()
 

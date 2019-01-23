@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/weepies/RM/INF
+CMAKE_SOURCE_DIR = /home/weepies/inf/Aim
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/weepies/RM/INF/build
+CMAKE_BINARY_DIR = /home/weepies/inf/Aim/build
 
 # Include any dependencies generated for this target.
 include libHardWare/mindVision/CMakeFiles/MindVision.dir/depend.make
@@ -57,42 +57,18 @@ include libHardWare/mindVision/CMakeFiles/MindVision.dir/progress.make
 # Include the compile flags for this target's objects.
 include libHardWare/mindVision/CMakeFiles/MindVision.dir/flags.make
 
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o: libHardWare/mindVision/CMakeFiles/MindVision.dir/flags.make
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o: ../libHardWare/mindVision/src/mind_vision_thread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o -c /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision_thread.cpp
-
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision_thread.cpp > CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.i
-
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision_thread.cpp -o CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.s
-
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.requires:
-
-.PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.requires
-
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.provides: libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.requires
-	$(MAKE) -f libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.provides.build
-.PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.provides
-
-libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.provides.build: libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o
-
-
 libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o: libHardWare/mindVision/CMakeFiles/MindVision.dir/flags.make
 libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o: ../libHardWare/mindVision/src/mind_vision.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MindVision.dir/src/mind_vision.cpp.o -c /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o"
+	cd /home/weepies/inf/Aim/build/libHardWare/mindVision && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MindVision.dir/src/mind_vision.cpp.o -c /home/weepies/inf/Aim/libHardWare/mindVision/src/mind_vision.cpp
 
 libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MindVision.dir/src/mind_vision.cpp.i"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision.cpp > CMakeFiles/MindVision.dir/src/mind_vision.cpp.i
+	cd /home/weepies/inf/Aim/build/libHardWare/mindVision && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/weepies/inf/Aim/libHardWare/mindVision/src/mind_vision.cpp > CMakeFiles/MindVision.dir/src/mind_vision.cpp.i
 
 libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MindVision.dir/src/mind_vision.cpp.s"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/RM/INF/libHardWare/mindVision/src/mind_vision.cpp -o CMakeFiles/MindVision.dir/src/mind_vision.cpp.s
+	cd /home/weepies/inf/Aim/build/libHardWare/mindVision && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/weepies/inf/Aim/libHardWare/mindVision/src/mind_vision.cpp -o CMakeFiles/MindVision.dir/src/mind_vision.cpp.s
 
 libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o.requires:
 
@@ -107,35 +83,32 @@ libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o.provides.
 
 # Object files for target MindVision
 MindVision_OBJECTS = \
-"CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o" \
 "CMakeFiles/MindVision.dir/src/mind_vision.cpp.o"
 
 # External object files for target MindVision
 MindVision_EXTERNAL_OBJECTS =
 
-libHardWare/mindVision/libMindVision.a: libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o
 libHardWare/mindVision/libMindVision.a: libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o
 libHardWare/mindVision/libMindVision.a: libHardWare/mindVision/CMakeFiles/MindVision.dir/build.make
 libHardWare/mindVision/libMindVision.a: libHardWare/mindVision/CMakeFiles/MindVision.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/RM/INF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libMindVision.a"
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && $(CMAKE_COMMAND) -P CMakeFiles/MindVision.dir/cmake_clean_target.cmake
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MindVision.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/weepies/inf/Aim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libMindVision.a"
+	cd /home/weepies/inf/Aim/build/libHardWare/mindVision && $(CMAKE_COMMAND) -P CMakeFiles/MindVision.dir/cmake_clean_target.cmake
+	cd /home/weepies/inf/Aim/build/libHardWare/mindVision && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MindVision.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 libHardWare/mindVision/CMakeFiles/MindVision.dir/build: libHardWare/mindVision/libMindVision.a
 
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/build
 
-libHardWare/mindVision/CMakeFiles/MindVision.dir/requires: libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision_thread.cpp.o.requires
 libHardWare/mindVision/CMakeFiles/MindVision.dir/requires: libHardWare/mindVision/CMakeFiles/MindVision.dir/src/mind_vision.cpp.o.requires
 
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/requires
 
 libHardWare/mindVision/CMakeFiles/MindVision.dir/clean:
-	cd /home/weepies/RM/INF/build/libHardWare/mindVision && $(CMAKE_COMMAND) -P CMakeFiles/MindVision.dir/cmake_clean.cmake
+	cd /home/weepies/inf/Aim/build/libHardWare/mindVision && $(CMAKE_COMMAND) -P CMakeFiles/MindVision.dir/cmake_clean.cmake
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/clean
 
 libHardWare/mindVision/CMakeFiles/MindVision.dir/depend:
-	cd /home/weepies/RM/INF/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/RM/INF /home/weepies/RM/INF/libHardWare/mindVision /home/weepies/RM/INF/build /home/weepies/RM/INF/build/libHardWare/mindVision /home/weepies/RM/INF/build/libHardWare/mindVision/CMakeFiles/MindVision.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/weepies/inf/Aim/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/weepies/inf/Aim /home/weepies/inf/Aim/libHardWare/mindVision /home/weepies/inf/Aim/build /home/weepies/inf/Aim/build/libHardWare/mindVision /home/weepies/inf/Aim/build/libHardWare/mindVision/CMakeFiles/MindVision.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : libHardWare/mindVision/CMakeFiles/MindVision.dir/depend
 

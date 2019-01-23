@@ -69,10 +69,6 @@ bool BaseAim::makeRectSafe(Rect & rect){
     return true;
 }
 
-void BaseAim::adjustEllipseAngle(cv::RotatedRect & rect){
-    if(rect.angle > 90) rect.angle -= 180;
-}
-
 bool BaseAim::broadenRect(Rect & rect){
     rect.x -= rect.width/2;
     rect.width += rect.width;
