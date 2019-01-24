@@ -314,6 +314,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     }
 }
 */
+/*
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int lowerY=0;
     int lowerIndex=-1;
@@ -373,6 +374,94 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         if(!makeRectSafe(rectROI)){
             resetROI();
 	}
+    }
+}*/
+void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
+    int lowerY=0;
+    int lowerIndex=-1;
+    int hero_index=-1;
+    bestCenter.x=-1;
+    //最优装甲板逻辑
+    for(int i=0; i<real_armor_lamps.size(); i+=2){
+        if(i+1 >= real_armor_lamps.size()) break;
+        int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
+        int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
+        if(x/real_armor_lamps[i].size.height>4){  
+            hero_index=i; 
+            pnpSolver.clearPoints3D();
+            pnpSolver.pushPoints3D(-115, -47, 0);
+            pnpSolver.pushPoints3D(115, -47, 0);
+            pnpSolver.pushPoints3D(115, 47, 0);
+            pnpSolver.pushPoints3D(-115, 47, 0);
+            break;
+        }
+        if(y > lowerY){
+            lowerY = y;
+            lowerIndex = i;
+        }
+    }
+    if(hero_index!=-1){
+        resizeCount=0;
+        count++;
+        if(real_armor_lamps[hero_index].center.x > real_armor_lamps[hero_index+1].center.x){
+            swap(real_armor_lamps[hero_index],real_armor_lamps[hero_index+1]);//确保偶数为左灯条，奇数为右灯条
+        }
+        int height = (real_armor_lamps[hero_index].size.height + real_armor_lamps[hero_index+1].size.height)/2;
+        //当灯条高度小于10个像素点时放弃锁定，重新寻找合适目标
+        if(height > 10){
+            //cout<<rectROI.x<<" "<<rectROI.y<<endl;
+            bestCenter.x = (real_armor_lamps[hero_index].center.x + real_armor_lamps[hero_index+1].center.x)/2 + rectROI.x;
+            bestCenter.y = (real_armor_lamps[hero_index].center.y + real_armor_lamps[hero_index+1].center.y)/2 + rectROI.y;
+        }else{
+            resetROI();
+            count=0;
+        }
+    }
+    //优先锁定图像下方装甲板
+    else if(lowerIndex == -1){
+        resizeCount++;
+        count=0;
+        if(!broadenRect(rectROI) || resizeCount>3){
+            resetROI();
+            resizeCount = 0;
+        }
+    } 
+    else if(lowerIndex != -1) {
+        resizeCount = 0; 
+        count++;
+        //cout<<real_armor_lamps[lowerIndex].x<<"  "<<real_armor_lamps[lowerIndex+1].x<<endl;
+	    if(real_armor_lamps[lowerIndex].center.x > real_armor_lamps[lowerIndex+1].center.x){
+            swap(real_armor_lamps[lowerIndex],real_armor_lamps[lowerIndex+1]);//确保偶数为左灯条，奇数为右灯条
+        }
+        int height = (real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2;
+        //当灯条高度小于10个像素点时放弃锁定，重新寻找合适目标
+        if(height > 10){
+            //cout<<rectROI.x<<" "<<rectROI.y<<endl;
+            bestCenter.x = (real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2 + rectROI.x;
+            bestCenter.y = (real_armor_lamps[lowerIndex].center.y + real_armor_lamps[lowerIndex+1].center.y)/2 + rectROI.y;
+            //cout<<bestCenter<<endl;
+        } else{
+		    resetROI();
+            count=0;
+    	}
+    }
+
+    if(bestCenter.x!=-1){
+        clock_t finish = clock();
+        best_lamps[0] = real_armor_lamps[lowerIndex];
+        best_lamps[1] = real_armor_lamps[lowerIndex+1];
+        best_lamps[0].center.x+=rectROI.x;
+        best_lamps[0].center.y+=rectROI.y;
+        best_lamps[1].center.x+=rectROI.x;
+        best_lamps[1].center.y+=rectROI.y;
+        rectROI.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x);
+        rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
+        rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
+        rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
+        cout<<rectROI.x<<endl;
+        if(!makeRectSafe(rectROI)){
+            resetROI();
+	    }
     }
 }
 
