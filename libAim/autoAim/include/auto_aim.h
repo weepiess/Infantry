@@ -3,11 +3,10 @@
 
 #include <opencv2/opencv.hpp>
 #include "base_aim.h"
-#include "basic_tool.h"
 #include "time.h"
 #include "aim_predict.h"
 #include "usb_capture_with_opencv.h"
-#include "aim_assistant.h"
+//#include "aim_assistant.h"
 using namespace cv;
 using namespace std;
 
@@ -26,6 +25,7 @@ public:
     AimResult aim(Mat &src, float currPitch, float currYaw, Point2f &pitYaw,int is_predict,bool &if_shoot,float time_delay);
     void set_parameters(int angle,int inside_angle, int height, int width);
     Rect armor;
+
 
 private:
 
@@ -50,7 +50,7 @@ private:
     bool is_check_armor=true;
     Rect rectROI;
     Aim_predict aim_predict;
-    BasicTool basic_tool;
+
 };                                                                                                      
 
 #endif

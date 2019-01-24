@@ -1,19 +1,7 @@
-////////////////////////////////////////////////////////////////////////////////
-///Copyright(c)      UESTC ROBOMASTER2019      Model Code for robot
-///ALL RIGHTS RESERVED
-///@file:aim_predict.h
-///@brief: 自瞄预测部分统一接口
-/// 
-///@vesion 1.0
-///@author: pc
-///@email: 694977655@qq.com
-///@date: 18-11-4
-///修订历史：
-////////////////////////////////////////////////////////////////////////////////
 #ifndef AIM_PREDICT_H
 #define AIM_PREDICT_H
 #include "kalman_filter_by_opencv.h"
-#include "Kalman_CSM.h"
+//#include "Kalman_CSM.h"
 #include "opencv2/opencv.hpp"
 
 class Aim_predict{
@@ -24,7 +12,7 @@ class Aim_predict{
         //预测模型初始化
         void model_init();
         
-        //重新调整卡尔曼statepost,主要用于对新目标的statepost更新
+        //根据时间 重新调整卡尔曼statepost
         void reset_kf_statepost(Mat statepost);
 
         /** 预测函数

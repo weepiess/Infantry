@@ -1,15 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-///Copyright(c)      UESTC ROBOMASTER2019      Model Code for robot
-///ALL RIGHTS RESERVED
-///@file:kalman_filter_by_opencv.h
-///@brief: opencv_kalman的封装
-/// 
-///@vesion 1.0
-///@author: pc
-///@email: 694977655@qq.com
-///@date: 18-12-9
-///修订历史：
-////////////////////////////////////////////////////////////////////////////////
 #ifndef KALMAN_FILTER_BY_OPENCV_H
 #define KALMAN_FILTER_BY_OPENCV_H
 

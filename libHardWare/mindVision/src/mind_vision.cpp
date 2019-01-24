@@ -1,5 +1,5 @@
 #include "mind_vision.h"
-
+#define DEBUG
 #define CAMERA_PARAMS_ADJUST
 
 MindVision::MindVision(){}
@@ -23,6 +23,7 @@ int MindVision::init(){
 
     //没有连接设备
     if(iCameraCounts==0){
+	cout<<"no device"<<endl;
         return -1;
     }
 
@@ -88,7 +89,6 @@ int MindVision::startPlay(int hCamera_, unsigned char color){
     #endif
 
     //设置分辨率，默认是1280*720
-    
     setResolution(width, height);
 
     #ifdef DEBUG
@@ -124,8 +124,7 @@ int MindVision::startPlay(int hCamera_, unsigned char color){
 }
 
 int MindVision::setResolution(int width, int height){
-    
-    CameraGetImageResolution(hCamera, &tResolution);
+        CameraGetImageResolution(hCamera, &tResolution);
     
     tResolution.iIndex = 0xFF;
     tResolution.iWidth = width;
@@ -134,14 +133,13 @@ int MindVision::setResolution(int width, int height){
     tResolution.iHeightFOV = height;
     
     CameraSetImageResolution(hCamera, &tResolution);
-    //cout<<"2"<<endl;
-    return 0;
 }
 
 int MindVision::getImg(Mat &src){
     //在成功调用CameraGetImageBuffer后，必须调用CameraReleaseImageBuffer来释放获得的buffer。
 	//否则再次调用CameraGetImageBuffer时，程序将被挂起一直阻塞，直到其他线程中调用CameraReleaseImageBuffer来释放了buffer
 	CameraReleaseImageBuffer(hCamera,pbyBuffer);
+
     if(CameraGetImageBuffer(hCamera, &sFrameInfo, &pbyBuffer, 1000) == CAMERA_STATUS_SUCCESS){
 		CameraImageProcess(hCamera, pbyBuffer, g_pRgbBuffer, &sFrameInfo);
 		if (iplImage){

@@ -15,7 +15,6 @@
 #include "basic_tool.h"
 #include "serial_port_debug.h"
 #include "usb_capture_with_thread.h"
-#include"omp.h"
 
 using namespace cv;
 
@@ -57,9 +56,7 @@ void ControlModel::processFSM(){
         switch (mSetMode){
             case ROBOT_MODE_AUTOAIM:{
                 autoAim->set_parameters(3,45,30,20);
-                autoAim->setEnemyColor(BaseAim::color_blue);
-                cap = pRobotModel->getMvisionCapture();
-                interface = pRobotModel->getpSerialInterface();
+                autoAim->setEnemyColor(BaseAim::color_red);
                 break;
             }
         }
@@ -82,15 +79,16 @@ void ControlModel::processFSM(){
 void ControlModel::Aim(){
         int start = basic_tool.currentTimeMsGet();
         Mat src1;
+        Mat src2;
         vector<RotatedRect> pre_armor_lamps;
         vector<RotatedRect> real_armor_lamps;
-        Point2f current_angle;  
+        Point2f current_angle;
+        MindVision* cap = pRobotModel->getMvisionCapture();
         //UsbCaptureWithThread* cap2 = pRobotModel->getpUsbCaptureAssist();
         //if(cap2->getImg(src2)!=0) cout<<"src is error"<<endl;
-        
         if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
         //src2 = imread("../res/2.png");
-        
+        SerialInterface *interface = pRobotModel->getpSerialInterface();
         interface->getAbsYunTaiDelta();
         current_angle.x = pRobotModel->getCurrentPitch();
         current_angle.y = pRobotModel->getCurrentYaw();
@@ -98,17 +96,22 @@ void ControlModel::Aim(){
         
         //int result=aim_assist.check_armor(src2);
         //cout<<finish-start<<" time"<<endl;
+
         if(autoAim->setImage(src1)){
             autoAim->findLamp_rect(pre_armor_lamps);
             autoAim->match_lamps(pre_armor_lamps,real_armor_lamps);
+            
             autoAim->select_armor(real_armor_lamps);
-            int start5 = basic_tool.currentTimeMsGet();
+            int finish = basic_tool.currentTimeMsGet();
             bool if_shoot=false;
-            if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,start5-start )==BaseAim::AIM_TARGET_FOUND){
-                int finish_1 = basic_tool.currentTimeMsGet();
+            if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
                  //rectangle(src2, autoAim->armor, Scalar(255,0,0), 2);
                  //int finish = basic_tool.currentTimeMsGet();
+<<<<<<< HEAD
                  cout<<finish_1-start<<"   time"<<endl;
+=======
+                 //cout<<finish-start<<"   time"<<endl;
+>>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
                 interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
                 unsigned char num=0x01;
@@ -126,7 +129,7 @@ void ControlModel::Aim(){
             }
             //imshow("armor",src2(autoAim->armor));
             //imshow("src2",src2);
-            waitKey(1);
+            //waitKey(1);
         }    
 }
 

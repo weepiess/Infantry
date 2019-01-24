@@ -27,7 +27,6 @@ RobotModel::~RobotModel() {
 
 int RobotModel::init(){
     string serialPath,videoPath;
-    setUseOptimized(true);
     //配置文件
     cv::FileStorage f("../res/main_config.yaml", cv::FileStorage::READ);
     f["robot_id"] >> mRobotId;//机器人id
@@ -44,6 +43,7 @@ int RobotModel::init(){
     }
 
     hCamera = mVision.init();
+    cout<<hCamera<<endl;
     if(hCamera!=-1){
         mVision.startPlay(hCamera, mEnemyIsRed);
         cout << "[robot model init ]:UsbCapture init successed!" <<endl;
@@ -67,7 +67,6 @@ int RobotModel::init(){
     //     cout << "[robot model init ]:UsbCapture Assist init failed!" <<endl;
     // }
     mCurrentMode=ROBOT_MODE_MARKAIM;
-    return 0;
 
 }
 

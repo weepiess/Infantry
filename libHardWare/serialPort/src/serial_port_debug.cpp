@@ -50,12 +50,12 @@ void SerialPortDebug::testSerialPort() {
                 break;
             case 's':
                 cout<<"YunTaiDeltaSet(0,10),test...."<<endl;
-                pSerialInterface->YunTaiDeltaSet(0,10);
+                pSerialInterface->YunTaiDeltaSet(0,-10);
                 cout<<"please input..."<<endl;
                 break;
             case 'd':
                 cout<<"YunTaiDeltaSet(-5,0),test...."<<endl;
-                pSerialInterface->YunTaiDeltaSet(-5,10);
+                pSerialInterface->YunTaiDeltaSet(-5,0);
                 cout<<"please input..."<<endl;
                 break;
             case 'q':
