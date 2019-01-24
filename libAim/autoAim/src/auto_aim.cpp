@@ -12,14 +12,10 @@ AutoAim::AutoAim(int width, int height){
     resizeCount = 0;
 
     //初始化三维坐标点
-<<<<<<< HEAD
-
-=======
     pnpSolver.pushPoints3D(-130, -60, 0);
     pnpSolver.pushPoints3D(130, -60, 0);
     pnpSolver.pushPoints3D(130, 60, 0);
     pnpSolver.pushPoints3D(-130, 60, 0);
->>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
     //初始化相机参数
     //pnpSolver.setCameraMatrix(1020.80666, 0., 695.74256, 0.,1020.80666,388.82902, 0., 0., 1.);
     pnpSolver.setCameraMatrix(1044.11801, 0., 637.0385, 0.,1046.6575,467.3094, 0., 0., 1.);
@@ -113,25 +109,11 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
     }
 }
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
-    cv::FileStorage f;
-    f = FileStorage("../libAim/res/aimdata.yaml",0); //READ
 
     //权重
     float yx_ratio;
     float params_max_height_ratio, params_max_dis_height_ratio, params_min_dis_height_ratio, params_max_allow_angle, params_max_yx_diff_ratio;
     int height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight,ratio_max,ratio_min;
-   /* f["height_diff_weight"] >> height_diff_weight;
-    f["angle_diff_weight"] >> angle_diff_weight;
-    f["height_ratio_weight"] >> height_ratio_weight;
-    f["yx_ratio_weight"] >> yx_ratio_weight;
-    f["ratio_max"] >> ratio_max;
-    f["ratio_min"] >> ratio_min;
-    f["params_max_height_ratio"] >> params_max_height_ratio;
-    f["params_max_dis_height_ratio"] >> params_max_dis_height_ratio;
-    f["params_min_dis_height_ratio"] >> params_min_dis_height_ratio;
-    f["params_max_yx_diff_ratio"] >> params_max_yx_diff_ratio;
-    f["params_max_allow_angle"] >> params_max_allow_angle;
-    f.release();*/
     height_diff_weight=2;
     angle_diff_weight=5;
     height_ratio_weight=2;
@@ -143,12 +125,6 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     params_min_dis_height_ratio= 1;
     params_max_yx_diff_ratio= 1;
     params_max_allow_angle=45;
-    // int angle_diff_weight = 3;
-    // int height_diff_weight = 2;
-    // int angle_diff_weight = 5;
-    // int height_ratio_weight = 2;
-    // int yx_ratio_weight = 3;
-    //初始化
     int size = pre_armor_lamps.size();
     vector<float> diff(size,0x3f3f3f3f);
     vector<float> best_match_index(size,-1);
@@ -234,182 +210,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
         }
     }
 }
-/*
-//匹配灯管
-void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
-    //权重
-    int angle_diff_weight = 3;
-    int height_diff_weight = 2;
-    //初始化
-    int size = pre_armor_lamps.size();
-    vector<float> diff(size);
-    vector<float> best_match_index(size);
-    for(int i=0; i<size; i++){
-        diff[i] = 0x3f3f3f3f;
-        best_match_index[i] = -1;
-    }
-    //计算灯管匹配之间的花费
-    int dist, avg_height, diff_angle, diff_height, ratio, totalDiff,inside_angle,diff_width;
-    int i,j;
-    for(i=0; i<size; i++){
-        float currDiff = 0x3f3f3f3f;
-        int currIndex = -1;
-        const RotatedRect &current = pre_armor_lamps[i];
-        int theta_current = current.angle;
 
-        for(j=i+1;j<size; j++){
-            //计算比例，筛选灯管
-            const RotatedRect &compare = pre_armor_lamps[j];
-            int theta_compare = compare.angle;
-            
-            //灯条角度差超过设定角度忽略
-            diff_angle = abs(theta_compare - theta_current);
-           // cout<<"diff_angle"<<diff_angle<<" "<<theta_compare<<" "<<theta_current<<endl;
-            if(diff_angle > param_diff_angle) continue;
-
-            //内角小于设定角度忽略
-            if(abs(current.center.y - compare.center.y)==0) inside_angle=90;
-            else inside_angle = atanf(abs(current.center.x-compare.center.x)/abs(current.center.y-compare.center.y))*180/CV_PI;
-            //cout<<"inside"<<inside_angle<<endl;
-            if(inside_angle<param_inside_angle) continue;
-            
-            //两灯条高度比例不在范围内则忽略，用比例代替高度差
-            if(compare.size.height/current.size.height > 1.5 || compare.size.height/current.size.height<0.7) continue;
-
-            //两灯条宽度差超过20个像素点忽略
-            diff_width=abs(compare.size.width - current.size.width);
-            //cout<<"diffwidth"<<diff_width<<endl;
-            if(diff_width>param_diff_width) continue;
-
-            dist = ImageTool::calc2PointApproDistance(compare.center, current.center);
-            //cout<<"dist"<<dist<<endl;
-            //灯条间距小于20个像素点忽略
-            if(dist<20) continue;
-            avg_height = (compare.size.height + current.size.height) / 2;
-            ratio = dist / avg_height;
-            //cout<<"ratio: "<<ratio<<endl;
-            if(ratio > 3 || ratio < 1) continue;
-            
-            totalDiff = angle_diff_weight*diff_angle + height_diff_weight*diff_height;
-            if(totalDiff < currDiff){
-                currDiff = totalDiff;
-                currIndex = j;
-            }
-        }
-
-        //一对灯管肯定花费是最少的，所以如果当前花费比两个的花费都要少，就记录是最优
-        if(currIndex==-1) continue;
-        if(currDiff < diff[i] && currDiff < diff[currIndex]){
-            diff[i] = currDiff;
-            diff[currIndex] = currDiff;
-            best_match_index[i] = currIndex;
-            best_match_index[currIndex] = i;
-        }
-    }
-
-    for(i=0; i<size; i++){
-        //cout<<best_match_index[i]<<endl;
-        int index = best_match_index[i];
-        if(index == -1 || index <= i) continue;
-        if(i == best_match_index[index]){
-            real_armor_lamps.push_back(pre_armor_lamps[i]);
-            real_armor_lamps.push_back(pre_armor_lamps[index]);
-        }
-    }
-}
-*/
-/*
-void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
-    int lowerY=0;
-    int lowerIndex=-1;
-    bestCenter.x=-1;
-<<<<<<< HEAD
-    pnpSolver.clearPoints3D();
-    pnpSolver.pushPoints3D(-115, -47, 0);//todo 小装甲
-    pnpSolver.pushPoints3D(115, -47, 0);
-    pnpSolver.pushPoints3D(115, 47, 0);
-    pnpSolver.pushPoints3D(-115, 47, 0);
-    //最优装甲板逻辑
-    for(int i=0; i<real_armor_lamps.size(); i+=2){
-        if(i+1 >= real_armor_lamps.size()) break;
-        int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
-        int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
-
-        if(x/real_armor_lamps[i].size.height>4){  
-            hero_index=i; 
-            pnpSolver.clearPoints3D();
-            pnpSolver.pushPoints3D(-115, -47, 0);
-            pnpSolver.pushPoints3D(115, -47, 0);
-            pnpSolver.pushPoints3D(115, 47, 0);
-            pnpSolver.pushPoints3D(-115, 47, 0);
-            break;
-        }
-=======
-    for(int i=0; i<real_armor_lamps.size(); i+=2){
-        if(i+1 >= real_armor_lamps.size()) break;
-        int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
->>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
-        if(y > lowerY){
-            lowerY = y;
-            lowerIndex = i;
-        }
-    }
-    //优先锁定图像下方装甲板
-    if(lowerIndex == -1){
-        resizeCount++;
-        count=0;
-        if(!broadenRect(rectROI) || resizeCount>3){
-            resetROI();
-            resizeCount = 0;
-        }
-<<<<<<< HEAD
-    } 
-    else if(lowerIndex != -1) {
-        resetROI();
-        resizeCount = 0; 
-=======
-    } else {
-        resizeCount = 0;
->>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
-        count++;
-        //cout<<real_armor_lamps[lowerIndex].x<<"  "<<real_armor_lamps[lowerIndex+1].x<<endl;
-	    if(real_armor_lamps[lowerIndex].center.x > real_armor_lamps[lowerIndex+1].center.x){
-            swap(real_armor_lamps[lowerIndex],real_armor_lamps[lowerIndex+1]);//确保偶数为左灯条，奇数为右灯条
-        }
-        int height = (real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2;
-        //当灯条高度小于10个像素点时放弃锁定，重新寻找合适目标
-        if(height > 10){
-            //cout<<rectROI.x<<" "<<rectROI.y<<endl;
-            bestCenter.x = (real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2 + rectROI.x;
-            bestCenter.y = (real_armor_lamps[lowerIndex].center.y + real_armor_lamps[lowerIndex+1].center.y)/2 + rectROI.y;
-            //cout<<bestCenter<<endl;
-        } else{
-		 resetROI();
-                 count=0;
-	}
-    }
-
-    if(bestCenter.x!=-1){
-        clock_t finish = clock();
-        best_lamps[0] = real_armor_lamps[lowerIndex];
-        best_lamps[1] = real_armor_lamps[lowerIndex+1];
-        best_lamps[0].center.x+=rectROI.x;
-        best_lamps[0].center.y+=rectROI.y;
-        best_lamps[1].center.x+=rectROI.x;
-        best_lamps[1].center.y+=rectROI.y;
-        //cout<<"bestlamps"<<best_lamps[0].center.x<<endl;
-        //cout<<best_lamps<<"bestlamps"<<endl;
-       // cout<<rectROI.x<<"rectroi x"<<endl;
-        rectROI.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x);
-        rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
-        rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
-        rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
-        cout<<rectROI.x<<endl;
-        if(!makeRectSafe(rectROI)){
-            resetROI();
-	}
-    }
-}*/
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int lowerY=0;
     int lowerIndex=-1;
@@ -498,10 +299,10 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
 	    }
     }
 }
-
 BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2f &pitYaw,int is_predict,bool &if_shoot,float time_delay){
 
-    
+     bool isKalman = true;
+     bool isCSM = false;
      if(bestCenter.x != -1){
          circle(src, bestCenter, 20, Scalar(255,255,255), 5);
          rectangle(src, rectROI, Scalar(255,0,0), 2);
@@ -523,45 +324,38 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
 
         Point3d tvec = pnpSolver.getTvec();
         cout<<"x: "<<tvec.x<<"y: "<<tvec.y<<"z: "<<tvec.z<<endl;
-        //vector<Point3f> worldpoint;
-        //worldpoint.push_back(Point3f(tvec.x,tvec.y-37,tvec.z));
-        //vector<Point2f>framepoint = pnpSolver.WorldFrame2ImageFrame(worldpoint);
-        // armor.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x)/4;
-        // armor.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2  - (best_lamps[0].size.height + best_lamps[1].size.height) ;
-        // armor.height = (best_lamps[0].size.height + best_lamps[1].size.height);
-        // armor.width = 1*(best_lamps[1].center.x - best_lamps[0].center.x);
-        // if(armor.y<0){
-        //     return AIM_TARGET_NOT_FOUND;
-        // }
-
-        if(is_predict){
-	    pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/45, 20, 170, currPitch, currYaw);
-	    cout<<"init yaw "<<currYaw<<endl;
-	    measurement.at<float>(0) = currYaw + pitYaw.y;
-	    cout<<"Measurement: "<<measurement<<endl;            
+        if(is_predict && isKalman){
+	        pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/45, 20, 170, currPitch, currYaw);
+	        cout<<"init yaw "<<currYaw<<endl;
+	        measurement.at<float>(0) = currYaw + pitYaw.y;
+	        cout<<"Measurement: "<<measurement<<endl;            
             if(count==1){
                 Mat statePost=(Mat_<float>(2, 1) << currYaw+pitYaw.y,0);
                 aim_predict.model_init();
                 aim_predict.reset_kf_statepost(statePost);
             }
-<<<<<<< HEAD
-            Mat Predict = this->aim_predict.predict(measurement,time_delay/25);
-            
-            float predict_angle=Predict.at<float>(1)*(9);//预测角为经过卡尔曼得出的角速度值乘以系统延迟,经过测试发现 在3m内不考虑子弹飞行时间效果较好,但是3m外则需要考虑
-            if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);//判断当前是否可以射击
-=======
-	   // measurement.at<float>(0) = currYaw + pitYaw.y;  
+	        // measurement.at<float>(0) = currYaw + pitYaw.y;  
             Mat Predict = this->aim_predict.predict(measurement,time_delay);
            // pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/17, -100, 170, currPitch, currYaw);
-	    cout<<"predict: "<<Predict<<endl;
+	        cout<<"predict: "<<Predict<<endl;
             float predict_angle=Predict.at<float>(1)*(2*time_delay+tvec.z/27);
-	    cout<<"time delay "<<time_delay<<endl;
-	    cout<<"add angle: "<<predict_angle<<endl;
+	        cout<<"time delay "<<time_delay<<endl;
+	        cout<<"add angle: "<<predict_angle<<endl;
             if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);
->>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
             pitYaw.y += predict_angle;
             
-        }else{   
+        }
+        else if(is_predict && isCSM){
+            vector<float> pred;
+            vector<float> now;
+            now.push_back(tvec.x+tvec.z/45);
+            now.push_back(tvec.y+20);
+            now.push_back(tvec.z+170);
+            csmModel.run(1,now,pred,currPitch,currYaw);
+            pitYaw = calPitchAndYaw(pred[0],pred[1],pred[2],currPitch,currYaw);
+            if_shoot = true;
+        }
+        else{   
             pitYaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/45, -50, 170, currPitch, currYaw);
         }
         return AIM_TARGET_FOUND;
