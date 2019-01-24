@@ -109,25 +109,11 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
     }
 }
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
-    cv::FileStorage f;
-    f = FileStorage("../libAim/res/aimdata.yaml",0); //READ
 
     //权重
     float yx_ratio;
     float params_max_height_ratio, params_max_dis_height_ratio, params_min_dis_height_ratio, params_max_allow_angle, params_max_yx_diff_ratio;
     int height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight,ratio_max,ratio_min;
-   /* f["height_diff_weight"] >> height_diff_weight;
-    f["angle_diff_weight"] >> angle_diff_weight;
-    f["height_ratio_weight"] >> height_ratio_weight;
-    f["yx_ratio_weight"] >> yx_ratio_weight;
-    f["ratio_max"] >> ratio_max;
-    f["ratio_min"] >> ratio_min;
-    f["params_max_height_ratio"] >> params_max_height_ratio;
-    f["params_max_dis_height_ratio"] >> params_max_dis_height_ratio;
-    f["params_min_dis_height_ratio"] >> params_min_dis_height_ratio;
-    f["params_max_yx_diff_ratio"] >> params_max_yx_diff_ratio;
-    f["params_max_allow_angle"] >> params_max_allow_angle;
-    f.release();*/
     height_diff_weight=2;
     angle_diff_weight=5;
     height_ratio_weight=2;
@@ -139,12 +125,6 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     params_min_dis_height_ratio= 1;
     params_max_yx_diff_ratio= 1;
     params_max_allow_angle=45;
-    // int angle_diff_weight = 3;
-    // int height_diff_weight = 2;
-    // int angle_diff_weight = 5;
-    // int height_ratio_weight = 2;
-    // int yx_ratio_weight = 3;
-    //初始化
     int size = pre_armor_lamps.size();
     vector<float> diff(size,0x3f3f3f3f);
     vector<float> best_match_index(size,-1);
@@ -230,6 +210,10 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
         }
     }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1977112d77e20a905b3908dba2ca88172218e9b3
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int lowerY=0;
     int lowerIndex=-1;
@@ -318,10 +302,10 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
 	    }
     }
 }
-
 BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2f &pitYaw,int is_predict,bool &if_shoot,float time_delay){
 
-    
+     bool isKalman = true;
+     bool isCSM = false;
      if(bestCenter.x != -1){
          circle(src, bestCenter, 20, Scalar(255,255,255), 5);
          rectangle(src, rectROI, Scalar(255,0,0), 2);
@@ -343,38 +327,38 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
 
         Point3d tvec = pnpSolver.getTvec();
         cout<<"x: "<<tvec.x<<"y: "<<tvec.y<<"z: "<<tvec.z<<endl;
-        //vector<Point3f> worldpoint;
-        //worldpoint.push_back(Point3f(tvec.x,tvec.y-37,tvec.z));
-        //vector<Point2f>framepoint = pnpSolver.WorldFrame2ImageFrame(worldpoint);
-        // armor.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x)/4;
-        // armor.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2  - (best_lamps[0].size.height + best_lamps[1].size.height) ;
-        // armor.height = (best_lamps[0].size.height + best_lamps[1].size.height);
-        // armor.width = 1*(best_lamps[1].center.x - best_lamps[0].center.x);
-        // if(armor.y<0){
-        //     return AIM_TARGET_NOT_FOUND;
-        // }
-
-        if(is_predict){
-	    pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/45, 20, 170, currPitch, currYaw);
-	    cout<<"init yaw "<<currYaw<<endl;
-	    measurement.at<float>(0) = currYaw + pitYaw.y;
-	    cout<<"Measurement: "<<measurement<<endl;            
+        if(is_predict && isKalman){
+	        pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/45, 20, 170, currPitch, currYaw);
+	        cout<<"init yaw "<<currYaw<<endl;
+	        measurement.at<float>(0) = currYaw + pitYaw.y;
+	        cout<<"Measurement: "<<measurement<<endl;            
             if(count==1){
                 Mat statePost=(Mat_<float>(2, 1) << currYaw+pitYaw.y,0);
                 aim_predict.model_init();
                 aim_predict.reset_kf_statepost(statePost);
             }
-	   // measurement.at<float>(0) = currYaw + pitYaw.y;  
+	        // measurement.at<float>(0) = currYaw + pitYaw.y;  
             Mat Predict = this->aim_predict.predict(measurement,time_delay);
            // pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/17, -100, 170, currPitch, currYaw);
-	    cout<<"predict: "<<Predict<<endl;
+	        cout<<"predict: "<<Predict<<endl;
             float predict_angle=Predict.at<float>(1)*(2*time_delay+tvec.z/27);
-	    cout<<"time delay "<<time_delay<<endl;
-	    cout<<"add angle: "<<predict_angle<<endl;
+	        cout<<"time delay "<<time_delay<<endl;
+	        cout<<"add angle: "<<predict_angle<<endl;
             if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);
             pitYaw.y += predict_angle;
             
-        }else{   
+        }
+        else if(is_predict && isCSM){
+            vector<float> pred;
+            vector<float> now;
+            now.push_back(tvec.x+tvec.z/45);
+            now.push_back(tvec.y+20);
+            now.push_back(tvec.z+170);
+            csmModel.run(1,now,pred,currPitch,currYaw);
+            pitYaw = calPitchAndYaw(pred[0],pred[1],pred[2],currPitch,currYaw);
+            if_shoot = true;
+        }
+        else{   
             pitYaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/45, -50, 170, currPitch, currYaw);
         }
         return AIM_TARGET_FOUND;

@@ -107,7 +107,11 @@ void ControlModel::Aim(){
             if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
                  //rectangle(src2, autoAim->armor, Scalar(255,0,0), 2);
                  //int finish = basic_tool.currentTimeMsGet();
+<<<<<<< HEAD
+                 cout<<finish_1-start<<"   time"<<endl;
+=======
                  //cout<<finish-start<<"   time"<<endl;
+>>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
                 interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
                 unsigned char num=0x01;
