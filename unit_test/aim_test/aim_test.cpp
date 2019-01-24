@@ -14,7 +14,6 @@ int main(int argc, char * argv[])
     cout << "文件列表: "<< endl;
     while((ptr=readdir(dir))!=NULL)
     {
-        cout<<"1"<<endl;
         //跳过'.'和'..'两个目录
         if(ptr->d_name[0] == '.')
             continue;

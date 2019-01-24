@@ -109,7 +109,7 @@ void ControlModel::Aim(){
                  //rectangle(src2, autoAim->armor, Scalar(255,0,0), 2);
                  //int finish = basic_tool.currentTimeMsGet();
                  cout<<finish_1-start<<"   time"<<endl;
-                //interface->YunTaiDeltaSet(angle.x, angle.y);
+                interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
                 unsigned char num=0x01;
                 if(if_shoot)

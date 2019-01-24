@@ -12,10 +12,7 @@ AutoAim::AutoAim(int width, int height){
     resizeCount = 0;
 
     //初始化三维坐标点
-    pnpSolver.pushPoints3D(-115, -47, 0);
-    pnpSolver.pushPoints3D(115, -47, 0);
-    pnpSolver.pushPoints3D(115, 47, 0);
-    pnpSolver.pushPoints3D(-115, 47, 0);
+
     //初始化相机参数
     //pnpSolver.setCameraMatrix(1020.80666, 0., 695.74256, 0.,1020.80666,388.82902, 0., 0., 1.);
     pnpSolver.setCameraMatrix(1044.11801, 0., 637.0385, 0.,1046.6575,467.3094, 0., 0., 1.);
@@ -208,11 +205,17 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int lowerIndex=-1;
     int hero_index=-1;
     bestCenter.x=-1;
+    pnpSolver.clearPoints3D();
+    pnpSolver.pushPoints3D(-115, -47, 0);//todo 小装甲
+    pnpSolver.pushPoints3D(115, -47, 0);
+    pnpSolver.pushPoints3D(115, 47, 0);
+    pnpSolver.pushPoints3D(-115, 47, 0);
     //最优装甲板逻辑
     for(int i=0; i<real_armor_lamps.size(); i+=2){
         if(i+1 >= real_armor_lamps.size()) break;
         int y = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
         int x = abs(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
+
         if(x/real_armor_lamps[i].size.height>4){  
             hero_index=i; 
             pnpSolver.clearPoints3D();
@@ -254,6 +257,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         }
     } 
     else if(lowerIndex != -1) {
+        resetROI();
         resizeCount = 0; 
         count++;
         //cout<<real_armor_lamps[lowerIndex].x<<"  "<<real_armor_lamps[lowerIndex+1].x<<endl;
@@ -333,7 +337,7 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
             }
             Mat Predict = this->aim_predict.predict(measurement,time_delay/25);
             
-            float predict_angle=Predict.at<float>(1)*(time_delay);//预测角为经过卡尔曼得出的角速度值乘以系统延迟,经过测试发现 在3m内不考虑子弹飞行时间效果较好,但是3m外则需要考虑
+            float predict_angle=Predict.at<float>(1)*(9);//预测角为经过卡尔曼得出的角速度值乘以系统延迟,经过测试发现 在3m内不考虑子弹飞行时间效果较好,但是3m外则需要考虑
             if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);//判断当前是否可以射击
             pitYaw.y += predict_angle;
             

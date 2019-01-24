@@ -45,6 +45,7 @@ void KalmanCSMFilter::init(double t0, const Eigen::VectorXd& x0) {
   this->t0 = t0;
   t = t0;
   initialized = true;
+  
 }
 
 void KalmanCSMFilter::init() {
