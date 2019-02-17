@@ -15,6 +15,7 @@
 #include "basic_tool.h"
 #include "serial_port_debug.h"
 #include "usb_capture_with_thread.h"
+#include "fstream"
 
 using namespace cv;
 
@@ -40,7 +41,7 @@ void ControlModel::serialListenDataProcess(SerialPacket recvPacket) {
    // cout<<"CMD:"<<(int)CMD<<edl;
     if(CMD_SERIAL_ABS_YUNTAI_DELTA==CMD){
         //底层数据更新,pitch/yaw
-         pRobotModel->mcuDataUpdate(recvPacket.getFloatInBuffer(2),recvPacket.getFloatInBuffer(6));
+        pRobotModel->mcuDataUpdate(recvPacket.getFloatInBuffer(2),recvPacket.getFloatInBuffer(6));
     } else if(CMD_SERIAL_MINIPC_SHUTDOWN==CMD){
         //关机命令
         cout << "shutdown!!!!!!!!!!" << endl;
@@ -57,6 +58,9 @@ void ControlModel::processFSM(){
             case ROBOT_MODE_AUTOAIM:{
                 autoAim->set_parameters(3,45,30,20);
                 autoAim->setEnemyColor(BaseAim::color_red);
+                mthread.join();
+                mthread.init(autoAim);
+                mthread.start();
                 break;
             }
         }
@@ -65,7 +69,6 @@ void ControlModel::processFSM(){
     //模式运行
     switch (pRobotModel->getCurrentMode()){
         case ROBOT_MODE_AUTOAIM:{
-
             Aim();
             break;
         }
@@ -87,6 +90,8 @@ void ControlModel::Aim(){
         //UsbCaptureWithThread* cap2 = pRobotModel->getpUsbCaptureAssist();
         //if(cap2->getImg(src2)!=0) cout<<"src is error"<<endl;
         if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
+        char c = waitKey(1);
+        cap->adjustParams(c);
         //src2 = imread("../res/2.png");
         SerialInterface *interface = pRobotModel->getpSerialInterface();
         interface->getAbsYunTaiDelta();
@@ -107,17 +112,14 @@ void ControlModel::Aim(){
             if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
                  //rectangle(src2, autoAim->armor, Scalar(255,0,0), 2);
                  //int finish = basic_tool.currentTimeMsGet();
-<<<<<<< HEAD
-                 cout<<finish_1-start<<"   time"<<endl;
-=======
                  //cout<<finish-start<<"   time"<<endl;
->>>>>>> afdb8ecde0542395096c89a7248a49a5bd6370bd
                 interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
+                ofstream outfile1("/home/weepies/output.txt", ios::ate);
+                outfile1 << angle.y << endl;
                 unsigned char num=0x01;
                 if(if_shoot)
 	                interface->YunTaiShoot(num);
-                
                 //int result=aim_assist.check_armor(src2(autoAim->armor));
                 // if(result!=-1){
                 //     putText(src2,to_string(result),Point(autoAim->armor.x,autoAim->armor.y-30),cv::FONT_HERSHEY_COMPLEX,2,2);

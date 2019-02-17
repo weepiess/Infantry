@@ -4,6 +4,7 @@
 #include <iostream>
 #include <eigen3/Eigen/Dense>
 #include <math.h>
+#include <vector>
 
 class Model
 {
@@ -20,20 +21,27 @@ private:
 	Eigen::MatrixXf R;
 	Eigen::MatrixXf K;
 	Eigen::MatrixXf H;
+
+	float velocity,acceleration;
+
+	float getMin(float a,float b,float c);
+	float getMax(float a,float b,float c);
+	float amend(float reality,int k,int axis);
 public:
 	Model();
 
 	float nextframe;
 
 	void CSM_init(float x0);
-	void CSM_predict(float y,float& predict,int k,int axis);
+	float CSM_predict(float y,int k,int axis);
 };
 
 class Predict
 {
 private:
-	Model tracking_x,tracking_z;
 	void trans(float pitch,float yaw,Eigen::MatrixXf& M1,Eigen::MatrixXf& M2,int flag);
+
+	Model tracking_x,tracking_z;
 	int times=0;
 	float last_pred[3];
 
