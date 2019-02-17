@@ -69,6 +69,14 @@ void SerialInterface::YunTaiDeltaSet(float pitch,float yaw){
     dataSend(sendPacket);
 }
 
+void SerialInterface::YunTaiAbsSet(float pitch ,float yaw ){
+    SerialPacket sendPacket;
+    sendPacket.creatPacket(CMD_SERIAL_YUNTAI_ABS_SET);
+    sendPacket.setFloatInBuffer(pitch,2);
+    sendPacket.setFloatInBuffer(yaw,6);
+    sendPacket.setUncharInBuffer(0x00,10);
+    dataSend(sendPacket);   
+}
 
 void SerialInterface::getAbsYunTaiDelta(){
     SerialPacket recvPacket;

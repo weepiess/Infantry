@@ -21,6 +21,7 @@
 #include <future>
 #include "basic_tool.h"
 #include "mind_vision.h"
+#include "autoptz.h"
 
 class ControlModel{
 public:
@@ -38,18 +39,21 @@ private:
     RobotMode mSetMode;
     BasicTool basic_tool;
     AutoAim* autoAim;
+    AutoPTZ autoptz;
   //  Aim_assistant aim_assist;
     vector<double> result;
     int armor_id=-1;
 private:
     RobotModel* pRobotModel;
     //相关临时变量
-    
+    MindVision* cap;
+    SerialInterface* interface;
         //是否需要确认装甲板
     bool need_check=true;
     std::future<int> tmp;
 private:
-    void Aim();
+    void Aim(bool is_shoot_control=true);
+    void AutoPTZControl();
 
 };
 

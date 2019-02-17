@@ -6,7 +6,7 @@
 #include "time.h"
 #include "aim_predict.h"
 #include "usb_capture_with_opencv.h"
-#include "CSM_model.h"
+#include "aim_assistant.h"
 //#include "aim_assistant.h"
 using namespace cv;
 using namespace std;
@@ -51,7 +51,7 @@ private:
     bool is_check_armor=true;
     Rect rectROI;
     Aim_predict aim_predict;
-    Predict csmModel;
+    Aim_assistant aim_assistant;
 };                                                                                                      
 
 #endif

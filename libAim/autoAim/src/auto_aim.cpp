@@ -23,6 +23,7 @@ AutoAim::AutoAim(int width, int height){
     pnpSolver.setDistortionCoef(-0.1018, 0.1015, -0.0135, -0.00073262,0.000241165);
     aim_predict.model_init();
     bestCenter.x=-1;
+    aim_assistant.init("../model2.pb");
 }
 
 
@@ -62,17 +63,19 @@ bool AutoAim::setImage(Mat &img){
     int thresh = 40, substract_thresh = 100;
     resetROI();
     mask = img(rectROI);
+    medianBlur(img,img,1);
     split(mask, channel);
     Mask = channel[0];
-    diff = channel[0] - channel[1];
-    GaussianBlur(Mask, Mask, Size(5,5), 0);
+    diff = channel[0] - channel[2];
+    //GaussianBlur(Mask, Mask, Size(5,5), 0);
     threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
     threshold(diff, diff, substract_thresh, 255, THRESH_BINARY);
     Mat element = getStructuringElement( MORPH_ELLIPSE, Size(1, 3));
-    for (int i = 0; i < 8; ++i){
-        dilate( diff, diff, element);
-    }   
-    bitwise_and(Mask, diff, mask);
+    mask = diff;
+    // for (int i = 0; i < 1; ++i){
+    //     dilate( diff, diff, element);
+    // }   
+    //bitwise_and(Mask, diff, mask);
     
     /*
     if(enemyColor == color_blue){
@@ -114,17 +117,16 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     float yx_ratio;
     float params_max_height_ratio, params_max_dis_height_ratio, params_min_dis_height_ratio, params_max_allow_angle, params_max_yx_diff_ratio;
     int height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight,ratio_max,ratio_min;
-    height_diff_weight=2;
-    angle_diff_weight=5;
+    angle_diff_weight=6;
     height_ratio_weight=2;
     yx_ratio_weight=3;
     ratio_max=6;
     ratio_min= 1;
-    params_max_height_ratio= 2;
-    params_max_dis_height_ratio= 10;
+    params_max_height_ratio= 1.5;
+    params_max_dis_height_ratio= 4;
     params_min_dis_height_ratio= 1;
     params_max_yx_diff_ratio= 1;
-    params_max_allow_angle=45;
+    params_max_allow_angle=2;
     int size = pre_armor_lamps.size();
     vector<float> diff(size,0x3f3f3f3f);
     vector<float> best_match_index(size,-1);
@@ -304,8 +306,8 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
      bool isKalman = true;
      bool isCSM = false;
      if(bestCenter.x != -1){
-         circle(src, bestCenter, 20, Scalar(255,255,255), 5);
-         rectangle(src, rectROI, Scalar(255,0,0), 2);
+         //circle(src, bestCenter, 20, Scalar(255,255,255), 5);
+         //rectangle(src, rectROI, Scalar(255,0,0), 2);
      }
 //    imshow("src",src);
   //  waitKey(1);
@@ -313,11 +315,24 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
         //circle(src, Point(xc1,yc1), 20, Scalar(255,255,0), 2);
         //circle(src, Point(xc2,yc2), 20, Scalar(255,255,0), 2);
         count++;
-        pnpSolver.pushPoints2D(cal_x_y(best_lamps[0],1));//P1
-        pnpSolver.pushPoints2D(cal_x_y(best_lamps[1],1));//P3
+        Mat frame;
+        src.copyTo(frame);
+        Rect rect;
+        Point2d left_up = cal_x_y(best_lamps[0],1);
+        Point2d right_up = cal_x_y(best_lamps[1],1);
+        rect.x = left_up.x;
+        rect.y = left_up.y-0.15*best_lamps[0].size.height;
+        rect.height = (1.5)*best_lamps[0].size.height;
+        rect.width = abs(right_up.x - left_up.x);
+        rectangle(src,rect,Scalar(0,255,255));
+        int number = aim_assistant.check_armor(frame(rect));
+        if(number != -1) putText(src,to_string(number),Point(15,15),1,1,Scalar(0,0,255),2);
+        pnpSolver.pushPoints2D(left_up);//P1
+        pnpSolver.pushPoints2D(right_up);//P3
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[1],0));//P2
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[0],0));//P4
-
+        imshow("src",src);
+        waitKey(1);
         pnpSolver.solvePnP();
         pnpSolver.clearPoints2D();
         //pnpSolver.showParams();
@@ -344,16 +359,6 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
             if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle);
             pitYaw.y += predict_angle;
             
-        }
-        else if(is_predict && isCSM){
-            vector<float> pred;
-            vector<float> now;
-            now.push_back(tvec.x+tvec.z/45);
-            now.push_back(tvec.y+20);
-            now.push_back(tvec.z+170);
-            csmModel.run(1,now,pred,currPitch,currYaw);
-            pitYaw = calPitchAndYaw(pred[0],pred[1],pred[2],currPitch,currYaw);
-            if_shoot = true;
         }
         else{   
             pitYaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/45, -50, 170, currPitch, currYaw);

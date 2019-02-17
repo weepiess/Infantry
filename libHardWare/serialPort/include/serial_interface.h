@@ -21,10 +21,12 @@
 typedef enum:unsigned char {
     CMD_SERIAL_CHASSIS_STOP_SET = 0x01,
     CMD_SERIAL_YUNTAI_DELTA_SET=0x10,
+    CMD_SERIAL_YUNTAI_ABS_SET = 0x11,
     CMD_SERIAL_SHOOT=0x12,
     CMD_SERIAL_DATA_UPDATE=0xb0,
     CMD_SERIAL_MINIPC_SHUTDOWN=0xc1,
-    CMD_SERIAL_ABS_YUNTAI_DELTA = 0x13
+    CMD_SERIAL_ABS_YUNTAI_DELTA = 0x13,
+    CMD_SERIAL_MODE_CAHNGE = 0Xa0
 } SerialPortCMD;
 
 
@@ -87,7 +89,7 @@ public:
     */
     void YunTaiDeltaSet(float pitch,float yaw);
 
-
+    void YunTaiAbsSet(float pitch,float yaw);
     /* 获取云台的绝对角度
     *　@return: Point2f，云台的pitch和yaw轴的角度　
     */
