@@ -4,6 +4,7 @@
         "dense": "cpp",
         "future": "cpp",
         "cholesky": "cpp",
+<<<<<<< HEAD
         "cctype": "cpp",
         "cmath": "cpp",
         "cstdarg": "cpp",
@@ -79,5 +80,8 @@
         "complex": "cpp",
         "functional": "cpp"
 >>>>>>> 3512af706918beabf795b53a0b7a69bc4ef5bd80
+=======
+        "ostream": "cpp"
+>>>>>>> a1cd5aa8ab75098dc8f67a2c6aab9aa7eb68a7cd
     }
 }

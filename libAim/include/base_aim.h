@@ -52,6 +52,16 @@ public:
      */
     void setTimeDelay(double timeDelay);
 
+    /** 低通滤波
+     * @return: void
+     */
+    float datafilter(float newdata);
+
+    /** 低通滤波
+     * @return: void
+     */
+    float datafilterII(float newdata);
+
 public:
     //敌方颜色，调用时只能使用变量名，不能直接使用0或１
     const static int color_red = 0;
@@ -120,6 +130,22 @@ protected:
     //图像的宽高
     int IMG_WIDTH;
     int IMG_HEIGHT;
+
+private:
+    int num_x = 0;      //一个过渡值，对于同方向变化量大的数据，num_x越大 
+    float k_x = 0.2;    //表示对新读入的数据的信任度，取值范围0-1 
+    int old_flag = 0;   //表示第n-2个数据到第n-1个数据的变化趋势，加为1，减为0 
+    int new_flag = 0;   //表示第n-1个数据到第n个数据的变化趋势，加为1，减为0
+    float old_data = 0;     //第n-1次的答案 
+    float new_data = 0;     //第n次的输入值 
+    int Threshold_1 = 8;
+    int Threshold_2 = 20;
+
+    float gain = 1.482463775e+01;
+    float xv[3];
+    float yv[3]; 
+    float next_input_value = 0;
+    int key=0;
 };
 
 #endif

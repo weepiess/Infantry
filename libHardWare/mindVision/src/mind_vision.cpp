@@ -162,7 +162,7 @@ void MindVision::adjustParams(unsigned char c){
     cout<<c<<endl;
     //保存参数
     if(c=='s'){
-        cv::FileStorage f("../libHardWare/mindVision/res/light_red_config.yaml", cv::FileStorage::WRITE);
+        cv::FileStorage f("../libHardWare/mindVision/res/light_blue_config.yaml", cv::FileStorage::WRITE);
         f << "frame_speed" << index;
         f << "gamma" << gamma;
         f << "exposure_time" << exposureTime;

@@ -17,11 +17,12 @@
 #include "opencv2/opencv.hpp"
 #include "robot_model.h"
 #include "auto_aim.h"
-//#include "aim_assistant.h"
+#include "aim_assistant.h"
 #include <future>
 #include "basic_tool.h"
 #include "mind_vision.h"
 #include "autoptz.h"
+#include "datathread.h"
 
 class ControlModel{
 public:
@@ -36,6 +37,7 @@ public:
 
 private:
     //机器人临时模式变量
+    cv::FileStorage file;
     RobotMode mSetMode;
     BasicTool basic_tool;
     AutoAim* autoAim;
@@ -51,6 +53,8 @@ private:
         //是否需要确认装甲板
     bool need_check=true;
     std::future<int> tmp;
+    NYdector mthread;
+    Aim_assistant* aim_assistant;
 private:
     void Aim(bool is_shoot_control=true);
     void AutoPTZControl();

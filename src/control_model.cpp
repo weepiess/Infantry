@@ -15,6 +15,7 @@
 #include "basic_tool.h"
 #include "serial_port_debug.h"
 #include "usb_capture_with_thread.h"
+#include "fstream"
 
 using namespace cv;
 
@@ -24,13 +25,14 @@ ControlModel::~ControlModel(){}
 
 void ControlModel::init(RobotModel* robotModel){
     pRobotModel=robotModel;
-    autoAim = new AutoAim(1280, 720);
+    
     //配置文件
     //初始模式初始化
     mSetMode=ROBOT_MODE_AUTOAIM;
     cap = pRobotModel->getMvisionCapture();
     interface = pRobotModel->getpSerialInterface();
-    //aim_assist.init("../res/model3.pb");
+    aim_assistant->init("../model3.pb");
+    autoAim->init(1280,720,aim_assistant);
 }
 
 //串口数据接收处理入口
@@ -42,7 +44,7 @@ void ControlModel::serialListenDataProcess(SerialPacket recvPacket) {
    // cout<<"CMD:"<<(int)CMD<<edl;
     if(CMD_SERIAL_ABS_YUNTAI_DELTA==CMD){
         //底层数据更新,pitch/yaw
-         pRobotModel->mcuDataUpdate(recvPacket.getFloatInBuffer(2),recvPacket.getFloatInBuffer(6));
+        pRobotModel->mcuDataUpdate(recvPacket.getFloatInBuffer(2),recvPacket.getFloatInBuffer(6));
     } else if(CMD_SERIAL_MINIPC_SHUTDOWN==CMD){
         //关机命令
         cout << "shutdown!!!!!!!!!!" << endl;
@@ -62,12 +64,14 @@ void ControlModel::processFSM(){
                 autoptz.join();
                 autoAim->set_parameters(3,45,30,20);
                 autoAim->setEnemyColor(BaseAim::color_red);
+                mthread.join();
+                mthread.init(autoAim);
+                mthread.start();
                 break;
             }
             case ROBOT_MODE_AUTO_PTZ:{
                 interface->YunTaiAbsSet(0,180);
                 usleep(100);
-                
                 autoptz.setCurrentAngel(pRobotModel->getCurrentYaw()); 
                 autoptz.setScanDirection(AutoPTZ::CLOCKWISE);
                 autoptz.setScanSpeed(AutoPTZ::SLOW);
@@ -97,29 +101,38 @@ void ControlModel::processFSM(){
 }
 
 void ControlModel::Aim(bool is_shoot_control){
-    int start = basic_tool.currentTimeMsGet();
-    Mat src1;
-    vector<RotatedRect> pre_armor_lamps;
-    vector<RotatedRect> real_armor_lamps;
-    Point2f current_angle;
-    if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
-    interface->getAbsYunTaiDelta();
-    current_angle.x = pRobotModel->getCurrentPitch();
-    current_angle.y = pRobotModel->getCurrentYaw();
-    Point2f angle;
-    if(autoAim->setImage(src1)){
-        autoAim->findLamp_rect(pre_armor_lamps);
-        autoAim->match_lamps(pre_armor_lamps,real_armor_lamps);
+        int start = basic_tool.currentTimeMsGet();
+        Mat src1;
+        Mat src2;
+        vector<RotatedRect> pre_armor_lamps;
+        vector<RotatedRect> real_armor_lamps;
+        Point2f current_angle;
+        MindVision* cap = pRobotModel->getMvisionCapture();
+
+        if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
+        char c = waitKey(1);
+        cap->adjustParams(c);
+        //src2 = imread("../res/2.png");
+        SerialInterface *interface = pRobotModel->getpSerialInterface();
+        interface->getAbsYunTaiDelta();
+        current_angle.x = pRobotModel->getCurrentPitch();
+        current_angle.y = pRobotModel->getCurrentYaw();
+        Point2f angle;
+
+
+        if(autoAim->setImage(src1)){
+            autoAim->findLamp_rect(pre_armor_lamps);
+            autoAim->match_lamps(pre_armor_lamps,real_armor_lamps);
             
-        autoAim->select_armor(real_armor_lamps);
-        int finish = basic_tool.currentTimeMsGet();
-        bool if_shoot=false;
-        if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
-            interface->YunTaiDeltaSet(angle.x, angle.y);
-            cout<<"angle1 "<<angle<<endl;
-            unsigned char num=0x01;
-            if(if_shoot&&is_shoot_control)
-	            interface->YunTaiShoot(num);
+            autoAim->select_armor(real_armor_lamps);
+            int finish = basic_tool.currentTimeMsGet();
+            bool if_shoot=false;
+            if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+                interface->YunTaiDeltaSet(angle.x, angle.y);
+                cout<<"angle1 "<<angle<<endl;
+                unsigned char num=0x01;
+                if(if_shoot)
+	                interface->YunTaiShoot(num);
 
         }else{
             interface->YunTaiDeltaSet(0xff,0xff);

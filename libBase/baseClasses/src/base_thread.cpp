@@ -42,7 +42,7 @@ pthread_t BaseThread::getThreadID()
 }  
   
 int BaseThread::getState()  
-{  
+{    
     return threadStatus;  
 }  
   

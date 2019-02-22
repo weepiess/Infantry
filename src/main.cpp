@@ -14,6 +14,8 @@
 #include "control_model.h"
 #include "serial_listen_thread.h"
 #include "serial_port_debug.h"
+#include "base_aim.h"
+#include "fstream"
 
 using  namespace std;
 
@@ -40,7 +42,6 @@ int main(){
     }
     serialListenThread.join();
     cout<<"error end!"<<endl;
-    //getchar();//防止监听线程意外结束直接退出。
+    getchar();//防止监听线程意外结束直接退出。
     return 0;
 }
-
