@@ -64,7 +64,7 @@ int MindVision::startPlay(int hCamera_, unsigned char color){
     */
     cv::FileStorage f;
     if(color == 0){ //红色
-        f = FileStorage("../libHardWare/mindVision/res/light_red_config.yaml", cv::FileStorage::READ);
+        f = FileStorage("../libHardWare/mindVision/res/light_blue_config.yaml", cv::FileStorage::READ);
     } else {
         f = FileStorage("../libHardWare/mindVision/res/light_blue_config.yaml", cv::FileStorage::READ);
     }

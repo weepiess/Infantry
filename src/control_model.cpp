@@ -31,8 +31,11 @@ void ControlModel::init(RobotModel* robotModel){
     mSetMode=ROBOT_MODE_AUTOAIM;
     cap = pRobotModel->getMvisionCapture();
     interface = pRobotModel->getpSerialInterface();
-    aim_assistant->init("../model3.pb");
-    autoAim->init(1280,720,aim_assistant);
+    cout<<"1"<<endl;
+    aim_assistant.init("../model4.pb");
+    cout<<"2"<<endl;
+    autoAim.init(&aim_assistant);
+
 }
 
 //串口数据接收处理入口
@@ -62,11 +65,11 @@ void ControlModel::processFSM(){
         switch (mSetMode){
             case ROBOT_MODE_AUTOAIM:{
                 autoptz.join();
-                autoAim->set_parameters(3,45,30,20);
-                autoAim->setEnemyColor(BaseAim::color_red);
-                mthread.join();
-                mthread.init(autoAim);
-                mthread.start();
+                autoAim.set_parameters(3,45,30,20);
+                autoAim.setEnemyColor(BaseAim::color_red);
+                //mthread.join();
+               //mthread.init(autoAim);
+                //mthread.start();
                 break;
             }
             case ROBOT_MODE_AUTO_PTZ:{
@@ -120,14 +123,16 @@ void ControlModel::Aim(bool is_shoot_control){
         Point2f angle;
 
 
-        if(autoAim->setImage(src1)){
-            autoAim->findLamp_rect(pre_armor_lamps);
-            autoAim->match_lamps(pre_armor_lamps,real_armor_lamps);
+        if(autoAim.setImage(src1)){
+            autoAim.findLamp_rect(pre_armor_lamps);
+            autoAim.match_lamps(pre_armor_lamps,real_armor_lamps);
             
-            autoAim->select_armor(real_armor_lamps);
+            autoAim.select_armor(real_armor_lamps);
             int finish = basic_tool.currentTimeMsGet();
             bool if_shoot=false;
-            if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+            if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+                int end = basic_tool.currentTimeMsGet();
+                cout<<"time cost: "<<end-start<<endl;
                 interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
                 unsigned char num=0x01;
@@ -136,7 +141,10 @@ void ControlModel::Aim(bool is_shoot_control){
 
         }else{
             interface->YunTaiDeltaSet(0xff,0xff);
-            }    
+        }
+        imshow("src",src1);
+        waitKey(1);
+
     }        
 }
 
@@ -151,14 +159,14 @@ void ControlModel::AutoPTZControl(){
     current_angle.x = pRobotModel->getCurrentPitch();
     current_angle.y = pRobotModel->getCurrentYaw();
     Point2f angle;
-    if(autoAim->setImage(src1)){
-        autoAim->findLamp_rect(pre_armor_lamps);
-        autoAim->match_lamps(pre_armor_lamps,real_armor_lamps);
+    if(autoAim.setImage(src1)){
+        autoAim.findLamp_rect(pre_armor_lamps);
+        autoAim.match_lamps(pre_armor_lamps,real_armor_lamps);
             
-        autoAim->select_armor(real_armor_lamps);
+        autoAim.select_armor(real_armor_lamps);
         int finish = basic_tool.currentTimeMsGet();
         bool if_shoot=false;
-        if(autoAim->aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+        if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
             autoptz.isTargetFind(true);
             interface->YunTaiDeltaSet(angle.x, angle.y);
             cout<<"angle1 "<<angle<<endl;

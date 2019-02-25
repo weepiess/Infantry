@@ -19,7 +19,7 @@ public:
     ~AutoAim();
 
 public:
-    void init(int width, int height,Aim_assistant* checker);
+    void init(Aim_assistant* checker);
     bool setImage(Mat &src);
     void findLamp_rect(vector<RotatedRect> &pre_armor_lamps); //搜索所有可能灯条
     void match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps); //匹配灯条
@@ -66,7 +66,7 @@ private:
     float ratio2_max;
     float ratio2_min;
     float max=-1;
-
+    int c = 1;
     int num = 0;      //一个过渡值，对于同方向变化量大的数据，num_x越大 
     int old_flags = 0;   //表示第n-2个数据到第n-1个数据的变化趋势，加为1，减为0 
     int new_flags = 0;   //表示第n-1个数据到第n个数据的变化趋势，加为1，减为0

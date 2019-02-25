@@ -6,6 +6,15 @@ Aim_assistant::~Aim_assistant(){}
 void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
     if(!img.empty()){
     cv::resize(img,img,cv::Size(rows,cols));
+    for(int i = 0;i<img.rows;i++){
+        for(int j = 0;j<img.cols;j++){
+            for(int k = 0; k<3;k++){
+                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.5+20;
+                if(tmp>255) img.at<Vec3b>(i,j)[k] = 2*255 - tmp;
+                else img.at<Vec3b>(i,j)[k] = tmp;
+            }
+        }
+    }
     //GaussianBlur(img, img, Size(3,3), 0);
     cvtColor(img,img,COLOR_BGR2GRAY);
     float *p=tensor->flat<float>().data();
@@ -89,7 +98,7 @@ int Aim_assistant::check_armor(cv::Mat frame){
             if(tmap(0,i)>=tmap(0,m))
              m=i;
         }
-        if(tmap(0,m)>0.6){
+        if(tmap(0,m)>0.55){
             cout<<"result: "<<m+1<<endl;
             return m+1;
         }else return -1;

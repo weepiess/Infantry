@@ -9,16 +9,13 @@ AutoAim::AutoAim(){}
 
 AutoAim::~AutoAim(){}
 
-void AutoAim::init(int width, int height,Aim_assistant* checker){
-    ratio1_max = -1;
-    ratio1_min = 1000;
-    ratio2_max = -1;
-    ratio2_min = 1000;
-    IMG_WIDTH = width;
-    IMG_HEIGHT = height;
+void AutoAim::init(Aim_assistant* checker){
+    id_checker = checker;
+    IMG_WIDTH = 1280;
+    IMG_HEIGHT = 720;
     resetROI();
     resizeCount = 0;
-
+    
     //初始化三维坐标点(小装甲)
     pnpSolver.clearPoints3D();
     pnpSolver.pushPoints3D(-65, -33, 0);
@@ -31,7 +28,7 @@ void AutoAim::init(int width, int height,Aim_assistant* checker){
     pnpSolver.setDistortionCoef(-0.1018, 0.1015, -0.0135, -0.00073262,0.000241165);
     aim_predict.model_init();
     bestCenter.x=-1;
-    id_checker = checker;
+    
 }
 Point2d cal_x_y(RotatedRect &rect, int is_up){
     float angle = (90-rect.angle)*CV_PI/180;
@@ -49,8 +46,8 @@ Point2d cal_x_y(RotatedRect &rect, int is_up){
 void AutoAim::resetROI(){
     rectROI.x = 0;
     rectROI.y = 0;
-    rectROI.width = IMG_WIDTH;
-    rectROI.height = IMG_HEIGHT;
+    rectROI.width = 1280;
+    rectROI.height = 720;
 }
 
 void AutoAim::set_parameters(int angle,int inside_angle, int height, int width){
@@ -66,16 +63,22 @@ bool AutoAim::setImage(Mat &img){
     if(img.empty()) return false;
     img.copyTo(image);
     Mat channel[3], Mask, diff;
-    int thresh = 40, substract_thresh = 110;
-    rectangle(img,rectROI,Scalar(255,255,0));
+    int thresh = 150, substract_thresh = 90;
     resetROI();
-    img = img(rectROI);
-    medianBlur(img,img,1);
-    split(img, channel);
+    mask = img(rectROI);
+    split(mask, channel);
+    Mask = channel[0];
     mask = channel[0] - channel[2];
+    medianBlur(img,img,1);
+    threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
     threshold(mask, mask, substract_thresh, 255, THRESH_BINARY);
-    // imshow("mask",mask);
-    // waitKey(1);
+    //imshow("img",mask);
+    //imshow("img1",Mask);
+    Mat element = getStructuringElement( MORPH_RECT, Size(1, 1));
+    dilate( mask, mask, element,Point(-1,-1));
+    //bitwise_and(Mask, mask, mask);
+    //imshow("img2",mask);
+    waitKey(1);
     return true;
 }
 
@@ -85,15 +88,14 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
     vector<vector<Point> > contours;
     vector<Vec4i> hierarcy;
     //寻找轮廓，将满足条件的轮廓放入待确定的数组中去
-    findContours(mask, contours, hierarcy, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    findContours(mask, contours, hierarcy, CV_RETR_TREE, CHAIN_APPROX_SIMPLE);
     RotatedRect temp;
     float lastCenterX = 0, lastCenterY = 0;
+    //cout<<"counter size :"<<contours.size()<<endl;
     if(contours.size()<40){
         for(int i=0;i<contours.size();i++){
             if(contours[i].size()>5){
-                for(int j=0; j<contours[i].size(); j++)
-                circle(image,contours[i][j],2,Scalar(0,255,0),2);
-                temp = adjustRRect(minAreaRect(contours[i]));//寻找最小外接矩形
+                temp = adjustRRect(minAreaRect(contours[i]));
                 if(abs(temp.angle)>45) continue;//旋转矩形角度小于45度，则忽略
                 pre_armor_lamps.push_back(temp);
             }
@@ -185,7 +187,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             best_match_index.at(currIndex) = i;
         }
     }
-
+    
     for(i=0; i<size; i++){
         int index = best_match_index[i];
         if(index == -1 || index <= i) continue;
@@ -196,7 +198,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     }
 }
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
-    int lowerY=100;
+    int lowerY=0;
     int lowerIndex=-1;
     int hero_index=-1;
     bestCenter.x=-1;
@@ -209,14 +211,37 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             swap(real_armor_lamps[i],real_armor_lamps[i+1]);//确保偶数为左灯条，奇数为右灯条
         }
         Point2d left_up = cal_x_y(real_armor_lamps[i],1);
+        Point2d left_d = cal_x_y(real_armor_lamps[i],0);
         Point2d right_up = cal_x_y(real_armor_lamps[i+1],1);
+        Point2d right_d = cal_x_y(real_armor_lamps[i+1],0);
         armor_area.x = left_up.x;
-        armor_area.y = left_up.y-0.2*real_armor_lamps[i].size.height;
-        armor_area.height = (1.5)*real_armor_lamps[i].size.height;
+        int y = (left_up.y + right_up.y) / 2 - 0.4 * real_armor_lamps[i].size.height;
+        if(y<0) armor_area.y;
+        else armor_area.y = y;
+        if(left_d.y>right_d.y){
+            if((1.9) * (left_d.y - right_up.y)+armor_area.y<720)
+                armor_area.height = (1.9) * (left_d.y - right_up.y);
+            else{
+                armor_area.height = 720 - armor_area.y;
+            }
+        }else{
+            if((1.9) * (right_d.y - left_up.y)+armor_area.y<720)
+                armor_area.height = (1.9) * (right_d.y - left_up.y);
+            else{
+                armor_area.height = 720 - armor_area.y;
+            }
+        }    
         armor_area.width = abs(right_up.x - left_up.x);
-        int number = id_checker->check_armor(source_image(armor_area));  
+        clock_t begin, finish;
+        begin = clock() ;
+        int number = id_checker->check_armor(image(armor_area));  
+        finish = clock();
+        cout<<"CNN time cost: "<<(double)(finish - begin) / CLOCKS_PER_SEC<<endl;
         armor_detected.push_back(number);
+        cout<<"number: "<<i<<"   "<<number<<endl;
     }
+    // imshow("image",image);
+    // waitKey(1);
     for(int i=0;i<armor_detected.size();i++){
         if(armor_detected[i] == 2){
             pnpSolver.clearPoints3D();
@@ -225,11 +250,12 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             pnpSolver.pushPoints3D(109, 33, 0);
             pnpSolver.pushPoints3D(-109, 33, 0);
 	        cout<<"find hero !!!!!!"<<endl;
-            hero_index = 2*i;
-            lowerIndex = 2*i;
+            hero_index = 2 * i;
+            lowerIndex = 2 * i;
             break;
         }
         else if(armor_detected[i] != 5 && armor_detected[i]!=-1){
+            cout<<"found: "<<armor_detected[i]<<" armor "<<endl;
             float y = 720 - (real_armor_lamps[2*i].center.y + real_armor_lamps[2*i+1].center.y)/2;
             float x = fabs(640-(real_armor_lamps[2*i].center.x + real_armor_lamps[2*i+1].center.x)/2);
             y = y / 720;
@@ -315,19 +341,11 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
         Rect rect;
         Point2d left_up = cal_x_y(best_lamps[0],1);
         Point2d right_up = cal_x_y(best_lamps[1],1);
-        rect.x = left_up.x;
-        rect.y = left_up.y-0.15*best_lamps[0].size.height;
-        rect.height = (1.5)*best_lamps[0].size.height;
-        rect.width = abs(right_up.x - left_up.x);
-        rectangle(src,rect,Scalar(0,255,255));
-        int number = id_checker->check_armor(frame(rect));
-        if(number != -1) putText(src,to_string(number),Point(15,15),1,1,Scalar(0,0,255),2);
         pnpSolver.pushPoints2D(left_up);//P1
         pnpSolver.pushPoints2D(right_up);//P3
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[1],0));//P2
         pnpSolver.pushPoints2D(cal_x_y(best_lamps[0],0));//P4
-        imshow("src",src);
-        waitKey(1);
+
         pnpSolver.solvePnP();
         pnpSolver.clearPoints2D();
         //pnpSolver.showParams();

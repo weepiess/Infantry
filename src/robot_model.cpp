@@ -43,7 +43,6 @@ int RobotModel::init(){
     // }
 
     hCamera = mVision.init();
-    cout<<hCamera<<endl;
     if(hCamera!=-1){
         mVision.startPlay(hCamera, mEnemyIsRed);
         cout << "[robot model init ]:UsbCapture init successed!" <<endl;
