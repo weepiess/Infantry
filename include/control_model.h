@@ -40,7 +40,7 @@ private:
     cv::FileStorage file;
     RobotMode mSetMode;
     BasicTool basic_tool;
-    AutoAim* autoAim;
+    AutoAim autoAim;
     AutoPTZ autoptz;
   //  Aim_assistant aim_assist;
     vector<double> result;
@@ -54,10 +54,11 @@ private:
     bool need_check=true;
     std::future<int> tmp;
     NYdector mthread;
-    Aim_assistant* aim_assistant;
+    Aim_assistant aim_assistant;
 private:
     void Aim(bool is_shoot_control=true);
     void AutoPTZControl();
+    void playerAim();
 
 };
 

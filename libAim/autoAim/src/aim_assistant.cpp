@@ -3,25 +3,28 @@ using namespace std;
 using namespace cv;
 Aim_assistant::Aim_assistant(){}
 Aim_assistant::~Aim_assistant(){}
+
+//转换opencv图片至tensorflow格式
 void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
     if(!img.empty()){
     cv::resize(img,img,cv::Size(rows,cols));
     for(int i = 0;i<img.rows;i++){
         for(int j = 0;j<img.cols;j++){
             for(int k = 0; k<3;k++){
-                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.5+20;
+                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.2+10;
                 if(tmp>255) img.at<Vec3b>(i,j)[k] = 2*255 - tmp;
                 else img.at<Vec3b>(i,j)[k] = tmp;
             }
         }
     }
-    //GaussianBlur(img, img, Size(3,3), 0);
     cvtColor(img,img,COLOR_BGR2GRAY);
     float *p=tensor->flat<float>().data();
     cv::Mat imagePixels(rows,cols,CV_32FC1,p);
     img.convertTo(imagePixels,CV_32FC1);
     }
 }
+
+//初始化过程
 int Aim_assistant::init(string model_path){
     Status status = NewSession(SessionOptions(), &session);
     if (!status.ok()) {
@@ -54,10 +57,9 @@ int Aim_assistant::init(string model_path){
 } 
 void Aim_assistant::TensorInit(Session* session,Mat& img){
     Tensor x(tensorflow::DT_FLOAT, tensorflow::TensorShape({1,32, 32,1}));
-    threshold(img, img, 0, 255, CV_THRESH_OTSU);
     std::vector<std::pair<string, tensorflow::Tensor>> inputs;
     inputs.push_back(std::pair<std::string, tensorflow::Tensor>("test-input/input", x));
-    Tensor tensor_out(tensorflow::DT_FLOAT, TensorShape({1,5}));
+    Tensor tensor_out(tensorflow::DT_FLOAT, TensorShape({1,6}));
     std::vector<tensorflow::Tensor> outputs={{ tensor_out }};
     Status status= session->Run(inputs, {"softmax"}, {}, &outputs);
     if (!status.ok()) {
@@ -70,8 +72,8 @@ int Aim_assistant::check_armor(cv::Mat frame){
     Tensor x(tensorflow::DT_FLOAT, tensorflow::TensorShape({1,32, 32,1}));
     cvmat_to_tensor(frame,&x,32,32);
     std::vector<std::pair<string, tensorflow::Tensor>> inputs;
-    inputs.push_back(std::pair<std::string, tensorflow::Tensor>("test-input/input", x));
-    Tensor tensor_out(tensorflow::DT_FLOAT, TensorShape({1,5}));
+    inputs.push_back(std::pair<std::string, tensorflow::Tensor>("test-input/input", x));//tensor输入
+    Tensor tensor_out(tensorflow::DT_FLOAT, TensorShape({1,6}));
     std::vector<tensorflow::Tensor> outputs={{ tensor_out }};
     Status status= session->Run(inputs, {"softmax"}, {}, &outputs);
     if (!status.ok()) {
@@ -79,21 +81,10 @@ int Aim_assistant::check_armor(cv::Mat frame){
         std::cout << status.ToString() << "\n";
         return -1;
     }else{
-
-        cout<<"ok...."<<endl;
-
-        cout << "Output tensor size:" << outputs.size() << std::endl;
-        cout << outputs[0].DebugString()<<endl;
-
-
         Tensor t = outputs[0];
-
-        //int output_dim = t.shape().dim_size(0);
-
-        cout<<t.shape()<<endl;
         auto tmap = t.tensor<float, 2>();
         int m=0;
-        for(int i=0;i<5;++i){
+        for(int i=0;i<6;++i){
             cout<<i<<"-->"<<tmap(0,i)<<" ";
             if(tmap(0,i)>=tmap(0,m))
              m=i;
@@ -102,8 +93,5 @@ int Aim_assistant::check_armor(cv::Mat frame){
             cout<<"result: "<<m+1<<endl;
             return m+1;
         }else return -1;
-        
-
-        
     }
 }

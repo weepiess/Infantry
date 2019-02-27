@@ -26,7 +26,7 @@ typedef enum:unsigned char {
     CMD_SERIAL_DATA_UPDATE=0xb0,
     CMD_SERIAL_MINIPC_SHUTDOWN=0xc1,
     CMD_SERIAL_ABS_YUNTAI_DELTA = 0x13,
-    CMD_SERIAL_MODE_CAHNGE = 0Xa0
+    CMD_SERIAL_MODE_CAHNGE = 0xa0
 } SerialPortCMD;
 
 

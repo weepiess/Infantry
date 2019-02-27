@@ -63,22 +63,27 @@ bool AutoAim::setImage(Mat &img){
     if(img.empty()) return false;
     img.copyTo(image);
     Mat channel[3], Mask, diff;
-    int thresh = 150, substract_thresh = 90;
+    int thresh =230 , substract_thresh = 90;
     resetROI();
     mask = img(rectROI);
     split(mask, channel);
-    Mask = channel[0];
+    Mask = channel[1];
     mask = channel[0] - channel[2];
-    medianBlur(img,img,1);
+    //medianBlur(img,img,1);
+    //Mat kernel(3,3,CV_32F,Scalar(-1));
+    //kernel.at<float>(1,1) = 8.9;
+    //filter2D(img,img,img.depth(),kernel);
     threshold(Mask, Mask, thresh, 255, THRESH_BINARY);
     threshold(mask, mask, substract_thresh, 255, THRESH_BINARY);
     //imshow("img",mask);
     //imshow("img1",Mask);
     Mat element = getStructuringElement( MORPH_RECT, Size(1, 1));
+    Mat element1 = getStructuringElement( MORPH_RECT, Size(5, 9));
     dilate( mask, mask, element,Point(-1,-1));
-    //bitwise_and(Mask, mask, mask);
-    //imshow("img2",mask);
-    waitKey(1);
+    dilate( Mask, Mask, element1,Point(-1,-1),2);
+    bitwise_and(Mask, mask, mask);
+    imshow("img2",mask);
+    //waitKey(1);
     return true;
 }
 
@@ -88,11 +93,11 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
     vector<vector<Point> > contours;
     vector<Vec4i> hierarcy;
     //寻找轮廓，将满足条件的轮廓放入待确定的数组中去
-    findContours(mask, contours, hierarcy, CV_RETR_TREE, CHAIN_APPROX_SIMPLE);
+    findContours(mask, contours, hierarcy, CV_RETR_EXTERNAL, CHAIN_APPROX_NONE);
     RotatedRect temp;
     float lastCenterX = 0, lastCenterY = 0;
-    //cout<<"counter size :"<<contours.size()<<endl;
-    if(contours.size()<40){
+    cout<<"counter size :"<<contours.size()<<endl;
+    if(LIKELY(contours.size()<200)){
         for(int i=0;i<contours.size();i++){
             if(contours[i].size()>5){
                 temp = adjustRRect(minAreaRect(contours[i]));
@@ -116,9 +121,9 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
     ratio_max=6;
     ratio_min= 1;
     params_max_height_ratio= 1.5;
-    params_max_dis_height_ratio= 4;
+    params_max_dis_height_ratio= 6;
     params_max_yx_diff_ratio= 1; //一对灯条最大侧向旋转角
-    params_max_allow_angle=2; //一对灯条最大允许角度差
+    params_max_allow_angle=6; //一对灯条最大允许角度差
     int size = pre_armor_lamps.size();
     vector<float> diff(size,0x3f3f3f3f);
     vector<float> best_match_index(size,-1);
@@ -197,8 +202,51 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
         }
     }
 }
+void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
+    float pre=1000;//预定义
+    int target_index=-1;//目标索引
+    bestCenter.x=-1;
+    for(int i=0; i<real_armor_lamps.size(); i+=2){
+        if(i+1 >= real_armor_lamps.size()) break;
+        Rect armor_area;
+        if(real_armor_lamps[i].center.x > real_armor_lamps[i+1].center.x){
+            swap(real_armor_lamps[i],real_armor_lamps[i+1]);//确保偶数为左灯条，奇数为右灯条
+        }
+        //优先选择趋近于图像中心的装甲板,达到操作手指示优先级的功能
+        float y = fabs(360 - (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2);
+        float x = fabs(640-(real_armor_lamps[i].center.x + real_armor_lamps[i+1].center.x)/2);
+        y = y / 360;
+        x = x / 640;
+        float score = 0.5 * y + 0.5 * x;
+        if(score < pre){
+            pre = score;
+            target_index = i;
+        }
+    }
+    if(target_index != -1){
+        bestCenter.x = (real_armor_lamps[target_index].center.x + real_armor_lamps[target_index+1].center.x)/2 + rectROI.x;
+        bestCenter.y = (real_armor_lamps[target_index].center.y + real_armor_lamps[target_index+1].center.y)/2 + rectROI.y;
+    }
+    if(bestCenter.x!=-1){
+        clock_t finish = clock();
+        best_lamps[0] = real_armor_lamps[target_index];
+        best_lamps[1] = real_armor_lamps[target_index+1];
+        best_lamps[0].center.x+=rectROI.x;
+        best_lamps[0].center.y+=rectROI.y;
+        best_lamps[1].center.x+=rectROI.x;
+        best_lamps[1].center.y+=rectROI.y;
+        rectROI.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x);
+        rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
+        rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
+        rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
+        if(!makeRectSafe(rectROI)){
+            resetROI();
+	    }
+    }
+
+}
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
-    int lowerY=0;
+    int lowerY=1000;
     int lowerIndex=-1;
     int hero_index=-1;
     bestCenter.x=-1;
@@ -210,10 +258,13 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         if(real_armor_lamps[i].center.x > real_armor_lamps[i+1].center.x){
             swap(real_armor_lamps[i],real_armor_lamps[i+1]);//确保偶数为左灯条，奇数为右灯条
         }
+        //计算装甲板灯条四个点像素坐标
         Point2d left_up = cal_x_y(real_armor_lamps[i],1);
         Point2d left_d = cal_x_y(real_armor_lamps[i],0);
         Point2d right_up = cal_x_y(real_armor_lamps[i+1],1);
         Point2d right_d = cal_x_y(real_armor_lamps[i+1],0);
+
+        //选定装甲板中心区域
         armor_area.x = left_up.x;
         int y = (left_up.y + right_up.y) / 2 - 0.4 * real_armor_lamps[i].size.height;
         if(y<0) armor_area.y;
@@ -234,7 +285,12 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         armor_area.width = abs(right_up.x - left_up.x);
         clock_t begin, finish;
         begin = clock() ;
-        int number = id_checker->check_armor(image(armor_area));  
+        int number = -1;
+        if(armor_area.width != 0 && armor_area.height != 0 ){
+            number = id_checker->check_armor(image(armor_area));  //输入CNN模型预测 0-4 对应 1-5 5种装甲板
+        }
+        Mat img_a;
+        c++;
         finish = clock();
         cout<<"CNN time cost: "<<(double)(finish - begin) / CLOCKS_PER_SEC<<endl;
         armor_detected.push_back(number);
@@ -254,14 +310,16 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             lowerIndex = 2 * i;
             break;
         }
-        else if(armor_detected[i] != 5 && armor_detected[i]!=-1){
+
+        //不瞄准工程车
+        else if(armor_detected[i] != 5 && armor_detected[i] != 6 && armor_detected[i]!=-1){
             cout<<"found: "<<armor_detected[i]<<" armor "<<endl;
             float y = 720 - (real_armor_lamps[2*i].center.y + real_armor_lamps[2*i+1].center.y)/2;
             float x = fabs(640-(real_armor_lamps[2*i].center.x + real_armor_lamps[2*i+1].center.x)/2);
             y = y / 720;
             x = x / 640;
             float score = 0.6 * y + 0.4 * x;
-            if(score > lowerY){
+            if(score < lowerY){
                 lowerY = score;
                 lowerIndex = 2 * i;
             }
@@ -271,8 +329,8 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         resizeCount=0;
         count++;
         int height = (real_armor_lamps[hero_index].size.height + real_armor_lamps[hero_index+1].size.height)/2;
-        //当灯条高度小于10个像素点时放弃锁定，重新寻找合适目标
-        if(height > 1){
+        //当灯条高度小于5个像素点时放弃锁定，重新寻找合适目标
+        if(LIKELY(height > 1)){
             
             bestCenter.x = (real_armor_lamps[hero_index].center.x 
                         + real_armor_lamps[hero_index+1].center.x)/2 + rectROI.x ;
@@ -284,7 +342,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         }
     }
     //优先锁定图像下方装甲板
-    else {if(lowerIndex == -1){
+    else if(lowerIndex == -1){
         resizeCount++;
         count=0;
         if(!broadenRect(rectROI)){ //|| resizeCount>5){
@@ -293,7 +351,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         }
     } 
     else if(lowerIndex != -1) {
-	cout<<" attacking Infantry!!!  :) "<<endl;
+	    cout<<" attacking Infantry!!!  :) "<<endl;
         pnpSolver.clearPoints3D();
         pnpSolver.pushPoints3D(-65, -33, 0);
         pnpSolver.pushPoints3D(65,  -33, 0);
@@ -310,7 +368,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
 		    resetROI();
             count=0;
     	}
-    }}
+    }
 
     if(bestCenter.x!=-1){
         clock_t finish = clock();
@@ -324,7 +382,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
         rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
         rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
-	if(hero_index==-1) resetROI();
+	    if(hero_index==-1) resetROI();
         //cout<<rectROI.x<<endl;
         if(!makeRectSafe(rectROI)){
             resetROI();
@@ -335,6 +393,7 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
 
     bool isKalman = true;
     if(bestCenter.x!=-1){
+        circle(src, bestCenter, 20, Scalar(255,255,255), 5);
         count++;
         Mat frame;
         src.copyTo(frame);
