@@ -32,7 +32,7 @@ Point2f BaseAim::calPitchAndYaw(float x_offset, float y_offset, float z_offset, 
 
 Point2f BaseAim::calPitchAndYaw(float x, float y, float z, float x_offset, float y_offset, float z_offset, float currPitch, float currYaw){
     Point2f angle;
-    angle.x = ImageTool::gravityKiller((z + z_offset)/1000.0, (y + y_offset)/1000.0, 15, currPitch);
+    angle.x = ImageTool::gravityKiller((z + z_offset)/1000.0, (y + y_offset)/1000.0, 20, currPitch);
     angle.y = -atanf((x + x_offset) / (z + z_offset))*180/CV_PI;
     return angle;
 }

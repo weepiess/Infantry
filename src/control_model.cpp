@@ -138,12 +138,12 @@ void ControlModel::Aim(bool is_shoot_control){
                 cout<<"time cost: "<<end-start<<endl;
                 interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
-                unsigned char num=0x01;
+                unsigned char num=0x05;
                 if(if_shoot)
 	                interface->YunTaiShoot(num);
         }
         imshow("src",src1);
-        waitKey(1);
+        //waitKey(1);
 
     }        
 }

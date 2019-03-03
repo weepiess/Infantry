@@ -1,6 +1,7 @@
 #ifndef AUTO_AIM_H
 #define AUTO_AIM_H
 #define LIKELY(x) __builtin_expect(!!(x),1)
+
 #include <opencv2/opencv.hpp>
 #include "base_aim.h"
 #include "time.h"
@@ -33,7 +34,6 @@ public:
 private:
     //Thread function_thread;
     FFt fft;
-
 private:
     
     float datadealer(float new_num);
@@ -41,6 +41,7 @@ private:
 
 
 private:
+    bool special_condition = false;
     Mat image;
     int param_diff_angle;
     int param_inside_angle;

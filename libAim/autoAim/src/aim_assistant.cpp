@@ -3,20 +3,28 @@ using namespace std;
 using namespace cv;
 Aim_assistant::Aim_assistant(){}
 Aim_assistant::~Aim_assistant(){}
-
+void SSR(Mat frame, Mat frame_ssr, Size size_ssr);
+void MSR(Mat frame, Mat *frame_ssr,Mat frame_msr, int size_num);
+void SSRCR(Mat frame, Mat frame_ssr, Size size_ssr);
+void MSRCR(Mat frame, Mat frame_msrcr, Size size_min, Size size_max, int size_num);
 //转换opencv图片至tensorflow格式
 void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
     if(!img.empty()){
+       // MSRCR(img, img, Size(21,21), Size(61,61),2);
+        //SSR(img,img,Size(5,5));
     cv::resize(img,img,cv::Size(rows,cols));
+    //MSRCR(img, img, Size(21,21), Size(61,61),3);
+    
     for(int i = 0;i<img.rows;i++){
         for(int j = 0;j<img.cols;j++){
             for(int k = 0; k<3;k++){
-                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.2+10;
+                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.5+10;
                 if(tmp>255) img.at<Vec3b>(i,j)[k] = 2*255 - tmp;
                 else img.at<Vec3b>(i,j)[k] = tmp;
             }
         }
     }
+    imshow("k",img);
     cvtColor(img,img,COLOR_BGR2GRAY);
     float *p=tensor->flat<float>().data();
     cv::Mat imagePixels(rows,cols,CV_32FC1,p);
@@ -89,7 +97,7 @@ int Aim_assistant::check_armor(cv::Mat frame){
             if(tmap(0,i)>=tmap(0,m))
              m=i;
         }
-        if(tmap(0,m)>0.55){
+        if(tmap(0,m)>0.6){
             cout<<"result: "<<m+1<<endl;
             return m+1;
         }else return -1;
