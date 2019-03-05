@@ -18,13 +18,13 @@ void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
     for(int i = 0;i<img.rows;i++){
         for(int j = 0;j<img.cols;j++){
             for(int k = 0; k<3;k++){
-                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.5+10;
+                int tmp = (uchar)img.at<Vec3b>(i,j)[k]*1.2+10;
                 if(tmp>255) img.at<Vec3b>(i,j)[k] = 2*255 - tmp;
                 else img.at<Vec3b>(i,j)[k] = tmp;
             }
         }
     }
-    imshow("k",img);
+    //imshow("k",img);
     cvtColor(img,img,COLOR_BGR2GRAY);
     float *p=tensor->flat<float>().data();
     cv::Mat imagePixels(rows,cols,CV_32FC1,p);

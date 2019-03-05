@@ -29,18 +29,23 @@ public:
     //aim()的形式不固定，但是返回值必须是AimResult类型
     AimResult aim(Mat &src, float currPitch, float currYaw, Point2f &pitYaw,int is_predict,bool &if_shoot,float time_delay);
     void set_parameters(int angle,int inside_angle, int height, int width);
+    void setFirstAttact(int id);
     Rect armor;
     void datajudger();
+
 private:
     //Thread function_thread;
     FFt fft;
 private:
-    
+    Point2d cal_x_y(RotatedRect &rect, int is_up);
+    Point2d cal_x_y_sp(RotatedRect &rect, int is_up);
     float datadealer(float new_num);
     void resetROI();
 
 
 private:
+    bool fire = false;
+    int fire_id;
     bool special_condition = false;
     Mat image;
     int param_diff_angle;
@@ -54,10 +59,8 @@ private:
     int resizeCount;
     RotatedRect best_lamps[2];
     Mat measurement = Mat::zeros(1, 1, CV_32F);
-    float dt;
     Point bestCenter;
     Mat mask;
-    Mat source_image;
     Mat watchwin;
     bool is_check_armor=true;
     Rect rectROI;
@@ -67,7 +70,6 @@ private:
     float ratio1_min;
     float ratio2_max;
     float ratio2_min;
-    float max=-1;
     int num = 0;      //一个过渡值，对于同方向变化量大的数据，num_x越大 
     int old_flags = 0;   //表示第n-2个数据到第n-1个数据的变化趋势，加为1，减为0 
     int new_flags = 0;   //表示第n-1个数据到第n个数据的变化趋势，加为1，减为0
@@ -86,12 +88,3 @@ private:
     int c = 0 ;
 };                                                                                                      
 #endif
-
-
-// frame_speed: 1
-// gamma: 32
-// exposure_time: 1100
-// contrast: 92
-// ae_state: 0
-// resolution_width: 1280
-// resolution_height: 720
