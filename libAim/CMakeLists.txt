@@ -1,7 +1,0 @@
-add_subdirectory(autoAim)
-add_subdirectory(markAim)
-add_subdirectory(autoPTZ)
-add_subdirectory(autoTRN)
-include_directories(./include)
-AUX_SOURCE_DIRECTORY(./src BASEAIM_SRCS)
-ADD_LIBRARY(BaseAim ${BASEAIM_SRCS})

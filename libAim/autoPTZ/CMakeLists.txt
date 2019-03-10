@@ -1,5 +1,0 @@
-include_directories(./include)
-include_directories(${PROJECT_SOURCE_DIR}/libBase/include)
-AUX_SOURCE_DIRECTORY(./src AUTOPTZ_SRCS)
-ADD_LIBRARY(AutoPTZ ${AUTOPTZ_SRCS})
-target_link_libraries(AutoPTZ BaseClasses)
