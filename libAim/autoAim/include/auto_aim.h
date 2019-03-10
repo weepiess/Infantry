@@ -44,6 +44,7 @@ private:
 
 
 private:
+    bool is_right = false;
     bool fire = false;
     int fire_id;
     bool special_condition = false;

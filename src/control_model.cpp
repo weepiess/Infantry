@@ -88,6 +88,9 @@ void ControlModel::processFSM(){
                 //mthread.start();
                 break;
             }
+            case ROBOT_MODE_MARKAIM:{
+
+            }
         }
     }
  
@@ -103,7 +106,7 @@ void ControlModel::processFSM(){
             break;
         }
         case ROBOT_MODE_PLAYER_AIM:{
-            
+
             playerAim();
         }
         default:

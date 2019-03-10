@@ -123,7 +123,7 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
         }
     }
     //imshow("img",image);
-}
+} 
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
     special_condition = false;
     //权重
@@ -324,6 +324,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int sp_index=-1;
     bestCenter.x=-1;
     bool detect_hero = false;
+    is_right = false;
     vector<int> armor_detected;
     if(special_condition){
         pnpSolver.clearPoints3D();
@@ -454,8 +455,16 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
                 sp_index = i;
             }
         }
-        bestCenter.x = real_armor_lamps[sp_index].center.x - 1.5 * real_armor_lamps[sp_index].size.height + rectROI.x;
-        bestCenter.y = real_armor_lamps[sp_index].center.y + rectROI.y;   
+        if(abs(720-real_armor_lamps[sp_index].center.x)>abs(720-real_armor_lamps[sp_index+1].center.x)){
+            bestCenter.x = real_armor_lamps[sp_index].center.x - 1.5 * real_armor_lamps[sp_index].size.height + rectROI.x;
+            bestCenter.y = real_armor_lamps[sp_index].center.y + rectROI.y;   
+            is_right = false;
+        }else{
+            bestCenter.x = real_armor_lamps[sp_index+1].center.x + 1.5 * real_armor_lamps[sp_index+1].size.height + rectROI.x;
+            bestCenter.y = real_armor_lamps[sp_index+1].center.y + rectROI.y; 
+            is_right = true; 
+        }
+        
     }
     if(hero_index!=-1){
         resizeCount=0;
@@ -573,16 +582,30 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
                 pitYaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/45, -50, 170, currPitch, currYaw);
             }
         }else{
-            Point2d up = cal_x_y(best_lamps[0],1);
-            Point2d down = cal_x_y(best_lamps[0],0);
-            pnpSolver.pushPoints2D(Point2d(up.x - 1.2 * best_lamps[0].size.height,up.y));
-            pnpSolver.pushPoints2D(up);//P1
-            pnpSolver.pushPoints2D(down);//P3
-            pnpSolver.pushPoints2D(Point2d(down.x - 1.2 * best_lamps[0].size.height,down.y));
-            pnpSolver.solvePnP();
-            pnpSolver.clearPoints2D();
-            Point3d tvec = pnpSolver.getTvec();
-            pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/63, -120, 170, currPitch, currYaw);
+            if(!is_right){
+                Point2d up = cal_x_y(best_lamps[0],1);
+                Point2d down = cal_x_y(best_lamps[0],0);
+                pnpSolver.pushPoints2D(Point2d(up.x - 1.2 * best_lamps[0].size.height,up.y));
+                pnpSolver.pushPoints2D(up);//P1
+                pnpSolver.pushPoints2D(down);//P3
+                pnpSolver.pushPoints2D(Point2d(down.x - 1.2 * best_lamps[0].size.height,down.y));
+                pnpSolver.solvePnP();
+                pnpSolver.clearPoints2D();
+                Point3d tvec = pnpSolver.getTvec();
+                pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/63, -120, 170, currPitch, currYaw);
+            }else{
+                Point2d up = cal_x_y(best_lamps[1],1);
+                Point2d down = cal_x_y(best_lamps[1],0);
+                pnpSolver.pushPoints2D(up);//P1
+                pnpSolver.pushPoints2D(Point2d(up.x + 1.2 * best_lamps[1].size.height,up.y));
+                pnpSolver.pushPoints2D(Point2d(down.x + 1.2 * best_lamps[1].size.height,down.y));
+                pnpSolver.pushPoints2D(down);//P3
+                
+                pnpSolver.solvePnP();
+                pnpSolver.clearPoints2D();
+                Point3d tvec = pnpSolver.getTvec();
+                pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/63, -120, 170, currPitch, currYaw);
+            }
         }
         return AIM_TARGET_FOUND;
     }
