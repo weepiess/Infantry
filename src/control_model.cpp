@@ -180,7 +180,6 @@ void ControlModel::AutoPTZControl(){
             interface->YunTaiDeltaSet(angle.x, angle.y);
             cout<<"angle1 "<<angle<<endl;
             unsigned char num=0x01;
-            usleep(2000);
             if(if_shoot)    interface->YunTaiShoot(num);
         }else{
             autoptz.isTargetFind(false);

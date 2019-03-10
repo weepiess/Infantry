@@ -9,6 +9,7 @@
 #include "aim_assistant.h"
 #include "queue"
 #include <list>
+#include "autotrn.h"
 using namespace cv;
 using namespace std;
 
@@ -38,12 +39,7 @@ private:
     void resetROI();
 
 private:
-    typedef enum: uchar{
-        CONDITION_NOR, //正常模式
-        CONDITION_ABN, //快速运动模式
-        CONDITION_NOR_WIGGLE, //扭腰模式
-        CONDITION_FAST_WIGGLE, //快速扭腰模式
-    }cod;
+
 
 public:
     float new_number=0;
@@ -51,6 +47,7 @@ public:
     uchar condition = 1;
 
 private:
+    AutoTRN autotnr;
     bool is_right = false;
     bool fire = false;
     int fire_id;

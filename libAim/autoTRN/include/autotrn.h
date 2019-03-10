@@ -14,8 +14,11 @@ class AutoTRN: public BaseThread{
 
     public:
     void run();
-    void init(AutoAim *pAutoaim);
-
+    void init();
+    void setData(float yaw_data);
+    void getCondition(uchar &condition);
+    void stop();
+    void resume();
     private:
     void dataJudger();
 
@@ -28,13 +31,18 @@ class AutoTRN: public BaseThread{
     }cod;
 
     private:
+    bool flag;
+    bool data_update = false;
+    uchar curr_condition;
     FFt fft;
+    pthread_cond_t  cond = PTHREAD_COND_INITIALIZER;
     pthread_mutex_t controlMutex = PTHREAD_MUTEX_INITIALIZER; 
     AutoAim *autoaim;
     private:
     int num = 0;      //一个过渡值，对于同方向变化量大的数据，num_x越大 
     int old_flags = 0;   //表示第n-2个数据到第n-1个数据的变化趋势，加为1，减为0 
-    int new_flags = 0;   //表示第n-1个数据到第n个数据的变化趋势，加为1，减为0
+    int new_flags = 0; 
+    float curr_data = 0;  //表示第n-1个数据到第n个数据的变化趋势，加为1，减为0
     float old_num = 0;     //第n-1次的答案 
     int Threshold_min = 8;
     int Threshold_max = 20;
