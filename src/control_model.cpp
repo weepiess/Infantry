@@ -65,9 +65,6 @@ void ControlModel::processFSM(){
                 autoptz.join();
                 autoAim.set_parameters(3,45,30,20);
                 autoAim.setEnemyColor(BaseAim::color_red);
-                autotrn.join();
-                autotrn.init(&autoAim);
-                //autotrn.start();
                 break;
             }
             case ROBOT_MODE_AUTO_PTZ:{

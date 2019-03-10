@@ -5,7 +5,6 @@
 #include <list>
 #include "Fft.h"
 #include <opencv2/opencv.hpp>
-#include "auto_aim.h"
 #include "atomic"
 class AutoTRN: public BaseThread{
     public:
@@ -22,13 +21,14 @@ class AutoTRN: public BaseThread{
     private:
     void dataJudger();
 
-    private:
+    public:
         typedef enum: uchar{
         CONDITION_NOR,
         CONDITION_ABN,
         CONDITION_NOR_WIGGLE,
         CONDITION_FAST_WIGGLE,
     }cod;
+
 
     private:
     bool flag;
@@ -37,7 +37,6 @@ class AutoTRN: public BaseThread{
     FFt fft;
     pthread_cond_t  cond = PTHREAD_COND_INITIALIZER;
     pthread_mutex_t controlMutex = PTHREAD_MUTEX_INITIALIZER; 
-    AutoAim *autoaim;
     private:
     int num = 0;      //一个过渡值，对于同方向变化量大的数据，num_x越大 
     int old_flags = 0;   //表示第n-2个数据到第n-1个数据的变化趋势，加为1，减为0 

@@ -571,7 +571,7 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
             } 
             Mat Predict = this->aim_predict.predict(measurement,time_delay);
             float predict_angle=Predict.at<float>(1)*(6*time_delay);
-            condition = autotnr.getCondition();
+            autotnr.getCondition(condition);
             cout<<int(condition)<<"  condition*"<<endl;
 
             if(condition!=AutoTRN::CONDITION_NOR){

@@ -22,12 +22,8 @@
 #include "basic_tool.h"
 #include "mind_vision.h"
 #include "autoptz.h"
-<<<<<<< HEAD
-#include "datathread.h"
-#include "mark_aim.h"
-=======
 #include "autotrn.h"
->>>>>>> e35b6436c0d37a52fdbdc3efcc5949045bcff3d1
+#include "mark_aim.h"
 
 class ControlModel{
 public:

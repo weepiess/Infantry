@@ -124,13 +124,13 @@ int MarkAim::locateArmor(Mat src,Mat Mask,RotatedRect real_armor,vector<Point2f>
         center = Point2d(unknown[center_box_index].x+unknown[center_box_index].width/2,unknown[center_box_index].y+unknown[center_box_index].height/2);
     }
     count++;
-    Mat src;
+    Mat img;
     RotatedRect temp1;
     Point2f* points = new Point2f[4];
     int n = findUndecidedArea(undecided_area);
     if(n!=-1){
-        src = Mask(undecided_area[n]);
-        findContours(src, contours, hierarcy, CV_RETR_LIST, CHAIN_APPROX_SIMPLE);
+        img = Mask(undecided_area[n]);
+        findContours(img, contours, hierarcy, CV_RETR_LIST, CHAIN_APPROX_SIMPLE);
         for(int i=0;i<contours.size();i++){
             temp1 = (minAreaRect(contours[i]));
             if(temp1.size.area()<1000) continue;

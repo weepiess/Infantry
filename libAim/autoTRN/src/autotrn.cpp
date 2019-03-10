@@ -7,7 +7,7 @@ void AutoTRN::init(){
     start();
 }
 
-void AutoTRN::setData(float yaw_dara){
+void AutoTRN::setData(float yaw_data){
     pthread_mutex_lock(&controlMutex);
     curr_data = yaw_data;
     pthread_mutex_unlock(&controlMutex);
@@ -93,7 +93,7 @@ void AutoTRN::getCondition(uchar &condition){
 void AutoTRN::run(){
     while(true){
         pthread_mutex_lock(&controlMutex);
-        while(is_target_found){
+        while(flag){
             pthread_cond_wait(&cond, &controlMutex);
         }
         pthread_mutex_unlock(&controlMutex);
