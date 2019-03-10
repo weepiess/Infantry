@@ -29,7 +29,7 @@ void Aim_predict::clear(){
     mYaw.clear();
     mPredict_Angle.clear();
 }
-bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict_angle){
+bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict_angle, uchar mode){
     if(mAngle_Velocity.size()<2){
         mAngle_Velocity.push_back(angel_velocity);
         mYaw.push_back(initYaw);
@@ -39,14 +39,25 @@ bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict
             float v_a_mean=std::accumulate(std::begin(mAngle_Velocity),std::end(mAngle_Velocity),0.0)/2;
             float pred_angle_mean=std::accumulate(std::begin(mPredict_Angle),std::end(mPredict_Angle),0.0)/2;
             clear();
-            if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){
+            if(int(mode) == 2 || int(mode) ==3){
+                 if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){
                 if(v_a_mean<-0.02&&iYaw_mean>0.2&&pred_angle_mean<0) {cout<<"*******"<<endl; return true;}
                 else if(v_a_mean>0.02&&iYaw_mean<-0.2 && pred_angle_mean>0) {cout<<"======="<<endl; return true;}
                 else {cout<<"qqqq"<<endl; return false;}
             }
             else if(fabs(iYaw_mean)<=0.45&&fabs(v_a_mean)<=0.009) {cout<<"++++++++"<<endl; return true;}
             else {cout<<"pppppppp"<<endl; return false;}
-        }else return false;
+            }
+            else{
+                if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){
+                    if(v_a_mean<-0.02&&iYaw_mean>0.2&&pred_angle_mean<0) {cout<<"*******"<<endl; return true;}
+                    else if(v_a_mean>0.02&&iYaw_mean<-0.2 && pred_angle_mean>0) {cout<<"======="<<endl; return true;}
+                    else {cout<<"qqqq"<<endl; return false;}
+                }
+                else if(fabs(iYaw_mean)<=0.45&&fabs(v_a_mean)<=0.009) {cout<<"++++++++"<<endl; return true;}
+                else {cout<<"pppppppp"<<endl; return false;}
+            }
+        }
     }else{
         clear();
         return false;

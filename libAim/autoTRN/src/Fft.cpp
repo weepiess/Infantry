@@ -76,15 +76,15 @@ void  FFt::fftx()                             //快速傅里叶函数
 {
     long    int i = 0, j = 0, k = 0, l = 0;
     complex up, down, product;
-    changex(N);
-    for (i = 0; i<log(N) / log(2); i++) /*一级蝶形运算*/
+    changex(NI);
+    for (i = 0; i<log(NI) / log(2); i++) /*一级蝶形运算*/
     {
         l = 1 << i;
-        for (j = 0; j<N; j += 2 * l) /*一组蝶形运算*/
+        for (j = 0; j<NI; j += 2 * l) /*一组蝶形运算*/
         {
             for (k = 0; k<l; k++) /*一个蝶形运算*/
             {
-                mul(x[j + k + l], W[N*k / 2 / l], &product);
+                mul(x[j + k + l], W[NI*k / 2 / l], &product);
                 add(x[j + k], product, &up);
                 sub(x[j + k], product, &down);
                 x[j + k] = up;
@@ -99,7 +99,7 @@ void  FFt::output()   /*输出x结果*/
 {
     int i;
     printf("\nx傅里叶变换结果\n");
-    for (i = 0; i<N; i++)
+    for (i = 0; i<NI; i++)
     {
         if (i % 4 == 0 && i != 0) printf("\n");
         printf("  %.2f", x[i].real);
@@ -123,7 +123,7 @@ void FFt::save()           //保存x傅里叶变换结果
         exit(1);
     }
     outfile << "x傅里叶变换结果:" << endl;
-    for (i = 0; i<N; i++)
+    for (i = 0; i<NI; i++)
     {
         outfile << x[i].real;
         if (x[i].img >= 0.0001)

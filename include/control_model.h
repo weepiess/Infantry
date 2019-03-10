@@ -22,8 +22,12 @@
 #include "basic_tool.h"
 #include "mind_vision.h"
 #include "autoptz.h"
+<<<<<<< HEAD
 #include "datathread.h"
 #include "mark_aim.h"
+=======
+#include "autotrn.h"
+>>>>>>> e35b6436c0d37a52fdbdc3efcc5949045bcff3d1
 
 class ControlModel{
 public:
@@ -44,6 +48,7 @@ private:
     AutoAim autoAim;
     AutoPTZ autoptz;
     MarkAim markaim;
+    AutoTRN autotrn;
   //  Aim_assistant aim_assist;
     vector<double> result;
     int armor_id=-1;
@@ -55,7 +60,6 @@ private:
         //是否需要确认装甲板
     bool need_check=true;
     std::future<int> tmp;
-    NYdector mthread;
     Aim_assistant aim_assistant;
 private:
     void Aim(bool is_shoot_control=true);

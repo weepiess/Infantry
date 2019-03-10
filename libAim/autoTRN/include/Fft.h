@@ -10,7 +10,7 @@
 #include  <ctime>
 #include <iomanip>
 #define PI 3.14159265  
-#define N  20       //采样256次
+#define NI  64       //采样256次
 
 class FFt{
 public:
@@ -22,8 +22,12 @@ typedef struct              //定义结构体
     double real;/*实部*/
     double img;/*虚部*/
 }complex;
- complex x[N * 2], *W;                       /*输出序列的值*/                      //序列长度 全局变量
 
+private:
+    // float PI = 3.14159265;
+    // float N = 64;
+public:
+complex x[NI * 2], *W;                       /*输出序列的值*/                      //序列长度 全局变量
 void add(complex a, complex b, complex *c);
 void  sub(complex a, complex b, complex *c) ;
 void  mul(complex a, complex b, complex *c) ;

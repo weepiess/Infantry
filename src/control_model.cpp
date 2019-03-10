@@ -65,12 +65,13 @@ void ControlModel::processFSM(){
                 autoptz.join();
                 autoAim.set_parameters(3,45,30,20);
                 autoAim.setEnemyColor(BaseAim::color_red);
-                //mthread.join();
-               //mthread.init(autoAim);
-                //mthread.start();
+                autotrn.join();
+                autotrn.init(&autoAim);
+                //autotrn.start();
                 break;
             }
             case ROBOT_MODE_AUTO_PTZ:{
+                autotrn.join();
                 interface->YunTaiAbsSet(0,180);
                 usleep(100);
                 autoptz.setCurrentAngel(pRobotModel->getCurrentYaw()); 
@@ -81,11 +82,12 @@ void ControlModel::processFSM(){
             }
             case ROBOT_MODE_PLAYER_AIM:{
                 autoptz.join();
+                autotrn.join();
                 autoAim.set_parameters(3,45,30,20);
                 autoAim.setEnemyColor(BaseAim::color_red);
-                //mthread.join();
-                //mthread.init(autoAim);
-                //mthread.start();
+                // mthread.join();
+                // mthread.init(autoAim);
+                // mthread.start();
                 break;
             }
             case ROBOT_MODE_MARKAIM:{
@@ -125,6 +127,8 @@ void ControlModel::Aim(bool is_shoot_control){
         Point2f current_angle;
         MindVision* cap = pRobotModel->getMvisionCapture();
         if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
+        char c = waitKey(1);
+        cap->adjustParams(c);
         SerialInterface *interface = pRobotModel->getpSerialInterface();
         interface->getAbsYunTaiDelta();
         current_angle.x = pRobotModel->getCurrentPitch();
@@ -143,7 +147,7 @@ void ControlModel::Aim(bool is_shoot_control){
                 interface->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
                 unsigned char num=0x01;
-                if(true)
+                if(if_shoot)
 	                interface->YunTaiShoot(num);
         }
         imshow("src",src1);
@@ -176,6 +180,7 @@ void ControlModel::AutoPTZControl(){
             interface->YunTaiDeltaSet(angle.x, angle.y);
             cout<<"angle1 "<<angle<<endl;
             unsigned char num=0x01;
+            usleep(2000);
             if(if_shoot)    interface->YunTaiShoot(num);
         }else{
             autoptz.isTargetFind(false);

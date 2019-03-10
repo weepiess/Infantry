@@ -15,6 +15,7 @@ void BaseAim::setTimeDelay(double timeDelay){
 void BaseAim::setImgSize(Size imgSize){
     IMG_WIDTH = imgSize.width;
     IMG_HEIGHT = imgSize.height;
+
 }
 
 Point2f BaseAim::calPitchAndYaw(float x_offset, float y_offset, float z_offset, float currPitch, float currYaw, bool useExtrinsicGuess, int flags){
@@ -31,7 +32,7 @@ Point2f BaseAim::calPitchAndYaw(float x_offset, float y_offset, float z_offset, 
 
 Point2f BaseAim::calPitchAndYaw(float x, float y, float z, float x_offset, float y_offset, float z_offset, float currPitch, float currYaw){
     Point2f angle;
-    angle.x = ImageTool::gravityKiller((z + z_offset)/1000.0, (y + y_offset)/1000.0, 20, currPitch);
+    angle.x = ImageTool::gravityKiller((z + z_offset)/1000.0, (y + y_offset)/1000.0, 15, currPitch);
     angle.y = -atanf((x + x_offset) / (z + z_offset))*180/CV_PI;
     return angle;
 }
@@ -66,49 +67,6 @@ bool BaseAim::makeRectSafe(Rect & rect){
     if (rect.width <= 0 || rect.height <= 0)
         return false;
     return true;
-}
-
-float BaseAim::datafilter(float newdata){
-    new_data = newdata;
-    if (new_data - old_data > 0 )       
-        new_flag = 1;
-    else new_flag = 0;
-    if (new_flag == old_flag)          
-    {
-        if (abs (new_data - old_data) > Threshold_1)    
-            num_x += 5;
-        if (num_x >= Threshold_2)      
-            k_x += 0.2; 
-    }
-    else                
-    {
-        num_x = 0;      
-        k_x = 0.2;
-        old_flag = new_flag; 
-    } 
-    if (k_x > 0.95)  {
-        k_x = 0.95;    
-        // num_x = 0;
-        // k_x = 0.2;
-    }
-    new_data = (1-k_x) * old_data + k_x * new_data;   
-    old_data = new_data;      
-    return old_data;
-}
-
-float BaseAim::datafilterII(float newdata){
-    next_input_value = newdata;
-    if(key == 0){
-        memset(xv,0,3);
-        memset(yv,0,3);
-        key = 0;
-    }
-    xv[0] = xv[1]; xv[1] = xv[2]; 
-    xv[2] = next_input_value / gain;
-    yv[0] = yv[1]; yv[1] = yv[2]; 
-    yv[2] =   (xv[0] + xv[2]) + 2 * xv[1] + ( -0.4128015981 * yv[0]) + (  1.1429805025 * yv[1]);
-    key++;
-    return yv[2];
 }
 
 bool BaseAim::broadenRect(Rect &rect){
