@@ -4,10 +4,10 @@
 #include "base_thread.h"
 #include "auto_aim.h"
 
-class Thread: public BaseThread{
+class NYdector: public BaseThread{
 public:
-    Thread();
-    ~Thread();
+    NYdector();
+    ~NYdector();
 
 public:
     void init(AutoAim *pAutoaim);

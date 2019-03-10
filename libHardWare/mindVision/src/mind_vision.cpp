@@ -111,7 +111,7 @@ int MindVision::startPlay(int hCamera_, unsigned char color){
     //色温
     //CameraSetPresetClrTemp(hCamera, 0);
     //色温增益
-    //CameraSetGain(hCamera, 1, 0, 0);
+    //CameraSetGain(hCamera, 0, 1, 0);
 
     if(tCapability.sIspCapacity.bMonoSensor){
         channel=1;

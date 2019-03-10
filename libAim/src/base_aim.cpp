@@ -15,7 +15,6 @@ void BaseAim::setTimeDelay(double timeDelay){
 void BaseAim::setImgSize(Size imgSize){
     IMG_WIDTH = imgSize.width;
     IMG_HEIGHT = imgSize.height;
-
 }
 
 Point2f BaseAim::calPitchAndYaw(float x_offset, float y_offset, float z_offset, float currPitch, float currYaw, bool useExtrinsicGuess, int flags){
@@ -32,7 +31,7 @@ Point2f BaseAim::calPitchAndYaw(float x_offset, float y_offset, float z_offset, 
 
 Point2f BaseAim::calPitchAndYaw(float x, float y, float z, float x_offset, float y_offset, float z_offset, float currPitch, float currYaw){
     Point2f angle;
-    angle.x = ImageTool::gravityKiller((z + z_offset)/1000.0, (y + y_offset)/1000.0, 15, currPitch);
+    angle.x = ImageTool::gravityKiller((z + z_offset)/1000.0, (y + y_offset)/1000.0, 20, currPitch);
     angle.y = -atanf((x + x_offset) / (z + z_offset))*180/CV_PI;
     return angle;
 }
@@ -112,7 +111,7 @@ float BaseAim::datafilterII(float newdata){
     return yv[2];
 }
 
-bool BaseAim::broadenRect(Rect & rect){
+bool BaseAim::broadenRect(Rect &rect){
     rect.x -= rect.width/2;
     rect.width += rect.width;
     rect.y -= rect.height/2;

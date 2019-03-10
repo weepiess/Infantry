@@ -1,3 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+///Copyright(c)      UESTC ROBOMASTER2019      Model Code for robot
+///ALL RIGHTS RESERVED
+///@file:aim_predict.h
+///@brief: 自瞄运动预测模型,使用卡尔曼滤波算法进行运动预测.
+/// 
+///@vesion 1.0
+///@author: pc
+///@email: 694977655@qq.com
+///@date: 18-12-9
+///修订历史：
+////////////////////////////////////////////////////////////////////////////////
 #ifndef AIM_PREDICT_H
 #define AIM_PREDICT_H
 #include "kalman_filter_by_opencv.h"

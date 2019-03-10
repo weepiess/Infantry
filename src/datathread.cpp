@@ -1,15 +1,15 @@
 #include "datathread.h"
 #include <iostream>
 
-Thread::Thread(){}
+NYdector::NYdector(){}
 
-Thread::~Thread(){}
+NYdector::~NYdector(){}
 
-void Thread::init(AutoAim *pAutoaim){
+void NYdector::init(AutoAim *pAutoaim){
     autoaim = pAutoaim;
 }
 
-void Thread::run(){
+void NYdector::run(){
     while(true)
         autoaim -> datajudger();
 }
