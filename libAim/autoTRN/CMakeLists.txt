@@ -1,0 +1,7 @@
+include_directories(./include)
+include_directories(${PROJECT_SOURCE_DIR}/libBase/include)
+include_directories(${PROJECT_SOURCE_DIR}/libAim/autoAim/include())
+AUX_SOURCE_DIRECTORY(./src AUTOTRN_SRCS)
+ADD_LIBRARY(AutoTRN ${AUTOTRN_SRCS})
+target_link_libraries(AutoTRN BaseClasses)
+target_link_libraries(AutoTRN AutoAim)

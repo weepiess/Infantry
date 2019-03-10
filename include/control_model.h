@@ -22,7 +22,7 @@
 #include "basic_tool.h"
 #include "mind_vision.h"
 #include "autoptz.h"
-#include "datathread.h"
+#include "autotrn.h"
 
 class ControlModel{
 public:
@@ -42,6 +42,7 @@ private:
     BasicTool basic_tool;
     AutoAim autoAim;
     AutoPTZ autoptz;
+    AutoTRN autotrn;
   //  Aim_assistant aim_assist;
     vector<double> result;
     int armor_id=-1;
@@ -53,7 +54,6 @@ private:
         //是否需要确认装甲板
     bool need_check=true;
     std::future<int> tmp;
-    NYdector mthread;
     Aim_assistant aim_assistant;
 private:
     void Aim(bool is_shoot_control=true);

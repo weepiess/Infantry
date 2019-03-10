@@ -39,7 +39,7 @@ class Aim_predict{
          *  @param: float angel_velocity, 当前云台角速度
          *  @param: float predict_angle, 卡尔曼预测的提前量
          */
-        bool shoot_logic(float initYaw, float angel_velocity, float predict_angle);
+        bool shoot_logic(float initYaw, float angel_velocity, float predict_angle, uchar mode);
         
         //丢失目标后清空vector容器,准备下一次数据
         void clear();
