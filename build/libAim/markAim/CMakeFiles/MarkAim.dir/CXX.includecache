@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../libAim/markAim/include/mark_aim.h
+opencv2/opencv.hpp
+-
+
+/home/weepies/RM/PROJECT/Infantry-master/libAim/markAim/src/mark_aim.cpp
+mark_aim.h
+/home/weepies/RM/PROJECT/Infantry-master/libAim/markAim/src/mark_aim.h
+string
+-
+iostream
+-
+algorithm
+-
+
