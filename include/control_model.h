@@ -23,6 +23,7 @@
 #include "mind_vision.h"
 #include "autoptz.h"
 #include "datathread.h"
+#include "mark_aim.h"
 
 class ControlModel{
 public:
@@ -42,6 +43,7 @@ private:
     BasicTool basic_tool;
     AutoAim autoAim;
     AutoPTZ autoptz;
+    MarkAim markaim;
   //  Aim_assistant aim_assist;
     vector<double> result;
     int armor_id=-1;
