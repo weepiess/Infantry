@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-
+//#define DEBUG
 
 AutoAim::AutoAim(){}
 
@@ -21,7 +21,7 @@ void AutoAim::init(Aim_assistant* checker){
     pnpSolver.pushPoints3D(-65, -33, 0);
     pnpSolver.pushPoints3D(65,  -33, 0);
     pnpSolver.pushPoints3D(65, 33, 0);
-    pnpSolver.pushPoints3D(-65, 33, 0);
+    pnpSolver.pushPoints3D(-65, 33, 0);Key(1);
 
     //初始化相机参数
     pnpSolver.setCameraMatrix(1044.11801, 0., 637.0385, 0.,1046.6575,467.3094, 0., 0., 1.);
@@ -36,7 +36,7 @@ Point2d cal_x_y(RotatedRect &rect, int is_up){
     float angle = (90-rect.angle)*CV_PI/180;
     Point2d point;
     if(is_up){
-        point.x = rect.center.x + rect.size.height/2*cos(angle);
+        point.x = rect.center.x + rect.size.heighKey(1);t/2*cos(angle);
         point.y = rect.center.y - rect.size.height/2*sin(angle);
     } else {
         point.x = rect.center.x - rect.size.height/2*cos(angle);
@@ -52,10 +52,10 @@ void AutoAim::resetROI(){
     rectROI.height = 720;
 }
 
-void AutoAim::set_parameters(int angle,int inside_angle, int height, int width){
+void AutoAim::set_parameters(inKey(1);_angle, int height, int width){
     param_diff_angle = angle;
-    param_inside_angle = inside_angle;
-    param_diff_height = height;
+    param_inside_angle = insideKey(1);
+    param_diff_height = height;Key(1);
     param_diff_width = width;
 }
 
@@ -276,9 +276,11 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
 void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
     float pre=1000;//预定义
     int target_index=-1;//目标索引
+    bool detect_hero
     bestCenter.x=-1;
     for(int i=0; i<real_armor_lamps.size(); i+=2){
         if(i+1 >= real_armor_lamps.size()) break;
+
         Rect armor_area;
         if(real_armor_lamps[i].center.x > real_armor_lamps[i+1].center.x){
             swap(real_armor_lamps[i],real_armor_lamps[i+1]);//确保偶数为左灯条，奇数为右灯条
@@ -294,25 +296,51 @@ void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
             target_index = i;
         }
     }
-    if(target_index != -1){
-        bestCenter.x = (real_armor_lamps[target_index].center.x + real_armor_lamps[target_index+1].center.x)/2 + rectROI.x;
-        bestCenter.y = (real_armor_lamps[target_index].center.y + real_armor_lamps[target_index+1].center.y)/2 + rectROI.y;
-    }
-    if(bestCenter.x!=-1){
-        clock_t finish = clock();
-        best_lamps[0] = real_armor_lamps[target_index];
-        best_lamps[1] = real_armor_lamps[target_index+1];
-        best_lamps[0].center.x+=rectROI.x;
-        best_lamps[0].center.y+=rectROI.y;
-        best_lamps[1].center.x+=rectROI.x;
-        best_lamps[1].center.y+=rectROI.y;
-        rectROI.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x);
-        rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
-        rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
-        rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
-        if(!makeRectSafe(rectROI)){
-            resetROI();
-	    }
+    
+    
+    
+    if(!special_condition){
+        if(target_index != -1){
+            float y0 = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
+            float x0 = fabsf(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
+            if((float(x0)/float(y0))>0.15 && (float(x0)/float(y0))<0.39 && 
+                (float(x0)/float(real_armor_lamps[i].size.height)) > 3.2 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
+                detect_hero = true;
+            }
+            if(detect_hero){
+                pnpSolver.clearPoints3D();
+                pnpSolver.pushPoints3D(-112, -35, 0);
+                pnpSolver.pushPoints3D(112,  -35, 0);
+                pnpSolver.pushPoints3D(112, 35, 0);
+                pnpSolver.pushPoints3D(-112, 35, 0);
+	            cout<<"aimming hero !!!!!!"<<endl;
+            }else{
+                cout<<"aimming infantry!!"<<endl;
+                pnpSolver.clearPoints3D();
+                pnpSolver.pushPoints3D(-65, -33, 0);
+                pnpSolver.pushPoints3D(65,  -33, 0);
+                pnpSolver.pushPoints3D(65, 33, 0);
+                pnpSolver.pushPoints3D(-65, 33, 0);
+            }
+            bestCenter.x = (real_armor_lamps[target_index].center.x + real_armor_lamps[target_index+1].center.x)/2 + rectROI.x;
+            bestCenter.y = (real_armor_lamps[target_index].center.y + real_armor_lamps[target_index+1].center.y)/2 + rectROI.y;
+        }
+        if(bestCenter.x!=-1){
+            clock_t finish = clock();
+            best_lamps[0] = real_armor_lamps[target_index];
+            best_lamps[1] = real_armor_lamps[target_index+1];
+            best_lamps[0].center.x+=rectROI.x;
+            best_lamps[0].center.y+=rectROI.y;
+            best_lamps[1].center.x+=rectROI.x;
+            best_lamps[1].center.y+=rectROI.y;
+            rectROI.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x);
+            rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
+            rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
+            rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
+            if(!makeRectSafe(rectROI)){
+                resetROI();
+	        }
+        }
     }
 
 }
@@ -322,7 +350,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int hero_index=-1;
     int sp_index=-1;
     bestCenter.x=-1;
-    bool detect_hero = false;
+    vector<int> possible_hero_index;
     is_right = false;
     vector<int> armor_detected;
     if(special_condition){
@@ -335,16 +363,17 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     //最优装甲板逻辑
         for(int i=0; i<real_armor_lamps.size(); i+=2){
             if(i+1 >= real_armor_lamps.size()) break;
+            if(real_armor_lamps[i].center.x > real_armor_lamps[i+1].center.x){
+                swap(real_armor_lamps[i],real_armor_lamps[i+1]);//确保偶数为左灯条，奇数为右灯条
+            }
             float y0 = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
             float x0 = fabsf(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
             if((float(x0)/float(y0))>0.15 && (float(x0)/float(y0))<0.39 && 
             (float(x0)/float(real_armor_lamps[i].size.height)) > 3.2 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
-                detect_hero = true;
-            }
+                possible_hero_index.push_back(1);
+            }else possible_hero_index.push_back(0);
             Rect armor_area;
-            if(real_armor_lamps[i].center.x > real_armor_lamps[i+1].center.x){
-                swap(real_armor_lamps[i],real_armor_lamps[i+1]);//确保偶数为左灯条，奇数为右灯条
-            }
+
             //计算装甲板灯条四个点像素坐标
             Point2d left_up = cal_x_y(real_armor_lamps[i],1);
             Point2d left_d = cal_x_y(real_armor_lamps[i],0);
@@ -399,7 +428,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     // imshow("image",image);
     // waitKey(1);
         for(int i=0;i<armor_detected.size();i++){
-            if(armor_detected[i] == 2 || detect_hero == true){
+            if(armor_detected[i] == 2 || possible_hero_index[i]){
                 pnpSolver.clearPoints3D();
                 pnpSolver.pushPoints3D(-112, -35, 0);
                 pnpSolver.pushPoints3D(112,  -35, 0);

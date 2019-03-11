@@ -40,7 +40,7 @@ bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict
             float pred_angle_mean=std::accumulate(std::begin(mPredict_Angle),std::end(mPredict_Angle),0.0)/2;
             clear();
             if(int(mode) == 2 || int(mode) ==3){
-                 if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){
+                if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){
                 if(v_a_mean<-0.02&&iYaw_mean>0.2&&pred_angle_mean<0) {cout<<"*******"<<endl; return true;}
                 else if(v_a_mean>0.02&&iYaw_mean<-0.2 && pred_angle_mean>0) {cout<<"======="<<endl; return true;}
                 else {cout<<"qqqq"<<endl; return false;}
