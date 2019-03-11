@@ -91,6 +91,9 @@ bool AutoAim::setImage(Mat &img){
         dilate(mask,mask,element2,Point(-1,-1));
         return true;
     }
+    #ifdef DUBUG
+    imshow("mask",mask);
+    #endif
 }
 
 //寻找灯管
@@ -604,6 +607,10 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
         }
         return AIM_TARGET_FOUND;
     }
+    #ifdef DUBUG
+    imshow("img",img);
+    waitKey(1);
+    #endif
     count = 0;
     return AIM_TARGET_NOT_FOUND;
 }
