@@ -27,7 +27,7 @@ void BoardSerialListenThread::run(){
     while(wake_up&&mSerial.isOpen()){
         while(mSerial.dataRecv32(mSerialPacket)==0){
             u_char CMD = mSerialPacket.getCMD();
-            if(CMD ==CMD_SERIAL_BOARD_REV){
+            if(CMD ==0x02){
                 Spoint[0] = mSerialPacket.getIntInBuffer(2);
                 Spoint[1] = mSerialPacket.getIntInBuffer(6);
                 Spoint[2] = mSerialPacket.getIntInBuffer(10);
