@@ -110,7 +110,7 @@ void ControlModel::processFSM(){
             playerAim();
         }
         case ROBOT_MODE_MARKAIM:{
-            MarkAim();
+            Mark();
             break;
         }
         default:
