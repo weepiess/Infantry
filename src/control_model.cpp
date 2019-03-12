@@ -87,8 +87,7 @@ void ControlModel::processFSM(){
                 break;
             }
             case ROBOT_MODE_MARKAIM:{
-                mBoardSerial.join();
-                mBoardSerial.init("/dev/ttyUSB0");
+                    mBoardSerial.BreakUp();
                 break;
             }
         }
@@ -224,6 +223,6 @@ void ControlModel::playerAim(){
 }
 
 void ControlModel::Mark(){
-    float * Ppoint = mBoardSerial.ReturnVal();
+    Point3f  Ppoint = mBoardSerial.ReturnVal();
 }
 

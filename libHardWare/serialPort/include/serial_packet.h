@@ -37,6 +37,7 @@ public:
     *  @return: void
     */
     void creatPacket(unsigned char CMD);
+    void creatPacket32(unsigned char CMD);
     unsigned char  getCMD();
     /***************自定义装载数据***************/
     void setUncharInBuffer(unsigned char data,int locationInBuffer);//unchar类型数据

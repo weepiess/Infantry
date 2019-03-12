@@ -29,6 +29,14 @@ void SerialPacket::creatPacket(unsigned char CMD){
     mInitflag= true;
 }
 
+void SerialPacket::creatPacket32(unsigned char CMD){
+    buffer32[0]=0xff;//帧头
+    buffer[mLen32-1]=0x0d;//帧尾
+    mCMD=CMD;
+    buffer32[1]=mCMD;//命令
+    mInitflag= true;
+}
+
 unsigned char  SerialPacket::getCMD(){
     return  mCMD;
 }

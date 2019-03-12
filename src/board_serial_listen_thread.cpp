@@ -27,21 +27,14 @@ void BoardSerialListenThread::run(){
     while(wake_up&&mSerial.isOpen()){
         while(mSerial.dataRecv32(mSerialPacket)==0){
             u_char CMD = mSerialPacket.getCMD();
-            if(CMD ==0x02){
-                Spoint[0] = mSerialPacket.getIntInBuffer(2);
-                Spoint[1] = mSerialPacket.getIntInBuffer(6);
-                Spoint[2] = mSerialPacket.getIntInBuffer(10);
-                Spoint[3] = mSerialPacket.getIntInBuffer(14);
-                Spoint[4] = mSerialPacket.getIntInBuffer(18);
-                Spoint[5] = mSerialPacket.getIntInBuffer(22);
-                Spoint[6] = mSerialPacket.getIntInBuffer(26);
-                Spoint[7] = mSerialPacket.getIntInBuffer(30);
+            if(CMD ==CMD_SERIAL_BOARD_REV){
+                    Repoint = Point3f(mSerialPacket.getIntInBuffer(2),mSerialPacket.getIntInBuffer(6),mSerialPacket.getIntInBuffer(10));
             }
         }
     }
     
 }
 
-float *BoardSerialListenThread::ReturnVal(){
-    return Spoint;
+Point3f BoardSerialListenThread::ReturnVal(){
+    return Repoint;
 }

@@ -4,7 +4,8 @@
 #include "base_thread.h"
 #include "serial_interface.h"
 #include "serial_packet.h"
-
+#include "opencv2/opencv.hpp"
+using namespace cv;
 class BoardSerialListenThread:public BaseThread{
 
 public:
@@ -16,11 +17,15 @@ public:
     void run();
     void Sleep();
     void BreakUp();
-    float *ReturnVal();
+    Point3f ReturnVal();
+
+private:
+    SerialInterface mSerial;
 
 private:
     bool wake_up;
-    SerialInterface mSerial;
-    float Spoint[8];
+    Point3f Repoint;
+    
+    
 };
 #endif

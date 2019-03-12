@@ -31,6 +31,9 @@ int main(){
     SerialListenThread serialListenThread;
     serialListenThread.init(&robotModel,&controlModel);
     serialListenThread.start();
+    BoardSerialListenThread boardSerialListenThread;
+    boardSerialListenThread.init("/dev/ttyUSB0");
+    boardSerialListenThread.Sleep();
     cout<<"[robot init]robot init end!"<<endl;
     //debug模块
     //SerialPortDebug serialPortDebug;
