@@ -23,9 +23,11 @@ public:
 public:
     //数据包缓存buffer
     unsigned char buffer[16];
+    unsigned char buffer32[32];
 private:
 
     int mLen=16;//定义数据包缓存buffer长度
+    int mLen32=32;//定义数据包缓存buffer长度
     bool mInitflag;//初始化标志位
     unsigned char mCMD;
 
@@ -53,6 +55,10 @@ public:
     int unPacking();
     //buffer清空
     void clearPakcet();
+
+    int unPacking32();
+    //buffer清空
+    void clearPakcet32();
 
 };
 

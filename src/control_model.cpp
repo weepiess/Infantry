@@ -35,7 +35,6 @@ void ControlModel::init(RobotModel* robotModel){
     autoAim.init(&aim_assistant);
 
 }
-
 //串口数据接收处理入口
 void ControlModel::serialListenDataProcess(SerialPacket recvPacket) {
 //复杂自定义数据包，需要自定义析单独处理
@@ -88,7 +87,7 @@ void ControlModel::processFSM(){
                 break;
             }
             case ROBOT_MODE_MARKAIM:{
-
+                mBoardSerial.init("/dev/ttyUSB0");
             }
         }
     }
@@ -107,6 +106,10 @@ void ControlModel::processFSM(){
         case ROBOT_MODE_PLAYER_AIM:{
 
             playerAim();
+        }
+        case ROBOT_MODE_MARKAIM:{
+            MarkAim();
+            break;
         }
         default:
             cout<<"[aiProcess]mode error"<<endl;
@@ -218,4 +221,7 @@ void ControlModel::playerAim(){
     }
 }
 
+void ControlModel::Mark(){
+    float * Ppoint = mBoardSerial.ReturnVal();
+}
 

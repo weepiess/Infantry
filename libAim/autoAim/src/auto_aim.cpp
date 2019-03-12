@@ -21,7 +21,7 @@ void AutoAim::init(Aim_assistant* checker){
     pnpSolver.pushPoints3D(-65, -33, 0);
     pnpSolver.pushPoints3D(65,  -33, 0);
     pnpSolver.pushPoints3D(65, 33, 0);
-    pnpSolver.pushPoints3D(-65, 33, 0);Key(1);
+    pnpSolver.pushPoints3D(-65, 33, 0);
 
     //初始化相机参数
     pnpSolver.setCameraMatrix(1044.11801, 0., 637.0385, 0.,1046.6575,467.3094, 0., 0., 1.);
@@ -36,7 +36,7 @@ Point2d cal_x_y(RotatedRect &rect, int is_up){
     float angle = (90-rect.angle)*CV_PI/180;
     Point2d point;
     if(is_up){
-        point.x = rect.center.x + rect.size.heighKey(1);t/2*cos(angle);
+        point.x = rect.center.x + rect.size.height/2*cos(angle);
         point.y = rect.center.y - rect.size.height/2*sin(angle);
     } else {
         point.x = rect.center.x - rect.size.height/2*cos(angle);
@@ -52,10 +52,10 @@ void AutoAim::resetROI(){
     rectROI.height = 720;
 }
 
-void AutoAim::set_parameters(inKey(1);_angle, int height, int width){
+void AutoAim::set_parameters(int angle,int inside_angle, int height, int width){
     param_diff_angle = angle;
-    param_inside_angle = insideKey(1);
-    param_diff_height = height;Key(1);
+    param_inside_angle = inside_angle;
+    param_diff_height = height;
     param_diff_width = width;
 }
 
@@ -276,7 +276,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
 void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
     float pre=1000;//预定义
     int target_index=-1;//目标索引
-    bool detect_hero
+    bool detect_hero;
     bestCenter.x=-1;
     for(int i=0; i<real_armor_lamps.size(); i+=2){
         if(i+1 >= real_armor_lamps.size()) break;
@@ -301,10 +301,10 @@ void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
     
     if(!special_condition){
         if(target_index != -1){
-            float y0 = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
-            float x0 = fabsf(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
+            float y0 = (real_armor_lamps[target_index].center.y + real_armor_lamps[target_index+1].center.y)/2;
+            float x0 = fabsf(real_armor_lamps[target_index].center.x-real_armor_lamps[target_index+1].center.x);
             if((float(x0)/float(y0))>0.15 && (float(x0)/float(y0))<0.39 && 
-                (float(x0)/float(real_armor_lamps[i].size.height)) > 3.2 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
+                (float(x0)/float(real_armor_lamps[target_index].size.height)) > 3.2 && (float(x0)/float(real_armor_lamps[target_index].size.height) < 4.08)){
                 detect_hero = true;
             }
             if(detect_hero){

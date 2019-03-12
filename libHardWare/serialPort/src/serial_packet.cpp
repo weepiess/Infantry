@@ -107,3 +107,19 @@ void SerialPacket::clearPakcet(){
     mInitflag= false;
 }
 
+int SerialPacket::unPacking32(){
+    //检查帧头，帧尾
+    if(buffer32[0]==0xff&&buffer32[mLen32-1]==0x0d){
+        mCMD=buffer[1];//解析得到命令
+        mInitflag=true;
+        return 0;
+    }
+    return 1;
+
+}
+//数据帧清空
+void SerialPacket::clearPakcet32(){
+    memset(buffer32, 0, sizeof(char)*mLen32);  //每个字节都用0填充
+    mInitflag= false;
+}
+
