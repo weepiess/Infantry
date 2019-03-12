@@ -31,7 +31,7 @@ void SerialPacket::creatPacket(unsigned char CMD){
 
 void SerialPacket::creatPacket32(unsigned char CMD){
     buffer32[0]=0xff;//帧头
-    buffer[mLen32-1]=0x0d;//帧尾
+    buffer32[mLen32-1]=0x0d;//帧尾
     mCMD=CMD;
     buffer32[1]=mCMD;//命令
     mInitflag= true;
@@ -86,6 +86,13 @@ int SerialPacket::getIntInBuffer(int locationInBuffer){
     if(locationInBuffer>0&&locationInBuffer<mLen-4){ //越界检查
         int data;
         memcpy(&data,buffer+locationInBuffer, 4);
+        return data;
+    }
+}
+int SerialPacket::getIntInBuffer32(int locationInBuffer){
+    if(locationInBuffer>0&&locationInBuffer<mLen32-4){ //越界检查
+        int data;
+        memcpy(&data,buffer32+locationInBuffer, 4);
         return data;
     }
 }

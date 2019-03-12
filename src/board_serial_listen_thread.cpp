@@ -28,7 +28,7 @@ void BoardSerialListenThread::run(){
         while(mSerial.dataRecv32(mSerialPacket)==0){
             u_char CMD = mSerialPacket.getCMD();
             if(CMD ==CMD_SERIAL_BOARD_REV){
-                    Repoint = Point3f(mSerialPacket.getIntInBuffer(2),mSerialPacket.getIntInBuffer(6),mSerialPacket.getIntInBuffer(10));
+                    Repoint = Point3f(mSerialPacket.getIntInBuffer32(2),mSerialPacket.getIntInBuffer32(6),mSerialPacket.getIntInBuffer32(10));
             }
         }
     }

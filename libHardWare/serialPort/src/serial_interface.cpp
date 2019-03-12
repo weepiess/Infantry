@@ -110,7 +110,7 @@ void SerialInterface::YunTaiShoot(unsigned char num){
 
 void SerialInterface::BoardCommand(){
     SerialPacket sendPacket;
-    sendPacket.creatPacket(CMD_SERIAL_BOARD_SEND);
+    sendPacket.creatPacket32(CMD_SERIAL_BOARD_SEND);
     dataSend32(sendPacket);   
 }
 

@@ -47,6 +47,7 @@ public:
     /*******自定义解析数据************/
     unsigned char getUncharInBuffer(int locationInBuffer);//unchar类型数据
     int getIntInBuffer(int locationInBuffer);//short int类型数据
+    int getIntInBuffer32(int locationInBuffer);//short int类型数据
     short int getShortIntInBuffer(int locationInBuffer);//int类型数据
     float getFloatInBuffer(int locationInBuffer);//float类型数据
     /** 解析数据帧，包含数据帧检查（解析CMD）
