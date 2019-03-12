@@ -88,6 +88,7 @@ void ControlModel::processFSM(){
             }
             case ROBOT_MODE_MARKAIM:{
                 mBoardSerial.init("/dev/ttyUSB0");
+                break;
             }
         }
     }
