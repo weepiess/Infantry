@@ -18,11 +18,14 @@ public:
     void Sleep();
     void BreakUp();
     Point3f ReturnVal();
+    void sendStartMessage();
 
 private:
     SerialInterface mSerial;
 
 private:
+    pthread_cond_t  cond = PTHREAD_COND_INITIALIZER;
+    pthread_mutex_t signalMutex = PTHREAD_MUTEX_INITIALIZER;
     bool wake_up;
     Point3f Repoint;
     

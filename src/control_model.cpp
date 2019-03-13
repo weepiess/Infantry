@@ -153,7 +153,6 @@ void ControlModel::Aim(bool is_shoot_control){
         }
         imshow("src",src1);
         waitKey(1);
-
     }        
 }
 
@@ -223,6 +222,11 @@ void ControlModel::playerAim(){
 }
 
 void ControlModel::Mark(){
-    Point3f  Ppoint = mBoardSerial.ReturnVal();
+    Point3f  point = mBoardSerial.ReturnVal();
+    Point2f current_angle;
+    current_angle.x = pRobotModel->getCurrentPitch();
+    current_angle.y = pRobotModel->getCurrentYaw();
+    autoAim.calPitchAndYaw(point.x,point,y,point.z,);
+    
 }
 

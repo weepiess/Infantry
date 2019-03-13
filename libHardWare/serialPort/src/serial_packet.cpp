@@ -14,6 +14,7 @@
 
 SerialPacket::SerialPacket(){
     clearPakcet();
+    clearPakcet32();
     mInitflag= false;
 }
 

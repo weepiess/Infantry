@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 //#define DEBUG
-
+//#define COLLECT_DATA
 AutoAim::AutoAim(){}
 
 
@@ -63,7 +63,9 @@ void AutoAim::set_parameters(int angle,int inside_angle, int height, int width){
 bool AutoAim::setImage(Mat &img){
     if(img.empty()) return false;
     img.copyTo(image);
-    
+    #ifdef DUBUG
+    imshow("roi",img(rectROI));
+    #endif
     //msrcr.MultiScaleRetinexCR(image, image, weight, sigema, 128, 128);
     Mat channel[3], diff;
     resetROI();
@@ -295,10 +297,7 @@ void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
             pre = score;
             target_index = i;
         }
-    }
-    
-    
-    
+    }   
     if(!special_condition){
         if(target_index != -1){
             float y0 = (real_armor_lamps[target_index].center.y + real_armor_lamps[target_index+1].center.y)/2;
@@ -340,6 +339,10 @@ void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
             if(!makeRectSafe(rectROI)){
                 resetROI();
 	        }
+        }else{
+            if(!broadenRect(rectROI)){ //|| resizeCount>5){
+                resetROI();
+            }
         }
     }
 
@@ -405,18 +408,20 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             int number = -1;
             if(armor_area.width != 0 && armor_area.height != 0 ){
                 number = id_checker->check_armor(image(armor_area)); 
-    //            cv::resize(image(armor_area),img_a,cv::Size(32,32));
-    // for(int i = 0;i<img_a.rows;i++){
-    //     for(int j = 0;j<img_a.cols;j++){
-    //         for(int k = 0; k<3;k++){
-    //             int tmp = (uchar)img_a.at<Vec3b>(i,j)[k]*1.2+10;
-    //             if(tmp>255) img_a.at<Vec3b>(i,j)[k] = 2*255 - tmp;
-    //             else img_a.at<Vec3b>(i,j)[k] = tmp;
-    //         }
-    //     }
-    // }
-    // cvtColor(img_a,img_a,COLOR_BGR2GRAY); //输入CNN模型预测 0-4 对应 1-5 5种装甲板
-    // imwrite("../armor_data/3/"+to_string(c)+"eg.png",img_a);
+                #ifdef COLLECT_DATA
+                cv::resize(image(armor_area),img_a,cv::Size(32,32));
+                for(int i = 0;i<img_a.rows;i++){
+                    for(int j = 0;j<img_a.cols;j++){
+                        for(int k = 0; k<3;k++){
+                            int tmp = (uchar)img_a.at<Vec3b>(i,j)[k]*1.2+10;
+                            if(tmp>255) img_a.at<Vec3b>(i,j)[k] = 2*255 - tmp;
+                            else img_a.at<Vec3b>(i,j)[k] = tmp;
+                        }
+                    }
+                }
+                cvtColor(img_a,img_a,COLOR_BGR2GRAY); //输入CNN模型预测 0-4 对应 1-5 5种装甲板
+                imwrite("../armor_data/3/"+to_string(c)+"eg.png",img_a);
+                #endif
             }
         
             c++;
@@ -490,7 +495,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         count++;
         int height = (real_armor_lamps[hero_index].size.height + real_armor_lamps[hero_index+1].size.height)/2;
         //当灯条高度小于5个像素点时放弃锁定，重新寻找合适目标
-        if(LIKELY(height > 1)){
+        if(LIKELY(height > 5)){
             
             bestCenter.x = (real_armor_lamps[hero_index].center.x 
                         + real_armor_lamps[hero_index+1].center.x)/2 + rectROI.x ;
@@ -592,7 +597,7 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
         pnpSolver.solvePnP();
         pnpSolver.clearPoints2D();
         Point3d tvec = pnpSolver.getTvec();
-        cout<<"**************                           "<<"x: "<<tvec.x<<"y: "<<tvec.y<<"z: "<<tvec.z<<"   current_yaw :"<<currYaw<<endl;
+        cout<<"************** "<<"x: "<<tvec.x<<"y: "<<tvec.y<<"z: "<<tvec.z<<"   current_yaw :"<<currYaw<<endl;
         if(is_predict && isKalman){
 	        pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/63, -50, 170, currPitch, currYaw);
 	        measurement.at<float>(0) = currYaw + pitYaw.y;           
