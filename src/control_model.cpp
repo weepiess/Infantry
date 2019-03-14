@@ -80,7 +80,7 @@ void ControlModel::processFSM(){
                 autoptz.join();
                 autotrn.join();
                 autoAim.set_parameters(3,45,30,20);
-                autoAim.setEnemyColor(BaseAim::color_red);
+                autoAim.setEnemyColor(BaseAim::color_blue);
                 // mthread.join();
                 // mthread.init(autoAim);
                 // mthread.start();
@@ -138,7 +138,6 @@ void ControlModel::Aim(bool is_shoot_control){
         if(autoAim.setImage(src1)){
             autoAim.findLamp_rect(pre_armor_lamps);
             autoAim.match_lamps(pre_armor_lamps,real_armor_lamps);
-            
             autoAim.select_armor(real_armor_lamps);
             int finish = basic_tool.currentTimeMsGet();
             bool if_shoot=false;
@@ -226,7 +225,7 @@ void ControlModel::Mark(){
     Point2f current_angle;
     current_angle.x = pRobotModel->getCurrentPitch();
     current_angle.y = pRobotModel->getCurrentYaw();
-    autoAim.calPitchAndYaw(point.x,point,y,point.z,);
+    // autoAim.calPitchAndYaw(point.x,point.y,point.z);
     
 }
 
