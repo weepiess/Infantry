@@ -13,7 +13,6 @@ void AutoAim::init(Aim_assistant* checker){
     id_checker = checker;
     IMG_WIDTH = 1280;
     IMG_HEIGHT = 720;
-    resetROI();
     resizeCount = 0;
     
     //初始化三维坐标点(小装甲)
@@ -180,8 +179,7 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             diff_angle = fabsf(theta_compare - theta_current);
             cout<<diff_angle<<"  diff_angle "<<endl;
             if(diff_angle > params_max_allow_angle) continue;
-            if(diff_angle > max)
-                max = diff_angle;
+
 
             //y差值与x差值超过设定值忽略
             if(current.center.x - compare.center.x == 0) yx_ratio=100;
@@ -403,10 +401,8 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             }
             float y0 = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
             float x0 = fabsf(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
-            cout<<"!*******************************!!!!!x0/y0 :"<<float(x0)/float(y0)<<"(float(x0)/float(real_armor_lamps[i].size.height)) "<<(float(x0)/float(real_armor_lamps[i].size.height))<<endl;
             if((float(x0)/float(y0))>0.15 && (float(x0)/float(y0))<1.6 && 
-            (float(x0)/float(real_armor_lamps[i].size.height)) > 2.5 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
-                cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!x0/y0 :"<<float(x0)/float(y0)<<endl;
+                    (float(x0)/float(real_armor_lamps[i].size.height)) > 2.5 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
                 possible_hero_index.push_back(1);
             }else possible_hero_index.push_back(0);
             Rect armor_area;
@@ -469,8 +465,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         waitKey(1);
         #endif
         for(int i=0;i<armor_detected.size();i++){
-            cout<<"flag :"<<count_flag<<endl;
-            if((armor_detected[i] == 1 || possible_hero_index[i] )&& !count_flag){ //进入英雄
+            if((armor_detected[i] == 1 || possible_hero_index[i] )&& !hero_lock){ //进入英雄
                 pnpSolver.clearPoints3D();
                 pnpSolver.pushPoints3D(-112, -35, 0);
                 pnpSolver.pushPoints3D(112,  -35, 0);
@@ -496,19 +491,17 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             }
         } 
         if(lowerIndex != -1){
-            count_flag = false;
-            cout<<"float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2      "<<float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2<<endl;
-            if((float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2>100 && fabs(640-(real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2)<320)||count_lock){
-                cout<<"process ***********"<<endl;
+            hero_lock = false;
+            if((float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2>100 &&
+                     fabs(640-(real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2)<320)||infantry_lock){
                 hero_index = -1;
-                count_flag = true;
-                count_lock = true;
+                hero_lock = true;
+                infantry_lock = true;
                 count_hero++;
                 if(count_hero > 150){
-                    cout<<" lock_on ******************"<<endl;
                     count_hero=0;
-                    count_flag = false;
-                    count_lock = false;
+                    hero_lock = false;
+                    infantry_lock = false;
                 }
             }
         }
@@ -533,42 +526,34 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
                 sp_index = i;
             }
         }
-                                cout<<sp_index<<"  sp_index !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
+        cout<<sp_index<<"                           sp_index "<<endl;
         if(abs(640-real_armor_lamps[sp_index].center.x)<abs(640-real_armor_lamps[sp_index+1].center.x)){
-            bestCenter.x = real_armor_lamps[sp_index].center.x - 1.5 * real_armor_lamps[sp_index].size.height + rectROI.x;
-            bestCenter.y = real_armor_lamps[sp_index].center.y + rectROI.y;   
+            bestCenter.x = real_armor_lamps[sp_index].center.x - 1.5 * real_armor_lamps[sp_index].size.height;
+            bestCenter.y = real_armor_lamps[sp_index].center.y;   
             is_right = false;
         }else{
-            bestCenter.x = real_armor_lamps[sp_index+1].center.x + 1.5 * real_armor_lamps[sp_index+1].size.height + rectROI.x;
-            bestCenter.y = real_armor_lamps[sp_index+1].center.y + rectROI.y; 
+            bestCenter.x = real_armor_lamps[sp_index+1].center.x + 1.5 * real_armor_lamps[sp_index+1].size.height;
+            bestCenter.y = real_armor_lamps[sp_index+1].center.y; 
             is_right = true; 
         }
-        cout<<"is_Right :"<<is_right<<endl;
     }
     if(hero_index!=-1){
-        resizeCount=0;
         count++;
         int height = (real_armor_lamps[hero_index].size.height + real_armor_lamps[hero_index+1].size.height)/2;
         //当灯条高度小于5个像素点时放弃锁定，重新寻找合适目标
         if(LIKELY(height > 5)){
             
             bestCenter.x = (real_armor_lamps[hero_index].center.x 
-                        + real_armor_lamps[hero_index+1].center.x)/2 + rectROI.x ;
+                        + real_armor_lamps[hero_index+1].center.x)/2;
             bestCenter.y = (real_armor_lamps[hero_index].center.y 
-                        + real_armor_lamps[hero_index+1].center.y)/2 +rectROI.y;
+                        + real_armor_lamps[hero_index+1].center.y)/2;
         }else{
-            resetROI();
             count=0;
         }
     }
     //优先锁定图像下方且靠近中心装甲板
     else if(lowerIndex == -1){
-        resizeCount++;
         count=0;
-        if(!broadenRect(rectROI)){ //|| resizeCount>5){
-            resetROI();
-            resizeCount = 0;
-        }
     } 
     else if(lowerIndex != -1) {
 	    cout<<" attacking Infantry!!!  :) "<<endl;
@@ -577,15 +562,13 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         pnpSolver.pushPoints3D(65,  -33, 0);
         pnpSolver.pushPoints3D(65, 33, 0);
         pnpSolver.pushPoints3D(-65, 33, 0);
-        resizeCount = 0; 
         count++;
         int height = (real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2;
         //当灯条高度小于5个像素点时放弃锁定，重新寻找合适目标
         if(height > 5){
-            bestCenter.x = (real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2 + rectROI.x;
-            bestCenter.y = (real_armor_lamps[lowerIndex].center.y + real_armor_lamps[lowerIndex+1].center.y)/2 + rectROI.y;
+            bestCenter.x = (real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2;
+            bestCenter.y = (real_armor_lamps[lowerIndex].center.y + real_armor_lamps[lowerIndex+1].center.y)/2;
         } else{
-		    resetROI();
             count=0;
     	}
     }
@@ -594,33 +577,15 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
         if(special_condition && sp_index!=-1){
             best_lamps[0] = real_armor_lamps[sp_index];
             best_lamps[1] = real_armor_lamps[sp_index+1];
-            best_lamps[0].center.x+=rectROI.x;
-            best_lamps[0].center.y+=rectROI.y;
-            best_lamps[1].center.x+=rectROI.x;
-            best_lamps[1].center.y+=rectROI.y;
-            resetROI();
         }else{
             best_lamps[0] = real_armor_lamps[lowerIndex];
             best_lamps[1] = real_armor_lamps[lowerIndex+1];
-            best_lamps[0].center.x+=rectROI.x;
-            best_lamps[0].center.y+=rectROI.y;
-            best_lamps[1].center.x+=rectROI.x;
-            best_lamps[1].center.y+=rectROI.y;
-            rectROI.x = (best_lamps[0].center.x + best_lamps[1].center.x)/2 - (best_lamps[1].center.x - best_lamps[0].center.x);
-            rectROI.y = (best_lamps[0].center.y + best_lamps[1].center.y)/2 - (best_lamps[0].size.height + best_lamps[1].size.height)/2;
-            rectROI.height = best_lamps[0].size.height + best_lamps[1].size.height;
-            rectROI.width = 2*(best_lamps[1].center.x - best_lamps[0].center.x);
-	        if(hero_index==-1) resetROI();
-            //cout<<rectROI.x<<endl;
-            if(!makeRectSafe(rectROI)){
-                resetROI();
 	        }
-        }
     }
 }
-BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2f &pitYaw,int is_predict,bool &if_shoot,float time_delay){
+BaseAim::AimResult AutoAim::aim(Mat &src, float curr_pitch, float curr_yaw, Point2f &pitch_yaw,int is_predict,bool &if_shoot,float time_delay){
 
-    bool isKalman = true;
+    bool is_kalman = true;
     if(bestCenter.x!=-1){
         circle(src, bestCenter, 20, Scalar(255,255,255), 5);
         count++;
@@ -653,14 +618,14 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
         pnpSolver.solvePnP();
         pnpSolver.clearPoints2D();
         Point3d tvec = pnpSolver.getTvec();
-        cout<<"************** "<<"x: "<<tvec.x<<"y: "<<tvec.y<<"z: "<<tvec.z<<"   current_yaw :"<<currYaw<<endl;
-        if(is_predict && isKalman){
-	        pitYaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/63, -50, 170, currPitch, currYaw);
-	        measurement.at<float>(0) = currYaw + pitYaw.y;           
+        cout<<"x: "<<tvec.x<<"y: "<<tvec.y<<"z: "<<tvec.z<<"   current_yaw :"<<curr_yaw<<endl;
+        if(is_predict && is_kalman){
+	        pitch_yaw = calPitchAndYaw(tvec.x,tvec.y, tvec.z, tvec.z/63, -50, 170, curr_pitch, curr_yaw);
+	        measurement.at<float>(0) = curr_yaw + pitch_yaw.y;           
             if(count==1){
-                Mat statePost=(Mat_<float>(2, 1) << currYaw+pitYaw.y,0);
+                Mat state_post=(Mat_<float>(2, 1) << curr_yaw+pitch_yaw.y,0);
                 aim_predict.model_init();
-                aim_predict.reset_kf_statepost(statePost);
+                aim_predict.reset_kf_statepost(state_post);
             } 
             Mat Predict = this->aim_predict.predict(measurement,time_delay);
             float predict_angle=Predict.at<float>(1)*(6*time_delay);
@@ -674,26 +639,26 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
                     k_add = 0.15; //低抑制低通滤波
                     if(predict_angle>0.6)
                         predict_angle = 0;
-                    cout<<"** NOR_WIGGLE **  ************************************"<<endl;
+                    cout<<"** NOR_WIGGLE "<<endl;
                 }
                 if(condition == AutoTRN::CONDITION_FAST_WIGGLE){ //快速扭腰
                     k_add = 0.14; //高抑制低通滤波
                     if(predict_angle>0.6)
                         predict_angle = 0;
-                    cout<<"** FAST_WIGGLE **  ************************************"<<endl;
+                    cout<<"** FAST_WIGGLE "<<endl;
                 }
             }
-            if_shoot=aim_predict.shoot_logic(pitYaw.y,Predict.at<float>(1),predict_angle,condition);
-            pitYaw.y += predict_angle;
-            autotnr.setData(pitYaw.y); //更新扭腰判断数据输入
+            if_shoot=aim_predict.shoot_logic(pitch_yaw.y,Predict.at<float>(1),predict_angle,condition);
+            pitch_yaw.y += predict_angle;
+            autotnr.setData(pitch_yaw.y); //更新扭腰判断数据输入
             if(condition != AutoTRN::CONDITION_NOR && condition!= AutoTRN::CONDITION_ABN){ //扭腰模式下低通滤波
-                pitYaw.y = datadealer(pitYaw.y);
-                cout<<"** CNOR **   ************************************"<<endl;
+                pitch_yaw.y = dataDealer(pitch_yaw.y);
+                cout<<"** CNOR **"<<endl;
             }
         
 
         }else{   
-            pitYaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/45, -50, 170, currPitch, currYaw);
+            pitch_yaw = calPitchAndYaw(tvec.x, tvec.y, tvec.z, tvec.z/45, -50, 170, curr_pitch, curr_yaw);
         }
         return AIM_TARGET_FOUND;
     }
@@ -705,22 +670,22 @@ BaseAim::AimResult AutoAim::aim(Mat &src, float currPitch, float currYaw, Point2
     return AIM_TARGET_NOT_FOUND;
 }
 
-float AutoAim::datadealer(float new_num){
+float AutoAim::dataDealer(float new_num){
     if (new_num - old_num > 0 )         //判断是否反向
-        new_flags = 1;
-    else new_flags = 0;
-    if (new_flags == old_flags)          //持续同向改变
+        new_inverse_flags = 1;
+    else new_inverse_flags = 0;
+    if (new_inverse_flags == old_inverse_flags)          //持续同向改变
     {
-        if (abs (new_num - old_num) > Threshold_min)    
+        if (abs (new_num - old_num) > threshold_min)    
             num += 5;
-        if (num >= Threshold_max)      
+        if (num >= threshold_max)      
             k += k_add;  //增大对测量数据的置信度
     }
     else                
     {
         num = 0;      
         k = 0.6;
-        old_flags = new_flags; 
+        old_inverse_flags = new_inverse_flags; 
     } 
     if (k >= 0.9)  { 
         k = 0.97;    
