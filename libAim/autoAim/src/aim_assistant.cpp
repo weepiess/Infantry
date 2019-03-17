@@ -24,7 +24,7 @@ void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
             }
         }
     }
-    imshow("k",img);
+    //imshow("k",img);
     cvtColor(img,img,COLOR_BGR2GRAY);
     float *p=tensor->flat<float>().data();
     cv::Mat imagePixels(rows,cols,CV_32FC1,p);

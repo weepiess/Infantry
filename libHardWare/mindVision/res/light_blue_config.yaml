@@ -2,7 +2,7 @@
 ---
 frame_speed: 1
 gamma: 32
-exposure_time: 1600
+exposure_time: 1800
 contrast: 98
 ae_state: 0
 resolution_width: 1280

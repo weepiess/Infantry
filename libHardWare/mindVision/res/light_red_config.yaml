@@ -1,7 +1,7 @@
 %YAML:1.0
 ---
 frame_speed: 1
-gamma: 30
+gamma: 32
 exposure_time: 1800
 contrast: 98
 ae_state: 0

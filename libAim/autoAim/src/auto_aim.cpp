@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#define DEBUG
+// #define DEBUG
 //#define COLLECT_DATA
 AutoAim::AutoAim(){}
 
@@ -74,35 +74,43 @@ bool AutoAim::setImage(Mat &img){
     if(enemyColor==color_red){
         int thresh =100 , substract_thresh = 60;
         //threshold(channel[2],channel[2],thresh,255,THRESH_BINARY);
-        diff = channel[2] - channel[1];
+        diff = channel[2] - channel[0];
+        #ifdef DEBUG
         imshow("diff",diff);
         imshow("chann2",channel[2]);
         imshow("chann1",channel[1]);
+        #endif
         threshold(diff, diff, substract_thresh, 255, THRESH_BINARY);
-        Mat element = getStructuringElement( MORPH_RECT, Size(3, 3));
+        Mat element = getStructuringElement( MORPH_RECT, Size(1, 5));
         dilate(diff,mask,element,Point(-1,-1));
+        #ifdef DEBUG
         imshow("mask",mask);
+        waitKey(1);
+        #endif
         return true;
     }
     else if(enemyColor == color_blue){
         cout<<"blue**********************************************8 "<<endl;
         int thresh = 110, substract_thresh = 150;
-        Mat gray = channel[1];
-        threshold(gray, gray,thresh, 255, cv::THRESH_BINARY);
+        //Mat gray = channel[1];
+        threshold(channel[1], channel[1],thresh, 255, cv::THRESH_BINARY);
         diff = channel[0] - channel[2];
         threshold(diff,diff,substract_thresh,255,THRESH_BINARY);
         Mat element = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9, 9));
         Mat element2 = getStructuringElement(MORPH_ELLIPSE,Size(1,4));
         dilate(diff, diff, element,Point(-1,-1),1);
+        #ifdef DEBUG
         imshow("diff",diff);
-        bitwise_and(diff, gray, mask);
+        #endif
+        bitwise_and(diff, channel[1], mask);
         dilate(mask,mask,element2,Point(-1,-1));
-            imshow("mask",mask);
-            imshow("gray",gray);
-    waitKey(1);
+        #ifdef DEBUG
+        imshow("mask",mask);
+        waitKey(1);
+        #endif
         return true;
     }
-    // #ifdef DUBUG
+    // #ifdef DEBUG
 
     // #endif
 }
@@ -121,32 +129,33 @@ void AutoAim::findLamp_rect(vector<RotatedRect> &pre_armor_lamps){
         for(int i=0;i<contours.size();i++){
             if(contours[i].size()>5){
                 temp = adjustRRect(fitEllipseDirect(contours[i]));
-                //ellipse(image,temp,Scalar(255,2,255),1);
-               if(temp.angle >= 90) temp.angle = temp.angle -180;
+                if(temp.angle >= 90) temp.angle = temp.angle -180;
+                if(temp.size.height < 10) continue;
                 if(abs(temp.angle)>45) continue;//旋转矩形角度小于45度，则忽略
+                if(float(temp.size.height)/float(temp.size.width) <2) continue; 
+                ellipse(image,temp,Scalar(0,255,0),1);
                 pre_armor_lamps.push_back(temp);
             }
         }
     }
+    #ifdef DEBUG
     imshow("img",image);
+    #endif
 }
 void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRect> &real_armor_lamps){
     
     //权重
     float yx_ratio;
     float params_max_height_ratio, params_max_dis_height_ratio, params_min_dis_height_ratio, params_max_allow_angle, params_max_yx_diff_ratio;
-    float height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight,ratio_max,ratio_min;
+    float height_diff_weight,angle_diff_weight,height_ratio_weight,yx_ratio_weight;
     //权重
     angle_diff_weight=6;
     height_ratio_weight=2;
     yx_ratio_weight=3;
-
-    ratio_max=6;
-    ratio_min= 1;
     params_max_height_ratio= 2;
     params_min_dis_height_ratio = 1;
-    params_max_dis_height_ratio= 7;
-    params_max_yx_diff_ratio= 1.5; //一对灯条最大侧向旋转角
+    params_max_dis_height_ratio= 5;
+    params_max_yx_diff_ratio= 0.8; //一对灯条最大侧向旋转角
     params_max_allow_angle=5; //一对灯条最大允许角度差
     int size = pre_armor_lamps.size();
     vector<float> diff(size,0x3f3f3f3f);
@@ -237,13 +246,13 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
             const RotatedRect &current = pre_armor_lamps[i];
             float theta_current = current.angle;
             //灯条角度小于一定阈值排除
-            if((theta_current < 0 && theta_current > -3) || (theta_current > 0 && theta_current < 3)) continue;
+            if((theta_current < 0 && theta_current > -5) || (theta_current > 0 && theta_current < 5)) continue;
 
             for(j=i+1;j<size; j++){
                 //计算比例，筛选灯管
                 const RotatedRect &compare = pre_armor_lamps[j];
                 float theta_compare = compare.angle;
-                if((theta_compare < 0 && theta_compare > -3) || (theta_compare > 0 && theta_compare < 3)) continue;
+                if((theta_compare < 0 && theta_compare > -5) || (theta_compare > 0 && theta_compare < 5)) continue;
                 //灯条角度必须一正一负
                 if((theta_current > 0 && theta_compare>0) || (theta_current < 0 && theta_compare < 0)) continue;
                 
@@ -252,15 +261,25 @@ void AutoAim::match_lamps(vector<RotatedRect> &pre_armor_lamps, vector<RotatedRe
                 if(diff_angle < 10) continue;
                 if(diff_angle > 25) continue;
                 //y差值与x差值超过设定值忽略
-
+                            if(current.center.x - compare.center.x == 0) yx_ratio=100;
+            else yx_ratio = fabsf(current.center.y-compare.center.y)/fabsf(current.center.x-compare.center.x);
+            cout<<"yx_ratio: "<<yx_ratio<<endl;
+            if(yx_ratio > params_max_yx_diff_ratio) continue;
                 //两灯条高度比例不在范围内则忽略
                 if(compare.size.height > current.size.height)
                     height_ratio = compare.size.height*1.0f/current.size.height;
                 else
                     height_ratio = current.size.height*1.0f/compare.size.height;
-                if(height_ratio > params_max_height_ratio) continue;
+                if(height_ratio > 1.5) continue;
+
+                dist = ImageTool::calc2PointDistance(compare.center, current.center);
+                avg_height = (compare.size.height + current.size.height) / 2.0;
+                dis_height_ratio = dist / avg_height;
+                cout<<"dis_height_ratio: "<<dis_height_ratio<<endl;
+                if(dis_height_ratio > params_max_dis_height_ratio || dis_height_ratio < params_min_dis_height_ratio) continue;
+
                 totalDiff = angle_diff_weight * ((diff_angle -10) /15) //角度花费
-                        + height_ratio_weight * ((height_ratio-1)/(params_max_height_ratio-1)); //高度比例花费
+                        + height_ratio_weight * ((height_ratio-1)/(1.5-1)); //高度比例花费
                         //+ yx_ratio_weight * (yx_ratio/params_max_yx_diff_ratio); //内角花费
                 if(diff.at(j) > totalDiff)
                     diff.at(j) = totalDiff;
@@ -384,8 +403,10 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             }
             float y0 = (real_armor_lamps[i].center.y + real_armor_lamps[i+1].center.y)/2;
             float x0 = fabsf(real_armor_lamps[i].center.x-real_armor_lamps[i+1].center.x);
-            if((float(x0)/float(y0))>0.15 && (float(x0)/float(y0))<0.39 && 
-            (float(x0)/float(real_armor_lamps[i].size.height)) > 3.2 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
+            cout<<"!*******************************!!!!!x0/y0 :"<<float(x0)/float(y0)<<"(float(x0)/float(real_armor_lamps[i].size.height)) "<<(float(x0)/float(real_armor_lamps[i].size.height))<<endl;
+            if((float(x0)/float(y0))>0.15 && (float(x0)/float(y0))<1.6 && 
+            (float(x0)/float(real_armor_lamps[i].size.height)) > 2.5 && (float(x0)/float(real_armor_lamps[i].size.height) < 4.08)){
+                cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!x0/y0 :"<<float(x0)/float(y0)<<endl;
                 possible_hero_index.push_back(1);
             }else possible_hero_index.push_back(0);
             Rect armor_area;
@@ -443,10 +464,13 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
             armor_detected.push_back(number);
             cout<<"number: "<<i<<"   "<<number<<endl;
         }
-    // imshow("image",image);
-    // waitKey(1);
+        #ifdef DUBUG
+        imshow("image",image);
+        waitKey(1);
+        #endif
         for(int i=0;i<armor_detected.size();i++){
-            if(armor_detected[i] == 2 || possible_hero_index[i]){
+            cout<<"flag :"<<count_flag<<endl;
+            if((armor_detected[i] == 1 || possible_hero_index[i] )&& !count_flag){ //进入英雄
                 pnpSolver.clearPoints3D();
                 pnpSolver.pushPoints3D(-112, -35, 0);
                 pnpSolver.pushPoints3D(112,  -35, 0);
@@ -454,8 +478,7 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
                 pnpSolver.pushPoints3D(-112, 35, 0);
 	            cout<<"find hero !!!!!!"<<endl;
                 hero_index = 2 * i;
-                lowerIndex = 2 * i;
-                break;
+                // lowerIndex = 2 * i;
             }
 
             //不瞄准工程车
@@ -469,10 +492,28 @@ void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
                 if(score < lowerY){
                     lowerY = score;
                     lowerIndex = 2 * i;
+                }   
+            }
+        } 
+        if(lowerIndex != -1){
+            count_flag = false;
+            cout<<"float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2      "<<float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2<<endl;
+            if((float(real_armor_lamps[lowerIndex].size.height + real_armor_lamps[lowerIndex+1].size.height)/2>100 && fabs(640-(real_armor_lamps[lowerIndex].center.x + real_armor_lamps[lowerIndex+1].center.x)/2)<320)||count_lock){
+                cout<<"process ***********"<<endl;
+                hero_index = -1;
+                count_flag = true;
+                count_lock = true;
+                count_hero++;
+                if(count_hero > 150){
+                    cout<<" lock_on ******************"<<endl;
+                    count_hero=0;
+                    count_flag = false;
+                    count_lock = false;
                 }
             }
         }
     }   
+    if(hero_index!=-1) lowerIndex = hero_index;
     if(special_condition){
         float pre = 10000;
         for(int i=0; i<real_armor_lamps.size(); i+=2){

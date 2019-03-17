@@ -39,7 +39,9 @@ private:
     void resetROI();
 
 private:
-
+    int count_hero=0;
+    bool count_flag = false;
+    bool count_lock = false; 
 
 public:
     float new_number=0;

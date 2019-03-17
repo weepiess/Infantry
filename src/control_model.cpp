@@ -128,8 +128,8 @@ void ControlModel::Aim(bool is_shoot_control){
         Point2f current_angle;
         MindVision* cap = pRobotModel->getMvisionCapture();
         if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
-        char c = waitKey(1);
-        cap->adjustParams(c);
+        // char c = waitKey(1);
+        // cap->adjustParams(c);
         SerialInterface *interface = pRobotModel->getpSerialInterface();
         interface->getAbsYunTaiDelta();
         current_angle.x = pRobotModel->getCurrentPitch();
@@ -141,7 +141,7 @@ void ControlModel::Aim(bool is_shoot_control){
             autoAim.select_armor(real_armor_lamps);
             int finish = basic_tool.currentTimeMsGet();
             bool if_shoot=false;
-            if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+            if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,0,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
                 int end = basic_tool.currentTimeMsGet();
                 cout<<"time cost: "<<end-start<<endl;
                 interface->YunTaiDeltaSet(angle.x, angle.y);
@@ -150,8 +150,8 @@ void ControlModel::Aim(bool is_shoot_control){
                 if(if_shoot)
 	                interface->YunTaiShoot(num);
         }
-        imshow("src",src1);
-        waitKey(1);
+    //    imshow("src",src1);
+    //    waitKey(1);
     }        
 }
 
@@ -198,8 +198,8 @@ void ControlModel::playerAim(){
     Point2f current_angle;
     MindVision* cap = pRobotModel->getMvisionCapture();
     if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
-    char c = waitKey(1);
-    cap->adjustParams(c);
+    // char c = waitKey(1);
+    // cap->adjustParams(c);
     SerialInterface *interface = pRobotModel->getpSerialInterface();
     interface->getAbsYunTaiDelta();
     current_angle.x = pRobotModel->getCurrentPitch();

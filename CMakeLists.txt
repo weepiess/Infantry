@@ -25,7 +25,7 @@ add_executable(example ${DIR_SRCS})
 
 target_link_libraries(example SerialPort UsbCapture MindVision)
 target_link_libraries(example pthread)
-# target_link_libraries(example AutoAim MarkAim AutoPTZ AutoTRN)
+target_link_libraries(example AutoAim MarkAim AutoPTZ AutoTRN)
 target_link_libraries(example BaseAim)
 target_link_libraries(example BaseClasses BaseTools)
 target_link_libraries(example MVSDK)
