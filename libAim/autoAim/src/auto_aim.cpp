@@ -63,50 +63,53 @@ bool AutoAim::setImage(Mat &img){
     cout<<enemyColor<<"  enemyColor"<<endl;
     if(img.empty()) return false;
     img.copyTo(image);
-
-    //msrcr.MultiScaleRetinexCR(image, image, weight, sigema, 128, 128);
     Mat channel[3], diff;
     resetROI();
     mask = img(rectROI);
     split(mask, channel);
     if(img.empty()) return false;
     if(enemyColor==color_red){
+        cout<<"red"<<endl;
         int thresh =100 , substract_thresh = 60;
-        //threshold(channel[2],channel[2],thresh,255,THRESH_BINARY);
         diff = channel[2] - channel[0];
+        
         #ifdef DEBUG
         imshow("diff",diff);
-        imshow("chann2",channel[2]);
-        imshow("chann1",channel[1]);
         #endif
+
         threshold(diff, diff, substract_thresh, 255, THRESH_BINARY);
         Mat element = getStructuringElement( MORPH_RECT, Size(1, 5));
         dilate(diff,mask,element,Point(-1,-1));
+
         #ifdef DEBUG
         imshow("mask",mask);
         waitKey(1);
         #endif
+
         return true;
     }
     else if(enemyColor == color_blue){
-        cout<<"blue**********************************************8 "<<endl;
+        cout<<"blue"<<endl;
         int thresh = 110, substract_thresh = 150;
-        //Mat gray = channel[1];
         threshold(channel[1], channel[1],thresh, 255, cv::THRESH_BINARY);
         diff = channel[0] - channel[2];
         threshold(diff,diff,substract_thresh,255,THRESH_BINARY);
         Mat element = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9, 9));
         Mat element2 = getStructuringElement(MORPH_ELLIPSE,Size(1,4));
         dilate(diff, diff, element,Point(-1,-1),1);
+
         #ifdef DEBUG
         imshow("diff",diff);
         #endif
+
         bitwise_and(diff, channel[1], mask);
         dilate(mask,mask,element2,Point(-1,-1));
+
         #ifdef DEBUG
         imshow("mask",mask);
         waitKey(1);
         #endif
+
         return true;
     }
     // #ifdef DEBUG
@@ -375,8 +378,8 @@ void AutoAim::selectArmorH(vector<RotatedRect> real_armor_lamps){
             }
         }
     }
-
 }
+
 void AutoAim::select_armor(vector<RotatedRect> real_armor_lamps){
     int lowerY=1000;
     int lowerIndex=-1;
@@ -694,11 +697,3 @@ float AutoAim::dataDealer(float new_num){
     old_num = new_num;      
     return old_num;
 }
-
-
-
-
-
-
-
-
