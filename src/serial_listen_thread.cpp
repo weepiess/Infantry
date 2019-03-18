@@ -12,23 +12,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "serial_listen_thread.h"
 SerialListenThread::SerialListenThread() {
-    mExitFlag= false;
+    exit_flag_= false;
 }
 SerialListenThread::~SerialListenThread(){
 
 }
-void SerialListenThread::init(RobotModel *robotModel,ControlModel *controlModel){
-    pRobotModel=robotModel;
-    pControlModel=controlModel;
+void SerialListenThread::init(RobotModel *robot_model,ControlModel *control_model){
+    robot_model_=robot_model;
+    control_model_=control_model;
 };
 
 void SerialListenThread::run() {
     SerialPacket recvPacket;
-    while(!mExitFlag){
+    while(!exit_flag_){
         //是否需要考虑对监听数据构造队列，因为处理数据函数需要一定时间。
-        if(pRobotModel->getpSerialInterface()->dataRecv(recvPacket)==0){
+        if(robot_model_->getpSerialInterface()->dataRecv(recvPacket)==0){
                 //串口监听数据处理
-                pControlModel->serialListenDataProcess(recvPacket);
+                control_model_->serialListenDataProcess(recvPacket);
         }
 
     }

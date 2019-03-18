@@ -15,19 +15,19 @@ public:
 public:
     bool init(string path);
     void run();
-    void Sleep();
-    void BreakUp();
-    Point3f ReturnVal();
+    void sleep();
+    void breakUp();
+    Point3f returnVal();
     void sendStartMessage();
 
 private:
-    SerialInterface mSerial;
+    SerialInterface serial_;
 
 private:
-    pthread_cond_t  cond = PTHREAD_COND_INITIALIZER;
-    pthread_mutex_t signalMutex = PTHREAD_MUTEX_INITIALIZER;
-    bool wake_up;
-    Point3f Repoint;
+    pthread_cond_t  cond_ = PTHREAD_COND_INITIALIZER;
+    pthread_mutex_t signal_mutex_ = PTHREAD_MUTEX_INITIALIZER;
+    bool wake_up_;
+    Point3f get_point_;
     
     
 };

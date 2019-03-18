@@ -22,7 +22,7 @@
 #include "basic_tool.h"
 #include "mind_vision.h"
 #include "autoptz.h"
-#include "autotrn.h"
+#include "recognize_wiggle.h"
 #include "mark_aim.h"
 #include "board_serial_listen_thread.h"
 class ControlModel{
@@ -36,35 +36,27 @@ public:
     void serialListenDataProcess(SerialPacket recvPacket);
     void processFSM();
 
+
+private:
+    void aim(bool is_shoot_control=true);
+    void autoPTZControl();
+    void playerAim();
+    void mark();
+
 private:
     //机器人临时模式变量
-    cv::FileStorage file;
-    RobotMode mSetMode;
-    BasicTool basic_tool;
-    AutoAim autoAim;
-    AutoPTZ autoptz;
-    MarkAim markaim;
-    AutoTRN autotrn;
-  //  Aim_assistant aim_assist;
-    vector<double> result;
-    int armor_id=-1;
-private:
-    BoardSerialListenThread mBoardSerial;
-    RobotModel* pRobotModel;
-    //相关临时变量
-    MindVision* cap;
-    SerialInterface* interface;
-        //是否需要确认装甲板
-    bool need_check=true;
-    std::future<int> tmp;
-    Aim_assistant aim_assistant;
-private:
-    Point2f p1,p2,p3,p4;
-private:
-    void Aim(bool is_shoot_control=true);
-    void AutoPTZControl();
-    void playerAim();
-    void Mark();
+    RobotMode set_mode_;
+    BasicTool basic_tool_;
+    AutoAim auto_aim_;
+    AutoPTZ auto_ptz_;
+    MarkAim mark_aim_;
+    RecognizeWiggle recognize_wiggle_;
+    Aim_assistant aim_assist_;
+    BoardSerialListenThread board_serial_;
+    RobotModel* robot_model_;
+    MindVision* cap_;
+    SerialInterface* interface_;
+
 };
 
 #endif //RMDEMO_CONTROL_MODEL_H

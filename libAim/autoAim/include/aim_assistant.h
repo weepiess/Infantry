@@ -39,14 +39,14 @@ class Aim_assistant{
         *  @param:  cv::Mat src :输入装甲板图片
         *  @return: int :装甲板id数字 1-5  返回-1 识别错误
         */
-        int check_armor(cv::Mat src);
+        int checkArmor(cv::Mat src);
         
     private:
         
-        void TensorInit(Session* session,cv::Mat& img);
+        void tensorInit(Session* session_,cv::Mat& img);
     private:
-        Session *session;
-        GraphDef graph_def;
+        Session *session_;
+        GraphDef graph_def_;
 
 };
 #endif

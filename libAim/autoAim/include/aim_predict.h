@@ -22,10 +22,10 @@ class Aim_predict{
         ~Aim_predict();
     public: 
         //预测模型初始化
-        void model_init();
+        void modelInit();
         
         //根据时间 重新调整卡尔曼statepost
-        void reset_kf_statepost(Mat statepost);
+        void resetKfStatepost(Mat statepost);
 
         /** 预测函数
         *  @param: Mat measurement, 测量矩阵
@@ -39,15 +39,15 @@ class Aim_predict{
          *  @param: float angel_velocity, 当前云台角速度
          *  @param: float predict_angle, 卡尔曼预测的提前量
          */
-        bool shoot_logic(float initYaw, float angel_velocity, float predict_angle, uchar mode);
+        bool shootLogic(float initYaw, float angel_velocity, float predict_angle, uchar mode);
         
         //丢失目标后清空vector容器,准备下一次数据
         void clear();
     private:    
-        Kalman_filter mKf;
-        vector<float> mYaw;
-        vector<float> mAngle_Velocity;
-        vector<float> mPredict_Angle;
+        Kalman_filter kalman_fileter_;
+        vector<float> yaw_;
+        vector<float> angle_velocity_;
+        vector<float> predict_angle_;
 
 
 

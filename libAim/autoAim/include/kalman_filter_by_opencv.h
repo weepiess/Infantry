@@ -14,26 +14,26 @@ public:
 
 public:
     void init(int dynamParams,int measureParams, int controlParams);
-    void set_samplingtime(float dt);
-    void set_statepost(Mat statePost);
+    void setSamplingtime(float dt);
+    void setStatepost(Mat statePost);
     Mat predict();
     void correct(Mat measurement);
     
 public:
     //int dynamParams;
-    int measureParams;
-    int controlParams;
+    int g_measure_params;
+    int g_control_params;
     //Mat transitionMatrix;
-    Mat statePre;           //!< predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)  
+    //Mat g_state_pre;           //!< predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)  
              //!< corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))  
-    Mat transitionMatrix;   //!< state transition matrix (A)  
-    Mat controlMatrix;      //!< control matrix (B) (not used if there is no control)  
-    Mat measurementMatrix;  //!< measurement matrix (H)  
-    Mat processNoiseCov;    //!< process noise covariance matrix (Q)  
-    Mat measurementNoiseCov;//!< measurement noise covariance matrix (R)  
-    Mat errorCovPre;        //!< priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/  
-    Mat gain;               //!< Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)  
-    Mat errorCovPost;
+    Mat g_transition_matrix;   //!< state transition matrix (A)  
+    Mat g_control_matrix;      //!< control matrix (B) (not used if there is no control)  
+    Mat g_measurement_matrix;  //!< measurement matrix (H)  
+    Mat g_process_noise_cov;    //!< process noise covariance matrix (Q)  
+    Mat g_measurement_noise_cov;//!< measurement noise covariance matrix (R)  
+    // Mat errorCovPre;        //!< priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/  
+    // Mat gain;               //!< Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)  
+    // Mat errorCovPost;
 
 private:
     KalmanFilter Kf;
