@@ -39,7 +39,7 @@ class RecognizeWiggle: public BaseThread{
     private:
     bool flag_;
     bool data_update_ = false;
-    uchar current_condition_;
+    uchar current_condition_=1;
     float curr_data_ = 0;
     list<float> numbase_;
     double result_[64 * 2] = { 0 };

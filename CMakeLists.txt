@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project(zimiao)
 SET(OpenCV_DIR /usr/local/opencv3/share/OpenCV)
+SET(CMAKE_BUILD_TYPE "Debug") 
+SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
 set(CMAKE_CXX_STANDARD 11)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/libHardWare/serialPort/include)

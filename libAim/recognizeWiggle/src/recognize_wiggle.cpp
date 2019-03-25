@@ -60,33 +60,37 @@ void RecognizeWiggle::dataJudger(){
         if(badnum_ > 10){ //高频情况
             if(mean < 1 && var > 3){ //扭腰均值较小
                 pthread_mutex_lock(&control_mutex_);
-                current_condition_ = EnemyConditon::CONDITION_NOR_WIGGLE;
+                current_condition_ = CONDITION_NOR_WIGGLE;
                 pthread_mutex_unlock(&control_mutex_);
                 if(var > 5){
                     pthread_mutex_lock(&control_mutex_);
-                    current_condition_ = EnemyConditon::CONDITION_FAST_WIGGLE;
+                    current_condition_ = CONDITION_FAST_WIGGLE;
                     pthread_mutex_unlock(&control_mutex_);
                 }
             }
             else{
                 pthread_mutex_lock(&control_mutex_);
-                current_condition_ = EnemyConditon::CONDITION_ABN;
+                current_condition_ = CONDITION_ABN;
                 pthread_mutex_unlock(&control_mutex_);
             }
         }
         else{
             pthread_mutex_lock(&control_mutex_);
-            current_condition_ =  EnemyConditon::CONDITION_NOR;
+            current_condition_ =  CONDITION_NOR;
             pthread_mutex_unlock(&control_mutex_);
         }
         badnum_ = 0;
         data_update_ = false;
     }   
+    //             pthread_mutex_lock(&control_mutex_);
+    // cout<<"current condition    "<<int(current_condition_)<<endl;
+    //             pthread_mutex_unlock(&control_mutex_);
 }
 
 void RecognizeWiggle::getCondition(uchar &condition){
     pthread_mutex_lock(&control_mutex_);
-    condition =  current_condition_;
+    condition =  int(current_condition_);
+    // cout<<"*******************"<<int(condition)<<"**************************"<<int(current_condition_)<<endl;
     pthread_mutex_unlock(&control_mutex_);
 }
 

@@ -150,8 +150,8 @@ void ControlModel::aim(bool is_shoot_control){
                 if(if_shoot)
 	                interface_->YunTaiShoot(num);
         }
-    //    imshow("src",src1);
-    //    waitKey(1);
+       imshow("src",src1);
+       waitKey(1);
     }        
 }
 

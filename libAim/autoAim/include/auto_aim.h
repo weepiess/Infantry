@@ -63,6 +63,9 @@ private:
     bool infantry_lock_ = false;  //锁定近处步兵
     bool is_right_ = false;
     bool special_condition_ = false;
+    bool lock_on_target_ = false;
+    bool target_in_ = false;
+    Point2f last_choose_center_ = Point2f(-1,-1);
 
 private:
     RecognizeWiggle recognize_wiggle_;

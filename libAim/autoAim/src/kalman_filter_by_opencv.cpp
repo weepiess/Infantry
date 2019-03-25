@@ -5,7 +5,6 @@ Kalman_filter::~Kalman_filter(){}
 
 void Kalman_filter::init(int dynamParams,int g_measure_params ,int g_control_params){
     Kf.init(dynamParams,g_measure_params,g_control_params);
-    
     Kf.measurementMatrix = g_measurement_matrix;
     Kf.measurementNoiseCov = g_measurement_noise_cov;
     Kf.processNoiseCov = g_process_noise_cov;
