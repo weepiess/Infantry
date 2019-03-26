@@ -64,8 +64,13 @@ private:
     bool is_right_ = false;
     bool special_condition_ = false;
     bool lock_on_target_ = false;
+    bool hero_lock_on_target_ = false;
     bool target_in_ = false;
+    bool hero_target_in_ = false;
     Point2f last_choose_center_ = Point2f(-1,-1);
+    Point2f hero_last_choose_center_ = Point2f(-1,-1);
+    bool last_targe_choose_condition_ = false;
+    bool hero_last_targe_choose_condition_ = false;
 
 private:
     RecognizeWiggle recognize_wiggle_;
