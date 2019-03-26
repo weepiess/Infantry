@@ -1,4 +1,4 @@
-#include "Fft.h"
+#include "fast_fourier_transform.h"
 using namespace std;
  
 
@@ -7,22 +7,22 @@ FFt::FFt(){}
 
 FFt::~FFt(){}
 
-void FFt::add(complex a, complex b, complex *c)      //  复数加运算
+void FFt::add(Complex a, Complex b, Complex *c)      //  复数加运算
 {
     c->real = a.real + b.real;
     c->img = a.img + b.img;
 }
-void  FFt::sub(complex a, complex b, complex *c)      //  复数减运算
+void  FFt::sub(Complex a, Complex b, Complex *c)      //  复数减运算
 {
     c->real = a.real - b.real;
     c->img = a.img - b.img;
 }
-void  FFt::mul(complex a, complex b, complex *c)      //复数乘运算
+void  FFt::mul(Complex a, Complex b, Complex *c)      //复数乘运算
 {
     c->real = a.real*b.real - a.img*b.img;
     c->img = a.real*b.img + a.img*b.real;
 }
-void  FFt::divi(complex a, complex b, complex *c)      //  复数除运算
+void  FFt::divi(Complex a, Complex b, Complex *c)      //  复数除运算
 {
     c->real = (a.real*b.real + a.img*b.img) / (b.real*b.real + b.img*b.img);
     c->img = (a.img*b.real - a.real*b.img) / (b.real*b.real + b.img*b.img);
@@ -31,7 +31,7 @@ void  FFt::divi(complex a, complex b, complex *c)      //  复数除运算
 void  FFt::initW(int size)                                //欧拉公式运算   
 {
     int i;
-    W = (complex*)malloc(sizeof(complex)* size);    //分配内存空间
+    W = (Complex*)malloc(sizeof(Complex)* size);    //分配内存空间
     for (i = 0; i<size; i++)
     {
         W[i].real = cos(2 * PI / size*i);
@@ -49,7 +49,7 @@ void  FFt::initW(int size)                                //欧拉公式运算
  
 void  FFt::changex(int size)                      //变址运算  
 {
-    complex temp;
+    Complex temp;
     unsigned int i = 0, j = 0, k = 0;
     double t;
     for (i = 0; i<size; i++)
@@ -75,7 +75,7 @@ void  FFt::changex(int size)                      //变址运算
 void  FFt::fftx()                             //快速傅里叶函数
 {
     long    int i = 0, j = 0, k = 0, l = 0;
-    complex up, down, product;
+    Complex up, down, product;
     changex(NI);
     for (i = 0; i<log(NI) / log(2); i++) /*一级蝶形运算*/
     {

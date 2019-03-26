@@ -23,9 +23,11 @@ public:
 public:
     //数据包缓存buffer
     unsigned char buffer[16];
+    unsigned char buffer32[32];
 private:
 
     int mLen=16;//定义数据包缓存buffer长度
+    int mLen32=32;//定义数据包缓存buffer长度
     bool mInitflag;//初始化标志位
     unsigned char mCMD;
 
@@ -35,6 +37,7 @@ public:
     *  @return: void
     */
     void creatPacket(unsigned char CMD);
+    void creatPacket32(unsigned char CMD);
     unsigned char  getCMD();
     /***************自定义装载数据***************/
     void setUncharInBuffer(unsigned char data,int locationInBuffer);//unchar类型数据
@@ -44,6 +47,7 @@ public:
     /*******自定义解析数据************/
     unsigned char getUncharInBuffer(int locationInBuffer);//unchar类型数据
     int getIntInBuffer(int locationInBuffer);//short int类型数据
+    int getIntInBuffer32(int locationInBuffer);//short int类型数据
     short int getShortIntInBuffer(int locationInBuffer);//int类型数据
     float getFloatInBuffer(int locationInBuffer);//float类型数据
     /** 解析数据帧，包含数据帧检查（解析CMD）
@@ -53,6 +57,10 @@ public:
     int unPacking();
     //buffer清空
     void clearPakcet();
+
+    int unPacking32();
+    //buffer清空
+    void clearPakcet32();
 
 };
 

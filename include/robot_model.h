@@ -35,19 +35,19 @@ public:
     int init();
 
 private://硬件资源
-    UsbCaptureWithThread mUsbCaptureMain;
-    UsbCaptureWithThread mUsbCaptureAssist;
-    SerialInterface mSerialInterface;
-    int hCamera;
-    MindVision mVision;
+    UsbCaptureWithThread usb_capture_main_;
+    UsbCaptureWithThread usb_capture_assist_;
+    SerialInterface serial_interface_;
+    int handle_camera_;
+    MindVision mind_vision_;
 
 private://机器人数据模型
-    pthread_mutex_t dataMutex = PTHREAD_MUTEX_INITIALIZER; //互斥变量锁
-    unsigned char mRobotId;//机器人id
-    RobotMode mCurrentMode;//机器人当前运行模式
-    float mCurrentPitch=0;//当前云台pitch角度
-    float mCurrentYaw=0;//当前云台yaw角度
-    bool mEnemyIsRed;
+    pthread_mutex_t data_mutex_ = PTHREAD_MUTEX_INITIALIZER; //互斥变量锁
+    unsigned char robot_id_;//机器人id
+    RobotMode current_mode_;//机器人当前运行模式
+    float current_pitch_=0;//当前云台pitch角度
+    float current_yaw_=0;//当前云台yaw角度
+    bool enemy_is_red_;
 public://硬件资源获取函数接口
     UsbCaptureWithThread* getpUsbCaptureMain();
     MindVision* getMvisionCapture();

@@ -1,9 +1,9 @@
 %YAML:1.0
 ---
 frame_speed: 1
-gamma: 30
-exposure_time: 1200
-contrast: 190
+gamma: 32
+exposure_time: 1500
+contrast: 98
 ae_state: 0
 resolution_width: 1280
 resolution_height: 720

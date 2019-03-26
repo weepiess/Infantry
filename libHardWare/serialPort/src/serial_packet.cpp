@@ -14,6 +14,7 @@
 
 SerialPacket::SerialPacket(){
     clearPakcet();
+    clearPakcet32();
     mInitflag= false;
 }
 
@@ -26,6 +27,14 @@ void SerialPacket::creatPacket(unsigned char CMD){
     buffer[mLen-1]=0x0d;//帧尾
     mCMD=CMD;
     buffer[1]=mCMD;//命令
+    mInitflag= true;
+}
+
+void SerialPacket::creatPacket32(unsigned char CMD){
+    buffer32[0]=0xff;//帧头
+    buffer32[mLen32-1]=0x0d;//帧尾
+    mCMD=CMD;
+    buffer32[1]=mCMD;//命令
     mInitflag= true;
 }
 
@@ -81,6 +90,13 @@ int SerialPacket::getIntInBuffer(int locationInBuffer){
         return data;
     }
 }
+int SerialPacket::getIntInBuffer32(int locationInBuffer){
+    if(locationInBuffer>0&&locationInBuffer<mLen32-4){ //越界检查
+        int data;
+        memcpy(&data,buffer32+locationInBuffer, 4);
+        return data;
+    }
+}
 
 float SerialPacket::getFloatInBuffer(int locationInBuffer){
     if(locationInBuffer>0&&locationInBuffer<mLen-4){ //越界检查
@@ -104,6 +120,22 @@ int SerialPacket::unPacking(){
 //数据帧清空
 void SerialPacket::clearPakcet(){
     memset(buffer, 0, sizeof(char)*mLen);  //每个字节都用0填充
+    mInitflag= false;
+}
+
+int SerialPacket::unPacking32(){
+    //检查帧头，帧尾
+    if(buffer32[0]==0xff&&buffer32[mLen32-1]==0x0d){
+        mCMD=buffer[1];//解析得到命令
+        mInitflag=true;
+        return 0;
+    }
+    return 1;
+
+}
+//数据帧清空
+void SerialPacket::clearPakcet32(){
+    memset(buffer32, 0, sizeof(char)*mLen32);  //每个字节都用0填充
     mInitflag= false;
 }
 

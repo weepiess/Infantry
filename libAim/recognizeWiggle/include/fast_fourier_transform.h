@@ -19,19 +19,16 @@ public:
 public:
 typedef struct              //定义结构体
 {
-    double real;/*实部*/
-    double img;/*虚部*/
-}complex;
+    double real;//实部
+    double img;//虚部
+}Complex;
 
-private:
-    // float PI = 3.14159265;
-    // float N = 64;
 public:
-complex x[NI * 2], *W;                       /*输出序列的值*/                      //序列长度 全局变量
-void add(complex a, complex b, complex *c);
-void  sub(complex a, complex b, complex *c) ;
-void  mul(complex a, complex b, complex *c) ;
-void  divi(complex a, complex b, complex *c) ;
+Complex x[NI * 2], *W;                       /*输出序列的值*/                      //序列长度 全局变量
+void add(Complex a, Complex b, Complex *c);
+void  sub(Complex a, Complex b, Complex *c) ;
+void  mul(Complex a, Complex b, Complex *c) ;
+void  divi(Complex a, Complex b, Complex *c) ;
 void  initW(int size) ;
 void  changex(int size);
 void  fftx() ;

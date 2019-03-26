@@ -3,41 +3,41 @@ using namespace cv;
 Aim_predict::Aim_predict(){}
 Aim_predict::~Aim_predict(){}
 
-void Aim_predict::model_init(){
-    mKf.measurementMatrix=(Mat_<float>(1, 2) <<   
+void Aim_predict::modelInit(){
+    kalman_fileter_.g_measurement_matrix=(Mat_<float>(1, 2) <<   
             1,0);  
-    mKf.measurementNoiseCov=(Mat_<float>(1, 1) <<   
+    kalman_fileter_.g_measurement_noise_cov=(Mat_<float>(1, 1) <<   
             0.0001);
 
-    mKf.processNoiseCov=(Mat_<float>(2,2) <<
+    kalman_fileter_.g_process_noise_cov=(Mat_<float>(2,2) <<
 			10000,0,
 			0,1); 
-    mKf.init(2,1,0);
+    kalman_fileter_.init(2,1,0);
 }
 
-void Aim_predict::reset_kf_statepost(Mat statepost){
-    mKf.set_statepost(statepost);
+void Aim_predict::resetKfStatepost(Mat statepost){
+    kalman_fileter_.setStatepost(statepost);
 }
 
 Mat Aim_predict::predict(Mat measurement, float dt){
-    mKf.set_samplingtime(dt);
-    mKf.correct(measurement);
-    return mKf.predict();
+    kalman_fileter_.setSamplingtime(dt);
+    kalman_fileter_.correct(measurement);
+    return kalman_fileter_.predict();
 }
 void Aim_predict::clear(){
-    mAngle_Velocity.clear();
-    mYaw.clear();
-    mPredict_Angle.clear();
+    angle_velocity_.clear();
+    yaw_.clear();
+    predict_angle_.clear();
 }
-bool Aim_predict::shoot_logic(float initYaw, float angel_velocity, float predict_angle, uchar mode){
-    if(mAngle_Velocity.size()<2){
-        mAngle_Velocity.push_back(angel_velocity);
-        mYaw.push_back(initYaw);
-        mPredict_Angle.push_back(predict_angle);
-        if(mPredict_Angle.size()==2){
-            float iYaw_mean=std::accumulate(std::begin(mYaw),std::end(mYaw),0.0)/2;
-            float v_a_mean=std::accumulate(std::begin(mAngle_Velocity),std::end(mAngle_Velocity),0.0)/2;
-            float pred_angle_mean=std::accumulate(std::begin(mPredict_Angle),std::end(mPredict_Angle),0.0)/2;
+bool Aim_predict::shootLogic(float initYaw, float angel_velocity, float predict_angle, uchar mode){
+    if(angle_velocity_.size()<2){
+        angle_velocity_.push_back(angel_velocity);
+        yaw_.push_back(initYaw);
+        predict_angle_.push_back(predict_angle);
+        if(predict_angle_.size()==2){
+            float iYaw_mean=std::accumulate(std::begin(yaw_),std::end(yaw_),0.0)/2;
+            float v_a_mean=std::accumulate(std::begin(angle_velocity_),std::end(angle_velocity_),0.0)/2;
+            float pred_angle_mean=std::accumulate(std::begin(predict_angle_),std::end(predict_angle_),0.0)/2;
             clear();
             if(int(mode) == 2 || int(mode) ==3){
                 if(fabs(iYaw_mean)>0.45&&fabs(v_a_mean)>0.004){

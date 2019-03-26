@@ -26,7 +26,9 @@ typedef enum:unsigned char {
     CMD_SERIAL_DATA_UPDATE=0xb0,
     CMD_SERIAL_MINIPC_SHUTDOWN=0xc1,
     CMD_SERIAL_ABS_YUNTAI_DELTA = 0x13,
-    CMD_SERIAL_MODE_CAHNGE = 0xa0
+    CMD_SERIAL_MODE_CAHNGE = 0xa0,
+    CMD_SERIAL_BOARD_REV = 0x02,
+    CMD_SERIAL_BOARD_SEND = 0x00
 } SerialPortCMD;
 
 
@@ -71,6 +73,20 @@ public:
      *  @note:   数据包构成参考serial_packet.h/cpp
      */
     int dataRecv(SerialPacket &recvPacket);
+        /** 命令数据发送函数
+     *根据协议数据帧格式，封装串口发送函数。
+     *  @param:  SerialPacket sendPacket :待发送的数据包
+     *  @return: int :错误号，0代表无错误，１代表发生错误。
+     *  @note:   数据包构成参考serial_packet.h/cpp
+     */
+    int dataSend32(SerialPacket sendPacket);
+
+    /** 命令数据接收函数
+     *根据协议数据帧格式，封装串口接收函数，包括协议帧的检查机制。
+     *  @return: int :错误号，0代表无错误，１代表发生错误。
+     *  @note:   数据包构成参考serial_packet.h/cpp
+     */
+    int dataRecv32(SerialPacket &recvPacket);
 
     /** 底盘停止设置
     *  @param:  void
@@ -101,6 +117,8 @@ public:
     *  @return: void
     */
     void YunTaiShoot(unsigned char num=0x01);
+
+    void BoardCommand();
 };
 
 

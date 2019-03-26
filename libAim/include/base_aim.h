@@ -51,6 +51,15 @@ public:
      * @param: timeDelay, 延时
      */
     void setTimeDelay(double timeDelay);
+    /** 
+     * 调用该函数前需要调用pnpSolver.getTvec()获取tvec矩阵，然后传入相应的值就可获取偏移角度
+     * @param: x, 直接传入tvec.x
+     * @param: x_offset，tvec返回的x需要手动添加的增量
+     * @param: currPitch，当前pitch角度
+     * @param: currYaw，当前yaw角度
+     * @return: Point2f，计算出来的转移角度 
+     */
+    Point2f calPitchAndYaw(float x, float y, float z, float x_offset, float y_offset, float z_offset, float currPitch, float currYaw);
 
 public:
     //敌方颜色，调用时只能使用变量名，不能直接使用0或１
@@ -69,15 +78,7 @@ protected:
     Point2f calPitchAndYaw(float x_offset, float y_offset, float z_offset, float currPitch, float currYaw, 
                             bool useExtrinsicGuess = false, int flags = SOLVEPNP_ITERATIVE);
 
-    /** 该函数与上面的区别是内部没有封装pnp解算的步骤，传入的值是tvec的偏移量和手动调整的参数offset
-     * 调用该函数前需要调用pnpSolver.getTvec()获取tvec矩阵，然后传入相应的值就可获取偏移角度
-     * @param: x, 直接传入tvec.x
-     * @param: x_offset，tvec返回的x需要手动添加的增量
-     * @param: currPitch，当前pitch角度
-     * @param: currYaw，当前yaw角度
-     * @return: Point2f，计算出来的转移角度 
-     */
-    Point2f calPitchAndYaw(float x, float y, float z, float x_offset, float y_offset, float z_offset, float currPitch, float currYaw);
+
 
     /** 纠正矩形拟合后矩形的宽不一定比长短的情况
      * @param: rect, 需要进行变换的旋转矩形，一般为矩形拟合后调用

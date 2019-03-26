@@ -24,18 +24,17 @@ ControlModel::ControlModel(){}
 ControlModel::~ControlModel(){}
 
 void ControlModel::init(RobotModel* robotModel){
-    pRobotModel=robotModel;
+    robot_model_=robotModel;
     
     //配置文件
     //初始模式初始化
-    mSetMode=ROBOT_MODE_AUTOAIM;
-    cap = pRobotModel->getMvisionCapture();
-    interface = pRobotModel->getpSerialInterface();
-    aim_assistant.init("../model4.pb");
-    autoAim.init(&aim_assistant);
+    set_mode_=ROBOT_MODE_AUTOAIM;
+    cap_ = robot_model_->getMvisionCapture();
+    interface_ = robot_model_->getpSerialInterface();
+    aim_assist_.init("../model4.pb");
+    auto_aim_.init(&aim_assist_);
 
 }
-
 //串口数据接收处理入口
 void ControlModel::serialListenDataProcess(SerialPacket recvPacket) {
 //复杂自定义数据包，需要自定义析单独处理
@@ -45,68 +44,73 @@ void ControlModel::serialListenDataProcess(SerialPacket recvPacket) {
    // cout<<"CMD:"<<(int)CMD<<edl;
     if(CMD_SERIAL_ABS_YUNTAI_DELTA==CMD){
         //底层数据更新,pitch/yaw
-        pRobotModel->mcuDataUpdate(recvPacket.getFloatInBuffer(2),recvPacket.getFloatInBuffer(6));
+        robot_model_->mcuDataUpdate(recvPacket.getFloatInBuffer(2),recvPacket.getFloatInBuffer(6));
     } else if(CMD_SERIAL_MINIPC_SHUTDOWN==CMD){
         //关机命令
         cout << "shutdown!!!!!!!!!!" << endl;
         system("shutdown -h now");
     }else if(CMD_SERIAL_MODE_CAHNGE==CMD){
-        mSetMode = RobotMode(recvPacket.getFloatInBuffer(2));
+        set_mode_ = RobotMode(recvPacket.getFloatInBuffer(2));
     }
     
 }
 
 void ControlModel::processFSM(){
     //模式切换预处理
-    if(mSetMode!=pRobotModel->getCurrentMode()){
-        pRobotModel->setCurrentMode(mSetMode);
-        switch (mSetMode){
+    if(set_mode_!=robot_model_->getCurrentMode()){
+        robot_model_->setCurrentMode(set_mode_);
+        switch (set_mode_){
             case ROBOT_MODE_AUTOAIM:{
-                autoptz.join();
-                autoAim.set_parameters(3,45,30,20);
-                autoAim.setEnemyColor(BaseAim::color_red);
+                auto_ptz_.join();
+                recognize_wiggle_.join();
+                auto_aim_.setEnemyColor(BaseAim::color_red);
+                recognize_wiggle_.init();
                 break;
             }
             case ROBOT_MODE_AUTO_PTZ:{
-                autotrn.join();
-                interface->YunTaiAbsSet(0,180);
+                recognize_wiggle_.join();
+                interface_->YunTaiAbsSet(0,180);
                 usleep(100);
-                autoptz.setCurrentAngel(pRobotModel->getCurrentYaw()); 
-                autoptz.setScanDirection(AutoPTZ::CLOCKWISE);
-                autoptz.setScanSpeed(AutoPTZ::SLOW);
-                autoptz.init();
+                auto_ptz_.setCurrentAngel(robot_model_->getCurrentYaw()); 
+                auto_ptz_.setScanDirection(AutoPTZ::CLOCKWISE);
+                auto_ptz_.setScanSpeed(AutoPTZ::SLOW);
+                auto_ptz_.init();
                 break;
             }
             case ROBOT_MODE_PLAYER_AIM:{
-                autoptz.join();
-                autotrn.join();
-                autoAim.set_parameters(3,45,30,20);
-                autoAim.setEnemyColor(BaseAim::color_red);
+                auto_ptz_.join();
+                recognize_wiggle_.join();
+                auto_aim_.setEnemyColor(BaseAim::color_blue);
                 // mthread.join();
-                // mthread.init(autoAim);
+                // mthread.init(auto_aim_);
                 // mthread.start();
                 break;
             }
             case ROBOT_MODE_MARKAIM:{
-
+                    board_serial_.breakUp();
+                break;
             }
         }
     }
  
     //模式运行
-    switch (pRobotModel->getCurrentMode()){
+    switch (robot_model_->getCurrentMode()){
         case ROBOT_MODE_AUTOAIM:{
 
-            Aim(false);
+            aim(false);
             break;
         }
         case ROBOT_MODE_AUTO_PTZ:{
-            Aim(true);
+            aim(true);
             break;
         }
         case ROBOT_MODE_PLAYER_AIM:{
 
             playerAim();
+        }
+        case ROBOT_MODE_MARKAIM:{
+            mark();
+            break;
         }
         default:
             cout<<"[aiProcess]mode error"<<endl;
@@ -115,107 +119,113 @@ void ControlModel::processFSM(){
 
 }
 
-void ControlModel::Aim(bool is_shoot_control){
-        int start = basic_tool.currentTimeMsGet();
+void ControlModel::aim(bool is_shoot_control){
+        int start = basic_tool_.currentTimeMsGet();
         Mat src1;
         Mat src2;
         vector<RotatedRect> pre_armor_lamps;
         vector<RotatedRect> real_armor_lamps;
         Point2f current_angle;
-        MindVision* cap = pRobotModel->getMvisionCapture();
-        if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
-        char c = waitKey(1);
-        cap->adjustParams(c);
-        SerialInterface *interface = pRobotModel->getpSerialInterface();
-        interface->getAbsYunTaiDelta();
-        current_angle.x = pRobotModel->getCurrentPitch();
-        current_angle.y = pRobotModel->getCurrentYaw();
+        cap_ = robot_model_->getMvisionCapture();
+        if(cap_->getImg(src1)!=0) cout<<"src is error"<<endl;
+        // char c = waitKey(1);
+        // cap_->adjustParams(c);
+        interface_ = robot_model_->getpSerialInterface();
+        interface_->getAbsYunTaiDelta();
+        current_angle.x = robot_model_->getCurrentPitch();
+        current_angle.y = robot_model_->getCurrentYaw();
         Point2f angle;
-        if(autoAim.setImage(src1)){
-            autoAim.findLamp_rect(pre_armor_lamps);
-            autoAim.match_lamps(pre_armor_lamps,real_armor_lamps);
-            
-            autoAim.select_armor(real_armor_lamps);
-            int finish = basic_tool.currentTimeMsGet();
+        if(auto_aim_.setImage(src1)){
+            auto_aim_.findLampRect(pre_armor_lamps);
+            auto_aim_.matchLamps(pre_armor_lamps,real_armor_lamps);
+            auto_aim_.selectArmor(real_armor_lamps);
+            int finish = basic_tool_.currentTimeMsGet();
             bool if_shoot=false;
-            if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
-                int end = basic_tool.currentTimeMsGet();
+            if(auto_aim_.aim(src1, current_angle.x, current_angle.y, angle,0,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+                int end = basic_tool_.currentTimeMsGet();
                 cout<<"time cost: "<<end-start<<endl;
-                interface->YunTaiDeltaSet(angle.x, angle.y);
+                interface_->YunTaiDeltaSet(angle.x, angle.y);
                 cout<<"angle1 "<<angle<<endl;
                 unsigned char num=0x01;
                 if(if_shoot)
-	                interface->YunTaiShoot(num);
+	                interface_->YunTaiShoot(num);
         }
-        imshow("src",src1);
-        waitKey(1);
-
+       imshow("src",src1);
+       waitKey(1);
     }        
 }
 
-void ControlModel::AutoPTZControl(){
-    int start = basic_tool.currentTimeMsGet();
+void ControlModel::autoPTZControl(){
+    int start = basic_tool_.currentTimeMsGet();
     Mat src1;
     vector<RotatedRect> pre_armor_lamps;
     vector<RotatedRect> real_armor_lamps;
     Point2f current_angle;
-    MindVision* cap = pRobotModel->getMvisionCapture();
-    if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
-    interface->getAbsYunTaiDelta();
-    current_angle.x = pRobotModel->getCurrentPitch();
-    current_angle.y = pRobotModel->getCurrentYaw();
+    cap_ = robot_model_->getMvisionCapture();
+    if(cap_->getImg(src1)!=0) cout<<"src is error"<<endl;
+    interface_->getAbsYunTaiDelta();
+    current_angle.x = robot_model_->getCurrentPitch();
+    current_angle.y = robot_model_->getCurrentYaw();
     Point2f angle;
-    if(autoAim.setImage(src1)){
-        autoAim.findLamp_rect(pre_armor_lamps);
-        autoAim.match_lamps(pre_armor_lamps,real_armor_lamps);
+    if(auto_aim_.setImage(src1)){
+        auto_aim_.findLampRect(pre_armor_lamps);
+        auto_aim_.matchLamps(pre_armor_lamps,real_armor_lamps);
             
-        autoAim.select_armor(real_armor_lamps);
-        int finish = basic_tool.currentTimeMsGet();
+        auto_aim_.selectArmor(real_armor_lamps);
+        int finish = basic_tool_.currentTimeMsGet();
         bool if_shoot=false;
-        if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
-            autoptz.isTargetFind(true);
-            interface->YunTaiDeltaSet(angle.x, angle.y);
+        if(auto_aim_.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+            auto_ptz_.isTargetFind(true);
+            interface_->YunTaiDeltaSet(angle.x, angle.y);
             cout<<"angle1 "<<angle<<endl;
             unsigned char num=0x01;
-            if(if_shoot)    interface->YunTaiShoot(num);
+            if(if_shoot)    interface_->YunTaiShoot(num);
         }else{
-            autoptz.isTargetFind(false);
-            autoptz.threadResume();
-            autoptz.setCurrentAngel(current_angle.y);
-            interface->YunTaiAbsSet(0,current_angle.y);
-            interface->YunTaiDeltaSet(0,autoptz.getAngle());
+            auto_ptz_.isTargetFind(false);
+            auto_ptz_.threadResume();
+            auto_ptz_.setCurrentAngel(current_angle.y);
+            interface_->YunTaiAbsSet(0,current_angle.y);
+            interface_->YunTaiDeltaSet(0,auto_ptz_.getAngle());
         }  
     }          
 }
 
 void ControlModel::playerAim(){
-    int start = basic_tool.currentTimeMsGet();
+    int start = basic_tool_.currentTimeMsGet();
     Mat src1;
     vector<RotatedRect> pre_armor_lamps;
     vector<RotatedRect> real_armor_lamps;
     Point2f current_angle;
-    MindVision* cap = pRobotModel->getMvisionCapture();
-    if(cap->getImg(src1)!=0) cout<<"src is error"<<endl;
-    char c = waitKey(1);
-    cap->adjustParams(c);
-    SerialInterface *interface = pRobotModel->getpSerialInterface();
-    interface->getAbsYunTaiDelta();
-    current_angle.x = pRobotModel->getCurrentPitch();
-    current_angle.y = pRobotModel->getCurrentYaw();
+    cap_ = robot_model_->getMvisionCapture();
+    if(cap_->getImg(src1)!=0) cout<<"src is error"<<endl;
+    // char c = waitKey(1);
+    // cap_->adjustParams(c);
+    interface_ = robot_model_->getpSerialInterface();
+    interface_->getAbsYunTaiDelta();
+    current_angle.x = robot_model_->getCurrentPitch();
+    current_angle.y = robot_model_->getCurrentYaw();
     Point2f angle;
-    if(autoAim.setImage(src1)){
-        autoAim.findLamp_rect(pre_armor_lamps);
-        autoAim.match_lamps(pre_armor_lamps,real_armor_lamps);    
-        autoAim.selectArmorH(real_armor_lamps);
-        int finish = basic_tool.currentTimeMsGet();
+    if(auto_aim_.setImage(src1)){
+        auto_aim_.findLampRect(pre_armor_lamps);
+        auto_aim_.matchLamps(pre_armor_lamps,real_armor_lamps);    
+        auto_aim_.selectArmorH(real_armor_lamps);
+        int finish = basic_tool_.currentTimeMsGet();
         bool if_shoot=false;
-        if(autoAim.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
-            int end = basic_tool.currentTimeMsGet();
+        if(auto_aim_.aim(src1, current_angle.x, current_angle.y, angle,1,if_shoot,finish-start )==BaseAim::AIM_TARGET_FOUND){
+            int end = basic_tool_.currentTimeMsGet();
             cout<<"time cost: "<<end-start<<endl;
-            interface->YunTaiDeltaSet(angle.x, angle.y);
+            interface_->YunTaiDeltaSet(angle.x, angle.y);
             cout<<"angle1 "<<angle<<endl;
         }
     }
 }
 
+void ControlModel::mark(){
+    Point3f  point = board_serial_.returnVal();
+    Point2f current_angle;
+    current_angle.x = robot_model_->getCurrentPitch();
+    current_angle.y = robot_model_->getCurrentYaw();
+    // auto_aim_.calPitchAndYaw(point.x,point.y,point.z);
+    
+}
 

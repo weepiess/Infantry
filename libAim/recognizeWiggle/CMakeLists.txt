@@ -1,0 +1,6 @@
+include_directories(./include)
+include_directories(${PROJECT_SOURCE_DIR}/libBase/include)
+include_directories(${PROJECT_SOURCE_DIR}/libAim/autoAim/include())
+AUX_SOURCE_DIRECTORY(./src RECOGNIZE_WIGGLE_SRCS)
+ADD_LIBRARY(RecognizeWiggle ${RECOGNIZE_WIGGLE_SRCS})
+target_link_libraries(RecognizeWiggle BaseClasses)

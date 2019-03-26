@@ -24,7 +24,7 @@ void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
             }
         }
     }
-    imshow("k",img);
+    //imshow("k",img);
     cvtColor(img,img,COLOR_BGR2GRAY);
     float *p=tensor->flat<float>().data();
     cv::Mat imagePixels(rows,cols,CV_32FC1,p);
@@ -34,56 +34,56 @@ void  cvmat_to_tensor(cv::Mat  img,Tensor* tensor,int rows,int cols){
 
 //初始化过程
 int Aim_assistant::init(string model_path){
-    Status status = NewSession(SessionOptions(), &session);
+    Status status = NewSession(SessionOptions(), &session_);
     if (!status.ok()) {
         std::cerr << status.ToString() << std::endl;
         return -1;
     } else {
         std::cout << "Session created successfully" << std::endl;
     }
-    status = ReadBinaryProto(Env::Default(), model_path, &graph_def);
+    status = ReadBinaryProto(Env::Default(), model_path, &graph_def_);
     if (!status.ok()) {
         std::cerr << status.ToString() << std::endl;
         return -1;
     } else {
         std::cout << "Load graph protobuf successfully" << std::endl;
     }
-    status = session->Create(graph_def);
+    status = session_->Create(graph_def_);
     if (!status.ok()) {
         std::cerr << status.ToString() << std::endl;
         return -1;
     } else {
-        std::cout << "Add graph to session successfully" << std::endl;
+        std::cout << "Add graph to session_ successfully" << std::endl;
     }
     Mat black=Mat(Size(32,32),CV_8UC1,Scalar(0));
     cout<<black.size()<<endl;
     
-    TensorInit(session,black);
+    tensorInit(session_,black);
     return 1;
 
 
 } 
-void Aim_assistant::TensorInit(Session* session,Mat& img){
+void Aim_assistant::tensorInit(Session* session_,Mat& img){
     Tensor x(tensorflow::DT_FLOAT, tensorflow::TensorShape({1,32, 32,1}));
     std::vector<std::pair<string, tensorflow::Tensor>> inputs;
     inputs.push_back(std::pair<std::string, tensorflow::Tensor>("test-input/input", x));
     Tensor tensor_out(tensorflow::DT_FLOAT, TensorShape({1,6}));
     std::vector<tensorflow::Tensor> outputs={{ tensor_out }};
-    Status status= session->Run(inputs, {"softmax"}, {}, &outputs);
+    Status status= session_->Run(inputs, {"softmax"}, {}, &outputs);
     if (!status.ok()) {
         cout<<"failure"<<endl;
         std::cout << status.ToString() << "\n";
     }else cout<<"ok"<<endl;
 
 }
-int Aim_assistant::check_armor(cv::Mat frame){
+int Aim_assistant::checkArmor(cv::Mat frame){
     Tensor x(tensorflow::DT_FLOAT, tensorflow::TensorShape({1,32, 32,1}));
     cvmat_to_tensor(frame,&x,32,32);
     std::vector<std::pair<string, tensorflow::Tensor>> inputs;
     inputs.push_back(std::pair<std::string, tensorflow::Tensor>("test-input/input", x));//tensor输入
     Tensor tensor_out(tensorflow::DT_FLOAT, TensorShape({1,6}));
     std::vector<tensorflow::Tensor> outputs={{ tensor_out }};
-    Status status= session->Run(inputs, {"softmax"}, {}, &outputs);
+    Status status= session_->Run(inputs, {"softmax"}, {}, &outputs);
     if (!status.ok()) {
         cout<<"failure"<<endl;
         std::cout << status.ToString() << "\n";

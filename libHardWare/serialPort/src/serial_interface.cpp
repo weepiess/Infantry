@@ -48,6 +48,22 @@ int SerialInterface::dataRecv(SerialPacket &recvPacket){
     }
     return -1;
 }
+int SerialInterface::dataSend32(SerialPacket sendPacket){
+    if(mMcuSerialPort.Send(sendPacket.buffer32,32)==32){
+        return 0;
+    }
+    return -1;
+
+}
+int SerialInterface::dataRecv32(SerialPacket &recvPacket){
+
+    if(mMcuSerialPort.Recv(recvPacket.buffer32,32)==32) {
+        if(recvPacket.unPacking32()==0){
+            return 0;
+        }
+    }
+    return -1;
+}
 
 
 /*********************控制接口**************************/
@@ -92,4 +108,9 @@ void SerialInterface::YunTaiShoot(unsigned char num){
     dataSend(sendPacket);
 }
 
+void SerialInterface::BoardCommand(){
+    SerialPacket sendPacket;
+    sendPacket.creatPacket32(CMD_SERIAL_BOARD_SEND);
+    dataSend32(sendPacket);   
+}
 

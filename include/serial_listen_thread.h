@@ -24,13 +24,13 @@ public:
     ~SerialListenThread();
 
 public:
-    void init(RobotModel *robotModel,ControlModel *controlModel);
+    void init(RobotModel *robot_model,ControlModel *control_model);
     void run();
 
 private:
-    RobotModel *pRobotModel;
-    ControlModel *pControlModel;
-    bool mExitFlag;
+    RobotModel *robot_model_;
+    ControlModel *control_model_;
+    bool exit_flag_;
 
 };
 

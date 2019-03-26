@@ -26,19 +26,18 @@ class AutoPTZ: public BaseThread{
         void setScanDirection(ScanDirection direction);
         void isTargetFind(bool flag);
         void threadResume();  
-        void AutoFunc();
+        void autoFunc();
     private:
         void run();
 
     private:
-        bool is_target_found;
-        ScanDirection scan_direction;
-        ScanSpeed speed_level;
-        float current_yaw;
-        float yaw_tmp;
-        float scan_control;
-        pthread_cond_t  cond = PTHREAD_COND_INITIALIZER;
-        pthread_mutex_t controlMutex = PTHREAD_MUTEX_INITIALIZER; //互斥变量锁    
+        bool is_target_found_;
+        ScanDirection scan_direction_;
+        ScanSpeed speed_level_;
+        float current_yaw_;
+        float yaw_tmp_;
+        pthread_cond_t  cond_ = PTHREAD_COND_INITIALIZER;
+        pthread_mutex_t control_mutex_ = PTHREAD_MUTEX_INITIALIZER; //互斥变量锁    
 };
 
 #endif
